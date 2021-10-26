@@ -9,14 +9,14 @@
         </div>
         <div class="home-controller-head-title">terminal</div>
       </div>
-      <div class="home-controller-body">
+      <div class="home-controller-body" ref="homebodyScorllDom_ref">
         <p class="home-controller-body-frist">welcome to here</p>
         <div style="padding:3px">
           <span >there is some help for you , you can input </span> 
           <span style="color:red;font-size:19px">'-- help '</span> 
           <span>for get these</span>
         </div>
-        <div class="user-inputValue">
+        <div class="user-inputValue" ref="userOrderDom_ref">
           <div  v-for="(item,index) in userOrders" :key="index">
             <span style="color:green">></span>
             <span>{{item.value}}</span>
@@ -43,13 +43,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref,reactive } from 'vue'
+import { ref,reactive ,nextTick,onMounted} from 'vue'
 import { useRouter } from 'vue-router'
 interface iControllerValue {
   value:string,
   children:string[]
 }
     const Router = useRouter()
+    let userOrderDom_ref = ref() 
+    let homebodyScorllDom_ref = ref()
+    onMounted(() => {
+      console.log(userOrderDom_ref.value.clientHeight)
+    })
+    
     const controllerValue:iControllerValue = reactive({
         value:'',
         children:[]
@@ -91,6 +97,14 @@ interface iControllerValue {
             default:
               console.log('not found')
           }
+          console.log()
+          
+          nextTick(() => {
+            var scorllHeight = userOrderDom_ref.value.clientHeight
+            homebodyScorllDom_ref.value.scrollTop = scorllHeight
+            console.log(scorllHeight)
+          })
+
           controllerValue.value = ''
           controllerValue.children = []
         }else if(e.keyCode === 38){
@@ -107,7 +121,11 @@ interface iControllerValue {
       }
 </script>
 <style scoped>
-
+.home{
+  background-image: url('../../assets/WX20211026-214815@2x.png');
+  background-size: 100%;
+  height:100vh;
+}
 .user-inputValue{
   margin-bottom: 20px;
   padding: 3px;
@@ -214,7 +232,8 @@ margin-bottom: 20px;
   position: relative;
   opacity: 0.8;
   margin:  0 auto;
-  margin-top:50px;
+  top:100px;
+  /* margin-top:50px; */
   color:white
 }
 .home-controller-head{
@@ -244,7 +263,14 @@ margin-bottom: 20px;
   }
 }
 @media all and (max-width: 376px) {
-  .controller-input{
+  .home{
+      background-image:none;
+  background-size: 100%;
+  top:0;
+  }
+  .home-controller{
+    top:0;
+  }
 /*   width: 100%;
   position: absolute;
   display: flex;
@@ -254,7 +280,6 @@ margin-bottom: 20px;
 
    font-family: "Microsoft soft";
   color:white; */
-  }
 }
 
 
