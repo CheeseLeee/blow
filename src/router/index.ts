@@ -23,7 +23,14 @@ const routes: Array<RouteRecordRaw> = [
       title:'主页'
     }
   },
-
+  {
+    path: '/gobang',
+    name: 'Gobang',
+    component: () => import('../views/game/gobang/Gobang.vue'),
+    meta:{
+      title:'五子棋'
+    }
+  },
 
 ]
 

@@ -1,11 +1,11 @@
 <template>
-  <div class="home">
-    <div class="home-controller">
+  <div class="home" @keydown="handleKeyDown" v-styleDepOn>
+    <div class="home-controller" v-if="isControllerShow">
       <div class="home-controller-head">
         <div class="home-controller-btns">
-          <div class="circle-red"><span></span></div>
-          <div class="circle-yellow"><span></span></div>
-          <div class="circle-green"><span></span></div>        
+          <div class="circle-red" @click="handleClose"><span></span></div>
+          <div class="circle-yellow" @click="handleScale"><span></span></div>
+          <div class="circle-green" @click="handleStart"><span></span></div>        
         </div>
         <div class="home-controller-head-title">terminal</div>
       </div>
@@ -34,26 +34,43 @@
  
       <div class="controller-input">
         <div>C:local\\:</div>
-        <input type="text" v-model="controllerValue.value"/>
-<!--         <div class="controller-value">{{controllerValue}}</div>
-        <div class="controller-input-animate"></div> -->
+        <input type="text" v-model="controllerValue.value" v-focus />
       </div>
+    </div>
+    <!--登录表单-->
+    <div  v-if="!isControllerShow" class="login-form">
+      <div>hahha</div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref,reactive ,nextTick,onMounted} from 'vue'
+import {getEquipment} from '../../utils/utilsFns'
 import { useRouter } from 'vue-router'
 interface iControllerValue {
   value:string,
   children:string[]
 }
+
     const Router = useRouter()
     let userOrderDom_ref = ref() 
     let homebodyScorllDom_ref = ref()
+    let isControllerShow = ref(true)
+    function handleClose(){
+      console.log('close')
+      isControllerShow.value = false
+    }
+    function handleScale(){
+      console.log('scale')
+    }
+    function handleStart(){
+      Router.push({
+        name:'Home'
+      })
+    }
     onMounted(() => {
-      console.log(userOrderDom_ref.value.clientHeight)
+      getEquipment()
     })
     
     const controllerValue:iControllerValue = reactive({
@@ -63,7 +80,7 @@ interface iControllerValue {
       const userOrders:iControllerValue[] = reactive([])
       let hisControllerValue:string[] = reactive([])
       let hisIndex = ref(0)
-      document.onkeydown = function(e:KeyboardEvent):void{
+      function handleKeyDown(e:KeyboardEvent):void{
         if(e.keyCode === 13){
           if(controllerValue.value === ''){
             return  
@@ -74,7 +91,7 @@ interface iControllerValue {
           switch(controllerValue.value){
             case '-- help':
               console.log('right')
-              controllerValue.children.push('-- start:开始','-- end:undefined','-- clear:清理掉操作信息','-- deepclear:清理掉操作历史栈及信息','-- author:作者信息')   
+              controllerValue.children.push('-- start:开始','-- end:undefined','-- clear:清理掉操作信息','-- deepclear:清理掉操作历史栈及信息','-- gobang:gobang is inventing','-- author:作者信息')   
               break
             case '-- start':
               Router.push({
@@ -90,6 +107,11 @@ interface iControllerValue {
             case '-- deepclear':
                hisIndex.value = 0
                hisControllerValue = []
+              break
+            case '-- gobang':
+                Router.push({
+                name:'Gobang'
+              })
               break
             case '-- author':
               controllerValue.children.push('Name:lzx,Born:1997-12-05,University:undefiend')
@@ -121,9 +143,23 @@ interface iControllerValue {
       }
 </script>
 <style scoped>
+.login-form{
+  width: 37.5rem;
+  height: 300px;
+  margin:  0 auto;
+  position: relative;
+  top:50%;
+  transform: translateY(-50%);
+  
+}
+.login-form .el-form {
+  width: 400px;
+  margin:  0 auto;
+}
 .home{
   background-image: url('../../assets/WX20211026-214815@2x.png');
-  background-size: 100%;
+/*   background-size: 100%;
+  background-repeat: no-repeat; */
   height:100vh;
 }
 .user-inputValue{
@@ -228,7 +264,7 @@ overflow-y: auto;
 margin-bottom: 20px;
 }
 .home-controller{
-   width: 600px; 
+  width: 52%;
   position: relative;
   opacity: 0.8;
   margin:  0 auto;
