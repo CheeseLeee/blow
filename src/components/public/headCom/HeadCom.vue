@@ -1,9 +1,8 @@
 <template>
-    <div class="head">
+    <div :class="[isTopScorll ? 'head' : 'notTop-head']" >
         <img class="head-vue-logo" src="../../../assets/logo.png" />
         <div class="head-tab">
             <p  v-for="(item,index) in tabs" :key="index">{{item}}</p>
-
         </div>
         <div class="head-tab-mobile">MENU</div>
         <div>
@@ -13,9 +12,30 @@
 </template>
 
 <script setup lang="ts">
-import {ref,reactive} from 'vue'
+import {ref,reactive,onMounted,onBeforeUnmount} from 'vue'
 const tabs = reactive(['Vue','React','TS','JS','Thought','Other'])
+let isTopScorll = ref(true)
+let flag = document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight)
+function scorll(){
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
+    if(scrollTop === 0){
+        console.log('0000')
+        isTopScorll.value = true
+    }else{
+        if(isTopScorll.value === false){           
+        return
+        }
+        isTopScorll.value = false
+    }
+}
+onMounted(() => {
+    window.addEventListener('scroll',scorll,true)
+})
+onBeforeUnmount(() => {
+    window.removeEventListener('scroll',scorll,true)
+})
 
+console.log(flag)
 
 </script>
 
@@ -30,12 +50,13 @@ const tabs = reactive(['Vue','React','TS','JS','Thought','Other'])
     height: 32px;
 }
 .head-tab p:hover{
+    cursor: pointer;
     transform: rotateX(
 360deg);
 }
 .head-tab p{
     margin: 0 6px;
-    cursor: pointer;
+    
     transition: all 1s;
 }
 .head-tab{
@@ -58,6 +79,20 @@ const tabs = reactive(['Vue','React','TS','JS','Thought','Other'])
     display: flex;
     justify-content:space-between;
     align-items: center;
+    transition: all 0.5s;
+}
+.notTop-head{
+    position: fixed;
+    top:0;
+    width: 100%;
+    height: 30px;
+    padding: 20px 0;
+    opacity: 0.8;
+    background-color: gray;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    transition: all 0.5s;
 }
 @media all and (max-width: 376px) {
   .head-tab{

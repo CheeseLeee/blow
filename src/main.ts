@@ -6,6 +6,7 @@ import 'element-plus/dist/index.css'
 import { eleComponents, plugins } from '../src/elementUi/elementPlus'
 import './iconfont/iconfont.css'
 
+
 const app = createApp(App)
 eleComponents.forEach(eleComponents => {
     app.component(eleComponents.name, eleComponents)
@@ -13,10 +14,9 @@ eleComponents.forEach(eleComponents => {
   plugins.forEach(plugin => {
     app.use(plugin)
   })
+//默认input聚焦
 app.directive('focus', {
-    // 当被绑定的元素挂载到 DOM 中时……
     mounted(el) {
-    // 聚焦元素
         el.focus()
     }
 })
@@ -25,8 +25,8 @@ app.directive('styleDepOn',{
     mounted(el){
         const myDate = new Date()
         const nowHours = myDate.getHours()
-        if(nowHours > 20){
-            el.style.backgroundImage = "url('./assets/logo.png')"
+        if(nowHours >= 20){
+            el.style.backgroundImage = 'url(' + require('./assets/homedeepimg.png') + ')'
         }
     }
 })
