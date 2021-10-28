@@ -75,11 +75,11 @@ console.log(flag)
     height: 30px;
     padding: 10px 0;
     opacity: 0.8;
-    background-color: gray;
     display: flex;
     justify-content:space-between;
     align-items: center;
     transition: all 0.5s;
+     background-color: #4A3653;
 }
 .notTop-head{
     position: fixed;
@@ -88,7 +88,7 @@ console.log(flag)
     height: 30px;
     padding: 20px 0;
     opacity: 0.8;
-    background-color: gray;
+    background-color: #4A3653;
     display: flex;
     justify-content:space-between;
     align-items: center;
