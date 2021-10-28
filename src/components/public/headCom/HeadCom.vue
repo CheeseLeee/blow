@@ -79,7 +79,7 @@ console.log(flag)
     justify-content:space-between;
     align-items: center;
     transition: all 0.5s;
-     background-color: #4A3653;
+     background-color: #8f91ec;
 }
 .notTop-head{
     position: fixed;
@@ -88,7 +88,7 @@ console.log(flag)
     height: 30px;
     padding: 20px 0;
     opacity: 0.8;
-    background-color: #4A3653;
+    background-color: #8f91ec;
     display: flex;
     justify-content:space-between;
     align-items: center;

@@ -15,10 +15,10 @@
             <div class="hex-box-mobile">
                 <img  src="../../assets/react.png" />
             </div>
-            
+         <p class="home-mid-title">WELCOME-TO-HOME</p>
+        <p class="home-mid-new">it's empty,beacuse the writer is lazy</p>            
         </div>
-        <p class="home-mid-title">2021</p>
-        <p class="home-mid-new">NEW</p>          
+         
         <div>???</div>
     </div>
 </template>
@@ -29,39 +29,44 @@ import HeadCom from '../../components/public/headCom/HeadCom.vue'
 
 <style scope>
 .home-body{
+    
+       width: 100%;
+       height: 1200px;
+     background-image: url('../../assets/coast.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
     overflow: hidden;
 }
 .home-mid-new{
     position:relative;
-    top:13%;
+    top:21%;
     left:50%;
     transform: translateX(-50%);
     font-size: 30px;
     font-weight: 500;
     font-family: sans-serif;
     z-index: 99;
-    color:white;
+    color:#0A122A;
     text-align: center;    
 }
 .home-mid-title{
+    text-transform: uppercase;
+    font-size: 56px;
+    font-weight: 1000;
     position:relative;
     top:20%;
     left:50%;
     transform: translateX(-50%);
-    font-size: 100px;
-    font-weight: 500;
     font-family: sans-serif;
     z-index: 99;
-    color:Purple;
+    color:#FE2E64;
     text-align: center;
 }
 .home{
     height: 1200px;
-    background-image: linear-gradient(to right, #100027 , #29002a);
-/*     background-image: url('../../assets/bgi.png');
-    background-repeat: no-repeat;
-    background-size: 100%;
-    height: 700px; */
+
+    height: 1200px; 
+/*      background-image: linear-gradient(to right, #100027 , #29002a); */
 }
 .ccc{
     margin-left: 53px; 
