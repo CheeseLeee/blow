@@ -1,5 +1,5 @@
 <template>
-  <div class="home" @keydown="handleKeyDown" v-styleDepOn>
+  <div class="home" @keydown="handleKeyDown" v-bgi="'homedeepimg'">
     <div class="home-controller" v-if="isControllerShow">
       <div class="home-controller-head">
         <div class="home-controller-btns">
@@ -9,33 +9,35 @@
         </div>
         <div class="home-controller-head-title">terminal</div>
       </div>
-      <div class="home-controller-body" ref="homebodyScorllDom_ref">
-        <p class="home-controller-body-frist">welcome to here</p>
-        <div style="padding:3px">
-          <span >there is some help for you , you can input </span> 
-          <span style="color:red;font-size:19px">'-- help '</span> 
-          <span>for get these</span>
-        </div>
-        <div class="user-inputValue" ref="userOrderDom_ref">
-          <div  v-for="(item,index) in userOrders" :key="index">
-            <span style="color:green">></span>
-            <span>{{item.value}}</span>
+      <div :class="[!isSclaeController ? 'not-active-controller' : 'active-controller']">
+        <div class="home-controller-body" ref="homebodyScorllDom_ref">
+          <p class="home-controller-body-frist">welcome to here</p>
+          <div style="padding:3px">
+            <span >there is some help for you , you can input </span> 
+            <span style="color:red;font-size:19px">'-- help '</span> 
+            <span>for get these</span>
+          </div>
+          <div class="user-inputValue" ref="userOrderDom_ref">
+            <div  v-for="(item,index) in userOrders" :key="index">
+              <span style="color:green">></span>
+              <span>{{item.value}}</span>
 
-            <template v-if="item.children" >
-              <div style="padding-left:25px" v-for="(item,index) in item.children" :key="index">
-                {{item}}
-              </div>
-            </template>
+              <template v-if="item.children" >
+                <div style="padding-left:25px" v-for="(item,index) in item.children" :key="index">
+                  {{item}}
+                </div>
+              </template>
+            </div>
+
           </div>
 
         </div>
-
-      </div>
- 
+     
       <div class="controller-input">
         <div>C:local\\:</div>
         <input type="text" v-model="controllerValue.value" v-focus />
       </div>
+       </div>
     </div>
     <!--登录表单-->
     <div  v-if="!isControllerShow" class="login-form">
@@ -48,21 +50,28 @@
 import { ref,reactive ,nextTick,onMounted} from 'vue'
 import {getEquipment} from '../../utils/utilsFns'
 import { useRouter } from 'vue-router'
+import { ElNotification } from 'element-plus'
 interface iControllerValue {
   value:string,
   children:string[]
 }
 
     const Router = useRouter()
+    let isSclaeController = ref(false)
     let userOrderDom_ref = ref() 
     let homebodyScorllDom_ref = ref()
     let isControllerShow = ref(true)
     function handleClose(){
-      console.log('close')
-      isControllerShow.value = false
+      ElNotification({
+        title: 'Error',
+        message: 'The author has not figured out what to do',
+        type: 'error',
+      })
+      //isControllerShow.value = false
     }
     function handleScale(){
-      console.log('scale')
+      isSclaeController.value = !isSclaeController.value
+      console.log(isSclaeController.value)
     }
     function handleStart(){
       Router.push({
@@ -143,6 +152,16 @@ interface iControllerValue {
       }
 </script>
 <style scoped>
+.not-active-controller{
+  height: 300px;
+  opacity: 1;
+  transition: all 0.5s;
+}
+.active-controller{
+  height: 0px;
+   opacity:0;
+  transition: all 0.5s;
+}
 ::-webkit-scrollbar {
 width:12px;
 }
@@ -267,6 +286,7 @@ box-shadow: 0px 0px 1px red;
   transform: translateY(-50%);
   margin-left:10px;
   display: flex;
+  z-index: 199;
 }
 .home-controller-head-title{
   position: absolute;

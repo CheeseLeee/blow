@@ -1,19 +1,43 @@
 <template>
     <div :class="[isTopScorll ? 'head' : 'notTop-head']" >
         <img class="head-vue-logo" src="../../../assets/logo.png" />
-        <div class="head-tab">
-            <p  v-for="(item,index) in tabs" :key="index">{{item}}</p>
+        
+        <div class="head-tab" v-for="(item,index) in tabs" :key="index">
+            <i :class="['iconfont',item.iconClass]"></i>
+            <p style="margin-left:5px">{{item.name}}</p>
+            
         </div>
         <div class="head-tab-mobile">MENU</div>
         <div>
-            <i class="iconfont  icon-github icon-github1size"></i>
+            <i class="iconfont  icon-github1 icon-github1size"></i>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import {ref,reactive,onMounted,onBeforeUnmount} from 'vue'
-const tabs = reactive(['Vue','React','TS','JS','Thought','Other'])
+const tabs = reactive([
+    {
+        name:'Vue',
+        iconClass:'icon-Vue'
+    },
+        {
+        name:'React',
+        iconClass:'icon-React'
+    },
+        {
+        name:'Js',
+        iconClass:'icon-JavaScript'
+    },
+        {
+        name:'Ts',
+        iconClass:'icon-typescript'
+    },
+        {
+        name:'Other',
+        iconClass:'icon-qita'
+    },
+])
 let isTopScorll = ref(true)
 let flag = document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight)
 function scorll(){
@@ -54,9 +78,7 @@ console.log(flag)
     transform: rotateX(
 360deg);
 }
-.head-tab p{
-    margin: 0 6px;
-    
+.head-tab p{    
     transition: all 1s;
 }
 .head-tab{
@@ -87,7 +109,8 @@ console.log(flag)
     width: 100%;
     height: 30px;
     padding: 20px 0;
-    opacity: 0.8;
+    opacity: 0.6;
+    z-index: 199;
     background-color: #8f91ec;
     display: flex;
     justify-content:space-between;
