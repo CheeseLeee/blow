@@ -35,7 +35,7 @@
      
       <div class="controller-input">
         <div>C:local\\:</div>
-        <input type="text" v-model="controllerValue.value" v-focus />
+        <input type="text" v-model="controllerValue.value" v-focus :disabled="!isControllerShow"/>
       </div>
        </div>
     </div>
@@ -48,7 +48,7 @@
 
 <script setup lang="ts">
 import { ref,reactive ,nextTick,onMounted} from 'vue'
-import {getEquipment} from '../../utils/utilsFns'
+import {getEquipment} from '../../utils/utils_fns'
 import { useRouter } from 'vue-router'
 import { ElNotification } from 'element-plus'
 interface iControllerValue {
@@ -310,6 +310,7 @@ margin-bottom: 20px;
   color:white
 }
 .home-controller-head{
+  z-index: 200;
   background-color: gray;
   height: 26px;
   width: 100%;
