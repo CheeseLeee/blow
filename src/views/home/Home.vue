@@ -21,16 +21,16 @@
                 <div class="home-btns-box">
                     <div class="btns-confim"> 
                         <img src="../../assets/edit.png" />
-                        <p>Start Drawing</p>
+                        <p>do nothing</p>
                     </div>
                     <div class="btns-sure">
                         <img src="../../assets/owner.png" />
-                        <p>Start Drawing</p>                        
+                        <p>do nothing</p>                      
                     </div>
                 </div>
                 <div class="btns-white">
                     <img src="../../assets/help.png" />
-                    <p style="margin-left:8px">Start Drawing</p>                   
+                    <p style="margin-left:8px">do nothing</p>                   
                 </div>
             </div>
             <div class="home-body-second">
@@ -59,8 +59,9 @@
             </div>
             <div class="home-body-book">
                 <div class="home-body-book-text">
-                    <p>i would try to introduce my book</p>
-                    <p>or this ?</p>
+                    <p>i would try to introduce scheming book</p>
+                    <p>i like them very much</p>
+                    <!-- <p>if you read it </p> -->
                 </div>
                 <div class="home-body-book-img">
                     <div class="home-body-img-box" v-for="(item,index) in books" :key="index">
@@ -77,66 +78,68 @@
                 </div>
                 <div class="write-flexbox">
                     <div style="width:45%;z-index:20">
-                        <p class="p1">Powerful Drawing Tool</p>
-                        <p class="p2">Did we mention it's free?</p>
-                        <p class="p3">The Pixilart Drawing Application is your ultimate pixel drawing tool. Make beautiful pixel art, create game sprites, GIF animations and even draw online together with others.</p>
+                        <p class="p1">Author's words</p>
+                        <p class="p2">this is beat</p>
+                        <p class="p3">more function will be comming soon</p>
                         <div class="pbtn " >
                             GO
                         </div>
-                    </div>
-                    <div>
-                        <img style="width:500px;height:400px" src="../../assets/vscode.png" />
-                    </div>
+                    </div>                   
+                    <img style="width:500px;height:400px" src="../../assets/vscode.png" />
                 </div>
                 
             </div>
 
+            <div class="home-body-thirty">
+                <p class="en-title">English learn</p>
+                <div class="masonry">
+                    
+                    <div class="item" v-for="(item,index) in learnEn" :key="index">
+                        <img :src="item.url" />
+                    </div>
+                </div>
+            </div>
+
             <div class="bottom-box">
-                <p class="bottom-p1">FOR CREATIVE MINDS</p>
-                <p class="bottom-p2">Join thousands of creative minds just like yourself. Pixilart is a community of artists who enjoy retro style art, modern art, games and so much more.</p>
+                <p class="bottom-p1">Create and Life</p>
+                <p class="bottom-p2">it's better to do than saying </p>
                 <div class="bottom-box-btn">
                     welcome to Join us
                 </div>
             </div>
 
-            <div class="home-body-thirty">
-                <div class="masonry">
-                    <div class="item" v-for="(item,index) in 12" :key="index">
-                        <img src="../../assets/2013skt.jpeg" />
-                    </div>
-                </div>
-            </div>
+            <div class="line-bottom"></div>
+
+            <div style="width:40%;height:200px"></div>
         </div>           
     </div>
 </template>
 
 <script lang="ts">
-const changeOpacity = (el?:any) => {
+const changeOpacity = (el?:HTMLElement) => {
     console.log(el)
-    return function ($event?:any){
-        console.log($event,el)
-        const scrollTop = document.documentElement.scrollTop | document.body.scrollTop
-        if(scrollTop !== 0){
-            el.style.opacity = 1000/scrollTop * 0.02 > 0.1 ? 1000/scrollTop * 0.02  : 0
+    return function (){
+        //console.log($event,el)
+        if(el){
+            const scrollTop = document.documentElement.scrollTop | document.body.scrollTop
+            if(scrollTop !== 0){
+                el.style.opacity = `${1000/scrollTop * 0.02 > 0.1 ? 1000/scrollTop * 0.02  : 0}`
+            }else{
+                el.style.opacity = 1 + ''
+            }
         }else{
-            el.style.opacity = 1
+            return
         }
+
     }
 }
-import {onMounted
-} from 'vue'
-import Swiper, {
-  Autoplay,
-  EffectCoverflow,
-  EffectCube,
-  Pagination,
-  Navigation,
-} from "swiper";
+
+
 // swiper-bundle.min.css 决定了小圆点和左右翻页标签，如果不需要可以不引用
 import "swiper/swiper-bundle.min.css";
 import 'swiper/swiper-bundle.css'
 import HeadCom from '../../components/public/headCom/HeadCom.vue'
-Swiper.use([Autoplay, EffectCoverflow, EffectCube, Pagination, Navigation]);
+import {useSwiper} from './homeFns'
 
 export default {
     components:{
@@ -146,16 +149,60 @@ export default {
     directives:{
         //滚动修改透明度
         opDepOn:{
-            mounted(el:any){
+            mounted(el:HTMLElement):void{
                 //let preScrollTop = 0
                 window.addEventListener('scroll',changeOpacity(el))
             },
-            beforeUnmount(){
+            beforeUnmount():void{
                 window.removeEventListener('scroll',changeOpacity())
             }
         }
     },
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     setup(){
+        const learnEn = [
+            {
+                name:'',
+                url:require('../../assets/english/1.jpg'),
+            },
+                        {
+                name:'',
+                url:require('../../assets/english/2.jpg')
+            },
+                        {
+                name:'',
+                url:require('../../assets/english/3.jpg')
+            },
+                        {
+                name:'',
+                url:require('../../assets/english/4.jpg')
+            },
+                        {
+                name:'',
+                url:require('../../assets/english/5.jpg')
+            },
+                        {
+                name:'',
+                url:require('../../assets/english/6.jpg')
+            },
+                        {
+                name:'',
+                url:require('../../assets/english/7.jpg')
+            },
+                        {
+                name:'',
+                url:require('../../assets/english/8.jpg')
+            },
+                        {
+                name:'',
+                url:require('../../assets/english/9.jpg')
+            },
+                                    {
+                name:'',
+                url:require('../../assets/english/9.jpg')
+            },
+
+        ]
         const books = [
             {
             name:'告白',
@@ -180,37 +227,10 @@ export default {
             name:'白夜行',
             url:require('../../assets/byx.jpeg')
         }]
-        onMounted(() => {
-            new Swiper(".swiper1", {
-                pagination: {
-                el: ".swiper-pagination",
-                },
-                navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-                hideOnClick: true,
-                },
-                autoplay: {
-                delay: 3000,
-                stopOnLastSlide: false,
-                disableOnInteraction: false,
-                },
-                on: {
-                    navigationShow: function () {
-                        console.log("按钮显示了");
-                    },
-                },
-        });
-        })
-        const onSwiper = (swiper:any) => {
-            console.log(swiper);
-        };
-      const onSlideChange = () => {
-        console.log('slide change');
-      };
+        useSwiper()
       return {
-          books,
-          onSwiper,onSlideChange
+          books,learnEn,
+  
       }
     }
     
@@ -221,7 +241,9 @@ export default {
 </script>
 
 <style scope>
-
+.home-body-second img{
+    width:50%;
+}
 .bottom-box-btn{
     width: 160px;
     margin: 0 auto;
@@ -241,6 +263,7 @@ export default {
 .bottom-p2{
     color: #6785b9;
     font-size: 20px;
+    margin: 5px 0;
 }
 .bottom-p1{
     font-weight: 700;
@@ -251,6 +274,7 @@ export default {
 .bottom-box{
     width: 60%;
     margin: 0 auto;
+    margin-top: 15px;
     height: 300px;
     text-align: center;
 }
@@ -272,6 +296,13 @@ export default {
     background-color: white;
     color:black
 }
+.en-title{
+    width: 40%;
+    text-align: center;
+    font-size: 29px;
+    color:black;
+    margin:0 auto;
+}
 .p1{
     font-weight: 700;
         font-size: 42px;
@@ -289,9 +320,11 @@ export default {
     font-weight: 700;
     color:white;
     font-family: Varela Round,sans-serif;
+    margin: 5px 0 10px 0;
 }
 
 .write-flexbox{
+    height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -327,9 +360,7 @@ export default {
 margin-top:15px;
 
 }
-.home-body-img-box{
 
-}
 .home-body-book-img  p{
     text-align: center;
 }
@@ -343,10 +374,10 @@ margin-top:15px;
     margin: 5px;
 }
 .home-body-book-img{
-    width: 400px;
+    width: 50%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+
     align-items: center;
 }
 .home-body-book{
@@ -357,6 +388,7 @@ margin-top:15px;
 
 }
 .home-body-book-text{
+    width: 50%;
     margin-left:10px;
     font-family: fantasy;
     font-size: 41px;
@@ -364,6 +396,7 @@ margin-top:15px;
 .home-body-thirty{
     width: 90%;
     margin: 0 auto;
+    padding-top:10px;
 }
 .masonry {
     columns: auto 300px
@@ -449,10 +482,7 @@ cursor: pointer;
     background-repeat: no-repeat;
     background-size: 100%;
 }
-.home-body{
 
-
-}
 .home-mid-new{
     position:relative;
     top:17%;
@@ -550,9 +580,37 @@ transform: translateX(-52px);
 
 .swiper-slide img{
     width: 100%;
-    height: 300px;
+
+}
+.line-bottom{
+    width: 70%;
+    height: 1px;
+    background-color: gray;
+    margin: 0 auto;
 }
 @media all and (max-width: 376px) {
+    .home-body-book-img .item{
+        width: 60px;
+        height: 60px;
+    }
+    .masonry{
+        columns:auto 50px
+    }
+    
+ /* column-count: 4; column-gap: 0; */;
+    .home-body-img-box p{
+        font-size: 12px;
+    }
+    .masonry .item{
+        width: 30%;
+    }
+    .masonry .item img{
+       
+        height: 100px;
+    }
+    .home-body-book-text p{
+        font-size: 25px;
+    }
     .hex-box{
      display: none;
     }
@@ -575,7 +633,7 @@ transform: translateX(-52px);
     .home-body-frist{
     
     width: 100%;
-    height: 100vh;
+    height: 100%;
      background-image: url('../../assets/coast.png');
     background-repeat: no-repeat;
     background-size: 100%;
