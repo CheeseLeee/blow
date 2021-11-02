@@ -10,4 +10,4 @@ export const eleComponents: any[] = [
   ElButton,
 
 ]
-export const plugins: any[] = [ElMessageBox,ElNotification]
+export const eleplugins: any[] = [ElMessageBox,ElNotification]

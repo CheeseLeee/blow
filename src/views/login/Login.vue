@@ -51,11 +51,11 @@ import { ref,reactive ,nextTick,onMounted} from 'vue'
 import {getEquipment} from '../../utils/utils_fns'
 import { useRouter } from 'vue-router'
 import { ElNotification } from 'element-plus'
-interface iControllerValue {
-  value:string,
-  children:string[]
-}
-
+  interface iControllerValue {
+    value:string,
+    children:string[]
+  }
+    
     const Router = useRouter()
     let isSclaeController = ref(false)
     let userOrderDom_ref = ref() 
