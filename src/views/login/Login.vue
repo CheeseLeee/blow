@@ -1,6 +1,6 @@
 <template>
   <div class="home" @keydown="handleKeyDown" v-bgi="'homedeepimg'">
-    <div class="home-controller" v-if="isControllerShow">
+    <div class="home-controller" v-if="isControllerShow && !dialogVisible">
       <div class="home-controller-head">
         <div class="home-controller-btns">
           <div class="circle-red" @click="handleClose"><span></span></div>
@@ -39,10 +39,31 @@
       </div>
        </div>
     </div>
-    <!--登录表单-->
-    <div  v-if="!isControllerShow" class="login-form">
-      <div>hahha</div>
-    </div>
+    <!--the author tip-->
+    <el-dialog
+        v-model="dialogVisible"
+        title="Tips"
+        width="60%"
+      >
+        <div>
+          <span :class="[index === 1 ? 'class-color' : '']" v-for="(item,index) in divOpeingInnerHTML" :key="index">{{item}}</span><span>_</span>
+        </div> 
+         <span :class="[index === 1 ? 'class-color' : '']" v-for="(item,index) in spansMapInnerHTML"  :key="index">
+          {{item}}
+        </span> 
+        <!--<span style="color:red;font-size:21px">{{wordInnherHTML[1]}}</span>-->
+       <!--  <span>{{spanWord_3_innerHtml}}</span> -->
+       <!--  <span> But the author is still happy and hope you have a great experience . if you have some ideas then you can call me at frist , Then are you readly?</span> -->
+        
+        <template #footer>
+          <span class="dialog-footer">
+
+            <el-button type="primary" @click="() => dialogVisible = false"
+              >let is go</el-button
+            >
+          </span>
+        </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -55,19 +76,62 @@ import { ElNotification } from 'element-plus'
     value:string,
     children:string[]
   }
+  const divOpeningMap = [
+    `< div id= ` ,` 'app' `,`>`
+  ]
+  const divOpeingInnerHTML:any = reactive([
+
+  ])
+  const divCloseingMap = [
+    '< /div >'
+  ]
+  const divClosinegnnerHTML = reactive([
     
-    const Router = useRouter()
-    let isSclaeController = ref(false)
-    let userOrderDom_ref = ref() 
-    let homebodyScorllDom_ref = ref()
-    let isControllerShow = ref(true)
-    function handleClose(){
-      ElNotification({
-        title: 'Error',
-        message: 'The author has not figured out what to do',
-        type: 'error',
-      })
-      //isControllerShow.value = false
+  ])
+  const spansMap = [
+    " Hi , Am i , The writre of page , because the author is very pround and impatient , So , it's just a ",
+    " development version ",
+    " which now you can see the view , even only 10% complete .  But the author is still happy and hope you have a great experience . if you have some ideas then you can call me at frist , Then are you readly?   ",
+    
+  ]
+  let spansMapInnerHTML:any = reactive([])  
+
+  function createTypeStark(typeMap?:any,contextInnerHTML?:any,index = 0,goonMap?:any,goonHTML?:any){
+    let context = ''
+    let arrIndex = 0
+    const spanWord_timer = setInterval(() => {      
+      context += typeMap[index][arrIndex]
+      arrIndex++      
+      contextInnerHTML[index] = context
+      if(contextInnerHTML[index].length ===  typeMap[index].length){
+        clearInterval(spanWord_timer)
+        index++
+        if(index !== typeMap.length){
+          createTypeStark(typeMap,contextInnerHTML,index)
+        }else{
+          // over then to do
+        }
+      }
+    },100)
+  }
+  createTypeStark(divOpeningMap,divOpeingInnerHTML)
+/*   typeAnimate(spansMap,spansMapInnerHTML) */
+     // typeAnimate(divOpeningMap,divOpeingInnerHTML)
+
+
+  let dialogVisible = ref(true)
+  const Router = useRouter()
+  let isSclaeController = ref(false)
+  let userOrderDom_ref = ref() 
+  let homebodyScorllDom_ref = ref()
+  let isControllerShow = ref(true)
+  function handleClose(){
+    ElNotification({
+      title: 'Error',
+      message: 'The author has not figured out what to do',
+      type: 'error',
+    })
+    //isControllerShow.value = false
     }
     function handleScale(){
       isSclaeController.value = !isSclaeController.value
@@ -152,6 +216,14 @@ import { ElNotification } from 'element-plus'
       }
 </script>
 <style scoped>
+.class-color{
+  display: inline-block;
+  color:red;
+  font-size: 21px;
+}
+.el-dialog__body span{
+  font-size: 19px;
+}
 .not-active-controller{
   height: 300px;
   opacity: 1;
