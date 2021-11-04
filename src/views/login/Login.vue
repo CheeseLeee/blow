@@ -45,12 +45,14 @@
         title="Tips"
         width="60%"
       >
-        <div>
-          <span :class="[index === 1 ? 'class-color' : '']" v-for="(item,index) in divOpeingInnerHTML" :key="index">{{item}}</span><span>_</span>
-        </div> 
-         <span :class="[index === 1 ? 'class-color' : '']" v-for="(item,index) in spansMapInnerHTML"  :key="index">
-          {{item}}
-        </span> 
+        <span>
+         <template  v-for="(item,index) in spansMapInnerHTML"  :key="index">
+            <span :class="[index === 3 ? 'text-ident-4' : index === 4 || index === 1 ? 'class-color' : '']">{{item}}</span>
+            <br v-if="index === 2"  />
+            <br v-if="index === 5 && !textOver" />           
+        </template> 
+       </span> 
+        <span v-if="textOver">_</span>
         <!--<span style="color:red;font-size:21px">{{wordInnherHTML[1]}}</span>-->
        <!--  <span>{{spanWord_3_innerHtml}}</span> -->
        <!--  <span> But the author is still happy and hope you have a great experience . if you have some ideas then you can call me at frist , Then are you readly?</span> -->
@@ -76,32 +78,23 @@ import { ElNotification } from 'element-plus'
     value:string,
     children:string[]
   }
-  const divOpeningMap = [
-    `< div id= ` ,` 'app' `,`>`
-  ]
-  const divOpeingInnerHTML:any = reactive([
-
-  ])
-  const divCloseingMap = [
-    '< /div >'
-  ]
-  const divClosinegnnerHTML = reactive([
-    
-  ])
+  let textOver = ref(true)
   const spansMap = [
+    '<div id='," 'app' ",'>',
     " Hi , Am i , The writre of page , because the author is very pround and impatient , So , it's just a ",
     " development version ",
     " which now you can see the view , even only 10% complete .  But the author is still happy and hope you have a great experience . if you have some ideas then you can call me at frist , Then are you readly?   ",
-    
+    '</div>'
   ]
   let spansMapInnerHTML:any = reactive([])  
 
-  function createTypeStark(typeMap?:any,contextInnerHTML?:any,index = 0,goonMap?:any,goonHTML?:any){
+  function createTypeStark(typeMap?:any,contextInnerHTML?:any,index = 0){
     let context = ''
     let arrIndex = 0
     const spanWord_timer = setInterval(() => {      
-      context += typeMap[index][arrIndex]
+      context += typeMap[index][arrIndex] 
       arrIndex++      
+      
       contextInnerHTML[index] = context
       if(contextInnerHTML[index].length ===  typeMap[index].length){
         clearInterval(spanWord_timer)
@@ -110,11 +103,13 @@ import { ElNotification } from 'element-plus'
           createTypeStark(typeMap,contextInnerHTML,index)
         }else{
           // over then to do
+          textOver.value = false
+          console.log(spansMap)
         }
       }
-    },100)
+    }, 80)
   }
-  createTypeStark(divOpeningMap,divOpeingInnerHTML)
+  createTypeStark(spansMap,spansMapInnerHTML)
 /*   typeAnimate(spansMap,spansMapInnerHTML) */
      // typeAnimate(divOpeningMap,divOpeingInnerHTML)
 
@@ -216,8 +211,10 @@ import { ElNotification } from 'element-plus'
       }
 </script>
 <style scoped>
+.text-ident-4{
+padding-left:25px;
+}
 .class-color{
-  display: inline-block;
   color:red;
   font-size: 21px;
 }
