@@ -4,7 +4,8 @@ interface iBindParams {
 interface globalDirective {
     name:string,
     cycle:{
-        mounted:(el:HTMLElement,...params:any[]) => void,
+        beforeMount?:(el:HTMLElement,...params:any[]) => void
+        mounted?:(el:HTMLElement,...params:any[]) => void,
         beforeUnmount?:() => void
     }
 }
@@ -31,5 +32,21 @@ export const globalDirectives:globalDirective[] = [
                 }
             }
         }
+    },
+    {
+        name:'mobileView',
+        cycle:{
+            beforeMount(el:HTMLElement){
+                const winWidth = window.innerWidth;
+                if(winWidth > 415){
+                    el.style.display = 'none'
+                    return true
+                }else{
+                    el.style.display = 'block'
+                    return false
+                }
+            }
+        }
     }
 ]
+

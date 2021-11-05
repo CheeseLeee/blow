@@ -1,5 +1,5 @@
 <template>
-  <div class="home" @keydown="handleKeyDown" v-bgi="'homedeepimg'">
+  <div class="home" @keydown="handleSendOrder" v-bgi="'homedeepimg'">
     <div class="home-controller" v-if="isControllerShow && !dialogVisible">
       <div class="home-controller-head">
         <div class="home-controller-btns">
@@ -35,7 +35,8 @@
      
       <div class="controller-input">
         <div>C:local\\:</div>
-        <input type="text" v-model="controllerValue.value" v-focus :disabled="!isControllerShow"/>
+        <input type="text" v-model="controllerValue.value" placeholder="press enter code to sure" v-focus :disabled="!isControllerShow"/>
+        <el-button type="info" v-mobileView @click="handleSendOrder($event,'mobileClick')">发送</el-button>
       </div>
        </div>
     </div>
@@ -47,7 +48,7 @@
       >
         <span>
          <template  v-for="(item,index) in spansMapInnerHTML"  :key="index">
-            <span :class="[index === 3 ? 'text-ident-4' : index === 4 || index === 1 ? 'class-color' : '']">{{item}}</span>
+            <span :class="[index === 3 ? 'text-ident-4' : index === 1 ? 'class-color' : '' , index === 4 ? 'class-yellow' : '']">{{item}}</span>
             <br v-if="index === 2"  />
             <br v-if="index === 5 && !textOver" />           
         </template> 
@@ -60,7 +61,7 @@
         <template #footer>
           <span class="dialog-footer">
 
-            <el-button type="primary" @click="() => dialogVisible = false"
+            <el-button type="primary" @click="handleDialogVisible"
               >let is go</el-button
             >
           </span>
@@ -110,11 +111,14 @@ import { ElNotification } from 'element-plus'
     }, 80)
   }
   createTypeStark(spansMap,spansMapInnerHTML)
-/*   typeAnimate(spansMap,spansMapInnerHTML) */
-     // typeAnimate(divOpeningMap,divOpeingInnerHTML)
 
-
-  let dialogVisible = ref(true)
+  let dialogVisibleSession = sessionStorage.getItem('dialogVisible') ? ref(false) : ref(true)
+  let dialogVisible:any = dialogVisibleSession 
+  console.log(dialogVisible)
+    function handleDialogVisible(){
+    dialogVisible.value = false
+    sessionStorage.setItem('dialogVisible','true')
+  }
   const Router = useRouter()
   let isSclaeController = ref(false)
   let userOrderDom_ref = ref() 
@@ -148,8 +152,10 @@ import { ElNotification } from 'element-plus'
       const userOrders:iControllerValue[] = reactive([])
       let hisControllerValue:string[] = reactive([])
       let hisIndex = ref(0)
-      function handleKeyDown(e:KeyboardEvent):void{
-        if(e.keyCode === 13){
+      function handleSendOrder(e:KeyboardEvent,type = ''):void{
+        console.log(type)
+
+        if(e.keyCode === 13 || type === 'mobileClick'){
           if(controllerValue.value === ''){
             return  
           }
@@ -213,11 +219,44 @@ import { ElNotification } from 'element-plus'
 <style scoped>
 .text-ident-4{
 padding-left:25px;
+/*  */
+} 
+
+.class-yellow{
+  background:#871317 -webkit-linear-gradient(left,#561214,#2b202a 50%,#ff0 90%,#561214) no-repeat 0 0;
+     background-size:20% 100%; 
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+     font-size: 36px;
+     text-align: center;
+     font-weight: bold;
+     text-decoration: underline; 
+     -webkit-animation: slideShine 4s linear infinite;animation: slideShine 2s linear infinite;
 }
+
 .class-color{
-  color:red;
-  font-size: 21px;
+background:#eb6fd0 -webkit-linear-gradient(left,#e65478,#cbe492 50%,#ff0 90%,#ddbb24) no-repeat 0 0;
+     background-size:20% 100%; 
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+     font-size: 36px;
+     text-align: center;
+     font-weight: bold;
+     text-decoration: underline;
 }
+.class-color {-webkit-animation: slideShine 4s linear infinite;animation: slideShine 4s linear infinite;}
+@-webkit-keyframes slideShine {
+     0% {
+          background-position: 0 0;
+        }
+     100% {
+          background-position: 100% 100%;
+      }
+ }
+ @keyframes slideShine {
+      0% {background-position: 0 0; }
+     100% {background-position: 100% 100%; }
+ }
 .el-dialog__body span{
   font-size: 19px;
 }
@@ -300,13 +339,14 @@ wrap:break-word ;
   background-color: black;
    font-family: "Microsoft soft";
   color:white;
-
+ align-items: center;
     
 }
 .controller-input input{
  outline-style: none ;
  border: 0px;
  flex-direction: column;
+
 color:white;
   padding: 3px;
   background-color: black;
@@ -385,7 +425,7 @@ margin-bottom: 20px;
   width: 100%;
   position: relative;
 }
-@media all and (max-width: 376px) {
+@media all and (max-width: 400px) {
   .home-controller{
      width: 100%;  
     position: relative;
@@ -397,7 +437,7 @@ margin-bottom: 20px;
   }
 }
 
-@media all and (max-width: 376px) {
+@media all and (max-width: 400px) {
   .home-controller-body{
   background-color: black;
   height:600px;
@@ -405,11 +445,14 @@ margin-bottom: 20px;
   overflow-x: hidden;
   }
 }
-@media all and (max-width: 376px) {
+@media all and (max-width: 400px) {
   .home{
       background-image:none;
   background-size: 100%;
   top:0;
+  }
+  .el-overlay{
+    display: none;
   }
   .home-controller{
     top:0;

@@ -34,28 +34,19 @@
                 </div>
             </div>
             <div class="home-body-second">
-                <img src="../../assets/T11.png" />
+                <img class="T1" src="../../assets/T11.png" />
                 <!--<div class="swiper-left-text">it's swiper</div>-->
-                <div class="swiper-container swiper1">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <img src="../../assets/2013skt.jpeg" />
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="../../assets/2015skt.jpeg" />
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="../../assets/2016skt.jpeg" />
-                        </div>
-                    </div>
-                    <!-- 如果需要分页器 -->
-                    <div class="swiper-pagination"></div>
-
-                    <div class="swiper-button-prev"></div>
-                    <!--左箭头。如果放置在swiper-container外面，需要自定义样式。-->
-                    <div class="swiper-button-next"></div>
-                    <!--右箭头。如果放置在swiper-container外面，需要自定义样式。-->
-                </div>
+                  <el-carousel indicator-position="none">
+                    <el-carousel-item>
+                        <img src="../../assets/2013skt.jpeg" />
+                    </el-carousel-item>
+                    <el-carousel-item>
+                        <img src="../../assets/2015skt.jpeg" />
+                    </el-carousel-item>
+                     <el-carousel-item>
+                        <img src="../../assets/2016skt.jpeg" />
+                    </el-carousel-item>
+                </el-carousel>
             </div>
             <div class="home-body-book">
                 <div class="home-body-book-text">
@@ -135,12 +126,7 @@ const changeOpacity = (el?:HTMLElement) => {
 }
 
 
-// swiper-bundle.min.css 决定了小圆点和左右翻页标签，如果不需要可以不引用
-import "swiper/swiper-bundle.min.css";
-import 'swiper/swiper-bundle.css'
 import HeadCom from '../../components/public/headCom/HeadCom.vue'
-import {useSwiper} from './homeFns'
-
 export default {
     components:{
         HeadCom,
@@ -227,7 +213,7 @@ export default {
             name:'白夜行',
             url:require('../../assets/byx.jpeg')
         }]
-        useSwiper()
+   
       return {
           books,learnEn,
   
@@ -241,8 +227,14 @@ export default {
 </script>
 
 <style scope>
+
 .home-body-second img{
-    width:50%;
+    width: 100%;
+    height: 100%;
+}
+.home-body-second .T1{
+    flex:1;
+    width: 50%;;
 }
 .bottom-box-btn{
     width: 160px;
@@ -417,8 +409,11 @@ margin-top:15px;
 .home-body-second .swiper-container{
     width: 600px
 }
+.el-carousel--horizontal{
+    flex:1;
+}
 .home-body-second{
-
+ flex-direction: row;
     display: flex;
     justify-content:center;
     margin-top:15px;
@@ -588,7 +583,7 @@ transform: translateX(-52px);
     background-color: gray;
     margin: 0 auto;
 }
-@media all and (max-width: 376px) {
+@media all and (max-width: 400px) {
     .home-body-book-img .item{
         width: 60px;
         height: 60px;
