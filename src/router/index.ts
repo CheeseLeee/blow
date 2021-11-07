@@ -39,6 +39,14 @@ const routes: Array<RouteRecordRaw> = [
       title:'main'
     }
   },
+  {
+    path:'/Main/life',
+    name: 'Life',
+    component: () => import('../views/life/Life.vue'),
+    meta:{
+      title:'life'
+    }
+  }
 ]
 
 const router = createRouter({

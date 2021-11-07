@@ -24,7 +24,7 @@
                     There is my life now , if you hava some interesting , i'll introduce some about info of me now ,
                     such as 'aboout life ' or ‘work' , maybe more than and more than
                 </p>
-                <div class="btn">
+                <div class="btn" @click="handleGoLife">
                     into this
                 </div>
             </div>
@@ -53,6 +53,7 @@
 </template>
 
 <script setup lang='ts'>
+import { useRouter } from 'vue-router'
     const mainHeadImgs = [
         {src:require('../../assets/main/qq.png'),
         content:'QQ:958986887'},
@@ -63,6 +64,12 @@
         {src:require('../../assets/main/email.png'),    
         content:'em:958986887@qq.com'}
     ]
+    let Router = useRouter()
+    function handleGoLife(){
+        Router.push({
+            name:'Life'
+        })
+    }
 </script>
 
 <style scoped >
