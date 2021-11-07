@@ -47,6 +47,21 @@ export const globalDirectives:globalDirective[] = [
                 }
             }
         }
+    },
+    {
+        name:'pcView',
+        cycle:{
+            beforeMount(el:HTMLElement){
+                const winWidth = window.innerWidth;
+                if(winWidth > 415){
+                    el.style.display = 'block'
+                    return true
+                }else{
+                    el.style.display = 'none'
+                    return false
+                }
+            }
+        }
     }
 ]
 

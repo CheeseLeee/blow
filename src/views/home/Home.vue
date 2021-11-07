@@ -33,9 +33,9 @@
                     <p style="margin-left:8px">do nothing</p>                   
                 </div>
             </div>
-            <div class="home-body-second">
+            <!--<div class="home-body-second">
                 <img class="T1" src="../../assets/T11.png" />
-                <!--<div class="swiper-left-text">it's swiper</div>-->
+                <div class="swiper-left-text">it's swiper</div>-
                   <el-carousel indicator-position="none">
                     <el-carousel-item>
                         <img src="../../assets/2013skt.jpeg" />
@@ -47,7 +47,7 @@
                         <img src="../../assets/2016skt.jpeg" />
                     </el-carousel-item>
                 </el-carousel>
-            </div>
+            </div>-->
             <div class="home-body-book">
                 <div class="home-body-book-text">
                     <p>i would try to introduce scheming book</p>

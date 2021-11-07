@@ -15,7 +15,7 @@
           <div style="padding:3px">
             <span >there is some help for you , you can input </span> 
             <span style="color:red;font-size:19px">'-- help '</span> 
-            <span>for get these</span>
+            <span>for get some commands</span>
           </div>
           <div class="user-inputValue" ref="userOrderDom_ref">
             <div  v-for="(item,index) in userOrders" :key="index">
@@ -35,8 +35,8 @@
      
       <div class="controller-input">
         <div>C:local\\:</div>
-        <input type="text" v-model="controllerValue.value" placeholder="press enter code to sure" v-focus :disabled="!isControllerShow"/>
-        <el-button type="info" v-mobileView @click="handleSendOrder($event,'mobileClick')">发送</el-button>
+        <input type="text" v-model="controllerValue.value" placeholder="press enter to confirm" v-focus :disabled="!isControllerShow"/>
+        <el-button type="info" v-mobileView @click="handleSendOrder($event,'mobileClick')">send</el-button>
       </div>
        </div>
     </div>
@@ -45,6 +45,7 @@
         v-model="dialogVisible"
         title="Tips"
         width="60%"
+        v-pcView
       >
         <span>
          <template  v-for="(item,index) in spansMapInnerHTML"  :key="index">
@@ -67,7 +68,12 @@
           </span>
         </template>
     </el-dialog>
+    <div v-pcView class="thanks-info">
+      <p>author:lzx</p>
+      <p>thanks:</p>
+    </div>
   </div>
+
 </template>
 
 <script setup lang="ts">
@@ -87,9 +93,9 @@ import { ElNotification } from 'element-plus'
     " which now you can see the view , even only 10% complete .  But the author is still happy and hope you have a great experience . if you have some ideas then you can call me at frist , Then are you readly?   ",
     '</div>'
   ]
-  let spansMapInnerHTML:any = reactive([])  
+  let spansMapInnerHTML:string[] = reactive([])  
 
-  function createTypeStark(typeMap?:any,contextInnerHTML?:any,index = 0){
+  function createTypeStark(typeMap:string[],contextInnerHTML:string[],index = 0){
     let context = ''
     let arrIndex = 0
     const spanWord_timer = setInterval(() => {      
@@ -111,9 +117,12 @@ import { ElNotification } from 'element-plus'
     }, 80)
   }
   createTypeStark(spansMap,spansMapInnerHTML)
+  const winWidth = window.innerWidth;
+  let pc_view = winWidth >=414 ? true : false
+  console.log(pc_view)
+  let dialogVisibleSession = sessionStorage.getItem('dialogVisible') || !pc_view ? ref(false) : ref(true)
 
-  let dialogVisibleSession = sessionStorage.getItem('dialogVisible') ? ref(false) : ref(true)
-  let dialogVisible:any = dialogVisibleSession 
+  let dialogVisible = dialogVisibleSession 
   console.log(dialogVisible)
     function handleDialogVisible(){
     dialogVisible.value = false
@@ -138,7 +147,7 @@ import { ElNotification } from 'element-plus'
     }
     function handleStart(){
       Router.push({
-        name:'Home'
+        name:'Main'
       })
     }
     onMounted(() => {
@@ -223,7 +232,7 @@ padding-left:25px;
 } 
 
 .class-yellow{
-  background:#871317 -webkit-linear-gradient(left,#561214,#2b202a 50%,#ff0 90%,#561214) no-repeat 0 0;
+  background:#871317 -webkit-linear-gradient(left,#561214,#2b202a 50%,rgb(231, 139, 52) 90%,#c2080e) no-repeat 0 0;
      background-size:20% 100%; 
      -webkit-background-clip: text;
      -webkit-text-fill-color: transparent;
@@ -417,6 +426,13 @@ margin-bottom: 20px;
   top:100px;
   /* margin-top:50px; */
   color:white
+}
+.thanks-info{
+    position: fixed;
+    color:white;
+    opacity: 0.6;
+    bottom: 10px;
+    right:50px;
 }
 .home-controller-head{
   z-index: 200;

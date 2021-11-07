@@ -31,7 +31,14 @@ const routes: Array<RouteRecordRaw> = [
       title:'五子棋'
     }
   },
-
+  {
+    path: '/main',
+    name: 'Main',
+    component: () => import('../views/main/Main.vue'),
+    meta:{
+      title:'main'
+    }
+  },
 ]
 
 const router = createRouter({
