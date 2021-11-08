@@ -44,7 +44,7 @@
                 <p class="contxt-p2">
                     It's respect that someone with their dream and pay their all attentions , even almost people is common , except...
                 </p>
-                <div class="btn">
+                <div class="btn" @click="handleGoDream">
                     go on 
                 </div>
             </div>
@@ -65,9 +65,9 @@ import { useRouter } from 'vue-router'
         content:'em:958986887@qq.com'}
     ]
     let Router = useRouter()
-    function handleGoLife(){
+    function handleGoDream(){
         Router.push({
-            name:'Life'
+            name:'dream'
         })
     }
 </script>

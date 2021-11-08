@@ -6,6 +6,16 @@
                 <div class="c2">2222</div>
                 <div class="c2">2222</div>
                 <div class="c2">2222</div>
+                <div class="trees">
+                    <tree-item type="d" positionLeft="120"></tree-item>
+                    <tree-item type="b" positionLeft="40"></tree-item>
+                </div>
+                <div class="cloud">
+                    <cloud-item></cloud-item>
+                </div>
+                <div class="mountains">
+                    <mountain-item positionLeft="200"></mountain-item>
+                </div>
                 <div class="ground"></div>
                 <div class="grass"></div>
             </div>
@@ -14,12 +24,17 @@
 </template>
 
 <script lang='ts'>
-import {onMounted,ref,nextTick} from 'vue'
+import {onMounted,ref} from 'vue'
+import TreeItem from '@/components/dream/TreeItem.vue'
+import CloudItem from '@/components/dream/CloudItem.vue'
+import MountainItem from '@/components/dream/MountainItem.vue'
 export default {
   components: {
-
+    TreeItem,
+    CloudItem,
+    MountainItem
   },
-  setup() {
+  setup(){
     let childWidtgref = ref()
     let childsWidth = ref()
 
@@ -48,6 +63,7 @@ export default {
         scrollViweTranslateX,childWidtgref,childsWidth
     }
   }
+
 }
 </script>
 
@@ -81,6 +97,7 @@ export default {
     width: 400%;
     display: flex;
     background-color: rgb(34, 177, 210);
+    position: relative;
 }
 #life{
     position:fixed;

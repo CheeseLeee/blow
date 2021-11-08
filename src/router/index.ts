@@ -40,9 +40,9 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path:'/Main/life',
-    name: 'Life',
-    component: () => import('../views/life/Life.vue'),
+    path:'/Main/dream',
+    name: 'dream',
+    component: () => import('../views/dream/Dream.vue'),
     meta:{
       title:'life'
     }
