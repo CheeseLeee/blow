@@ -1,26 +1,33 @@
 <template>
-    <div class="scroll-body" :style="{height:childsWidth + 'px'}">
+    <div  class="scroll-body" :style="{height:childsWidth + 'px'}">
         <div id="life">
             <div class="life-scroll-view" ref="childWidtgref" :style="{transform:`translateX(${scrollViweTranslateX}px)`}">
                 <div class="c2">2222</div>
                 <div class="c2">2222</div>
                 <div class="c2">2222</div>
                 <div class="c2">2222</div>
+                <img class="sun" src="../../assets/main/sun.png" />
                 <div class="trees">
                     <tree-item type="d" positionLeft="120"></tree-item>
                     <tree-item type="b" positionLeft="40"></tree-item>
+                    <tree-item type="c" positionLeft="750"></tree-item>
+                    <tree-item type="e" positionLeft="900"></tree-item>
                 </div>
                 <div class="cloud">
-                    <cloud-item></cloud-item>
+                    <cloud-item positionLeft="200" positionTop="40"></cloud-item>
+                    <cloud-item positionLeft="750" positionTop="100"> </cloud-item>
                 </div>
                 <div class="mountains">
-                    <mountain-item positionLeft="200"></mountain-item>
+                    <mountain-item positionLeft="900"></mountain-item>
                 </div>
                 <div class="ground"></div>
                 <div class="grass"></div>
             </div>
         </div>
     </div>
+    <div id="animate" ></div>
+    <div v-if="!startScroll" class="welcome">welcome to here</div>
+
 </template>
 
 <script lang='ts'>
@@ -28,6 +35,7 @@ import {onMounted,ref} from 'vue'
 import TreeItem from '@/components/dream/TreeItem.vue'
 import CloudItem from '@/components/dream/CloudItem.vue'
 import MountainItem from '@/components/dream/MountainItem.vue'
+import {animate} from '../../utils/utils_fns/index'
 export default {
   components: {
     TreeItem,
@@ -37,37 +45,68 @@ export default {
   setup(){
     let childWidtgref = ref()
     let childsWidth = ref()
-
-    onMounted(() => {        
+    let startScroll = ref(false)
+    onMounted(() => { 
+        var animateEl:any = document.getElementById('animate')        
+        animate(animateEl)
+        /*-------*/
         let w = childWidtgref.value.clientWidth
-        let winHeight = window.innerHeight
-        console.log('wh',winHeight)
-
         childsWidth.value = w 
-        console.log(childsWidth.value)
         window.addEventListener('scroll', handleScroll)
     })
     let scrollViweTranslateX = ref(0)
     
     function handleScroll(){
+        startScroll.value = true
         let scrollHeight = document.documentElement.scrollTop || document.body.scrollTop
         console.log(scrollHeight)
-        var h = window.innerWidth*4-window.innerHeight;
-        var w = window.innerWidth*3;
-        console.log(w/h)
+        var h = window.innerWidth * 4 - window.innerHeight
+        var w = window.innerWidth * 3
         scrollViweTranslateX.value =  -scrollHeight * ( w / h )
-        console.log()
     }
 
     return {
-        scrollViweTranslateX,childWidtgref,childsWidth
+        scrollViweTranslateX,childWidtgref,childsWidth,startScroll
     }
   }
 
 }
-</script>
+</script>   
 
 <style scoped >
+#animate{
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: red;
+    background:url('../../assets/main/robby-slides.png') no-repeat
+}
+.sun{
+    position: absolute;
+    top:0;
+    left: 5px;
+}
+.welcome{
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: frankfurter-medium-plain;
+    font-size: 30px;
+    z-index: 99;
+    color:white;
+      animation-name: opacity;
+  animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction:alternate;
+}
+@keyframes opacity {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
 .grass{
     width: 100%;
     height: 30px;
