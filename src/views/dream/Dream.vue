@@ -65,12 +65,6 @@ export default {
         let {t} = scorllToward(afterScrollTop)
         //case:scroll down
         if(t){     
-            console.log('timer',timer)      
-            if(!timer){
-                return
-            }
-            timer = false  
-  
             animate(animateEl)
         //case:scroll up            
         }

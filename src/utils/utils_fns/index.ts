@@ -20,12 +20,11 @@ export function scorllToward(afterScrollTop:any){
     } //true === down ; false === up
 }
 //let scrollTimer:any = null
-let stepTimer:any = null
-let c = 0
+let stepTimer:any 
+let scrollTimer:any
 export function animate(animateEle:HTMLElement){ 
-    console.log('执行了',c++)
     if(!stepTimer){
-        stepTimer = null  
+
         let count = 1
         animateEle.style.backgroundPosition =   0 + "px " + 0 + 'px'                     
         stepTimer = setInterval(() => {
@@ -35,20 +34,22 @@ export function animate(animateEle:HTMLElement){
                 setTimeout(() => {
                     animateEle.style.backgroundPosition =  -200 * 0 + "px " + 0 + 'px'
                     clearInterval(stepTimer)
+                    stepTimer = null
+                    
                 },200)
             }
         },200)
     }
-    if(stepTimer){   
+    if(stepTimer && !scrollTimer){   
         let countX = 1
-        stepTimer = setInterval(() => {
+        scrollTimer = setInterval(() => {
             animateEle.style.backgroundPosition =  -200 * countX + "px " + 0 + 'px' // "px " 一定要空格是:200px 0px 中间有空格
             countX++
             if(countX === 3){
-                stepTimer = null
+                clearInterval(scrollTimer)
             }
         },200)
-    }
+    } 
 
 }
 
