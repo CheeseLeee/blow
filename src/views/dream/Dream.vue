@@ -25,7 +25,9 @@
             </div>
         </div>
     </div>
-    <div id="animate" ></div>
+    <div id="animate" >
+        <div class="animate-eyes" :style="{left:eyesLeft + 'px'}"></div>
+    </div>
     <div v-if="!startScroll" class="welcome">welcome to here</div>
 
 </template>
@@ -35,7 +37,7 @@ import {onMounted,ref} from 'vue'
 import TreeItem from '@/components/dream/TreeItem.vue'
 import CloudItem from '@/components/dream/CloudItem.vue'
 import MountainItem from '@/components/dream/MountainItem.vue'
-import {animate} from '../../utils/utils_fns/index'
+import {animate,scorllToward} from '../../utils/utils_fns/index'
 export default {
   components: {
     TreeItem,
@@ -46,9 +48,11 @@ export default {
     let childWidtgref = ref()
     let childsWidth = ref()
     let startScroll = ref(false)
+    let eyesLeft = ref(90)
+    var animateEl:any
+    var timer = true
     onMounted(() => { 
-        var animateEl:any = document.getElementById('animate')        
-        animate(animateEl)
+        animateEl= document.getElementById('animate')        
         /*-------*/
         let w = childWidtgref.value.clientWidth
         childsWidth.value = w 
@@ -56,17 +60,30 @@ export default {
     })
     let scrollViweTranslateX = ref(0)
     
-    function handleScroll(){
+    function handleScroll(e:any){
+        var afterScrollTop =  document.documentElement.scrollTop || document.body.scrollTop
+        let {t} = scorllToward(afterScrollTop)
+        //case:scroll down
+        if(t){     
+            console.log('timer',timer)      
+            if(!timer){
+                return
+            }
+            timer = false  
+  
+            animate(animateEl)
+        //case:scroll up            
+        }
+ 
         startScroll.value = true
         let scrollHeight = document.documentElement.scrollTop || document.body.scrollTop
-        console.log(scrollHeight)
         var h = window.innerWidth * 4 - window.innerHeight
         var w = window.innerWidth * 3
         scrollViweTranslateX.value =  -scrollHeight * ( w / h )
     }
 
     return {
-        scrollViweTranslateX,childWidtgref,childsWidth,startScroll
+        scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft
     }
   }
 
@@ -74,10 +91,24 @@ export default {
 </script>   
 
 <style scoped >
+.animate-eyes{
+    background: url('../../assets/main/robby-eyes-close.png') no-repeat;
+    position: absolute;
+    bottom: 140px;
+    left: 90px;
+    width: 55px;
+    height: 25px;
+        animation-name: opacity;
+  animation-duration: .5s;
+  animation-timing-function: ease-in;
+animation-delay: 5s /* Opera */;
+    animation-iteration-count: infinite;
+    animation-direction:alternate;
+}
 #animate{
     width: 200px;
     height: 200px;
-    position: absolute;
+    position: fixed;
     bottom: 90px;
     left: 50%;
     transform: translateX(-50%);
