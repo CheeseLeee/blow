@@ -22,8 +22,19 @@ export function scorllToward(afterScrollTop:any){
 //let scrollTimer:any = null
 let stepTimer:any 
 let scrollTimer:any
+let count = 1
 export function animate(animateEle:HTMLElement){ 
-    if(!stepTimer){
+    if(stepTimer) return
+    stepTimer = setInterval(() => {
+        animateEle.style.backgroundPosition =  -200 * count + "px " + 0 + 'px'
+        count++
+        if(count === 3){
+            count = 1
+            clearInterval(stepTimer)
+            stepTimer = null
+        }
+    },200)
+/*     if(!stepTimer){
 
         let count = 1
         animateEle.style.backgroundPosition =   0 + "px " + 0 + 'px'                     
@@ -40,16 +51,9 @@ export function animate(animateEle:HTMLElement){
             }
         },200)
     }
-    if(stepTimer && !scrollTimer){   
-        let countX = 1
-        scrollTimer = setInterval(() => {
-            animateEle.style.backgroundPosition =  -200 * countX + "px " + 0 + 'px' // "px " 一定要空格是:200px 0px 中间有空格
-            countX++
-            if(countX === 3){
-                clearInterval(scrollTimer)
-            }
-        },200)
-    } 
+    if(stepTimer){   
+        console.log('c')
+    }  */
 
 }
 
