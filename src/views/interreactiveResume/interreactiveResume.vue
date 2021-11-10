@@ -1,5 +1,5 @@
 <template>
-    <div  class="scroll-body" :style="{height:childsWidth + 'px'}">
+    <div  class="scroll-body" >
         <div id="life">
             <div class="life-scroll-view" ref="childWidtgref" :style="{transform:`translateX(${scrollViweTranslateX}px)`}">
                 <div class="c2">
@@ -167,7 +167,7 @@ animation-delay: 5s /* Opera */;
     background-image: url('../../assets/main/ground.png');
 }
 .scroll-body{
-    height: 2000px;
+    height: 4000px;
 }
 .c2{
     flex:25%;

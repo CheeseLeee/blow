@@ -22,6 +22,7 @@ export function scorllToward(afterScrollTop:any){
 //let stepTimerto_left:any = null
 let stepTimerto_right:any 
 let stepTimerto_left:any
+
 export function animate(animateEle:HTMLElement,towards:any = 'right',countX = 1){ 
     if(towards === 'left'){
         if(stepTimerto_left) return
@@ -57,23 +58,43 @@ export function animate(animateEle:HTMLElement,towards:any = 'right',countX = 1)
             }
         },200)
     }
+}
 
+/*
+export function animate(animateEle:HTMLElement,towards:any = 'right',countX = 1){ 
+    if(towards === 'left'){
+        if(stepTimerto_left) return
+        clearInterval(stepTimerto_right)
+        stepTimerto_right = null
+        animateEle.style.backgroundPosition =  0 + "px " + -200 + 'px'
+        stepTimerto_left = setInterval(() => {
+            animateEle.style.backgroundPosition =  -200 * countX + "px " + -200 + 'px'
+            countX++
+            if(countX === 3){           
+                clearInterval(stepTimerto_left)
+                stepTimerto_left = null
+                setTimeout(() => {
+                    animateEle.style.backgroundPosition =  -200 * 0 + "px " + -200 + 'px'
+                },200)
+            }
+        },200)
     }
+    if(towards === 'right'){
+        if(stepTimerto_right) return
+        clearInterval(stepTimerto_left)
+        stepTimerto_left = null
+        animateEle.style.backgroundPosition =  -200 * 0 + "px " + 0 + 'px'
+        stepTimerto_right = setInterval(() => {
+            animateEle.style.backgroundPosition =  -200 * countX + "px " + 0 + 'px'
+            countX++
+            if(countX === 3){           
+                clearInterval(stepTimerto_right)
+                stepTimerto_right = null
+                setTimeout(() => {
+                    animateEle.style.backgroundPosition =  -200 * 0 + "px " + 0 + 'px'
+                },200)
+            }
+        },200)
+    }
+}*/
 
-
-/* export function animate(animateEle:HTMLElement){ 
-    if(stepTimerto_right) return
-    stepTimerto_right = setInterval(() => {
-        animateEle.style.backgroundPosition =  -200 * count + "px " + 0 + 'px'
-        count++
-        if(count === 3){           
-            count = 1
-            clearInterval(stepTimerto_right)
-            stepTimerto_right = null
-            setTimeout(() => {
-
-                animateEle.style.backgroundPosition =  -200 * 0 + "px " + 0 + 'px'
-            },200)
-        }
-    },200)
-} */

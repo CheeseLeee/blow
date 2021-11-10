@@ -12,6 +12,10 @@
         <div class="imgs">          
           <img v-for="(item,index) in scores" :key="index" :src="item.src" :style="{transform:`translateY(${item.positionY}px)`}"/>
         </div>
+        <div class="imgs-stalk">
+          <div :style="{transform:`translateY(${-120}px)`}"></div><div :style="{transform:`translateY(${-15}px)`}"></div>
+          <div :style="{transform:`translateY(${-70}px)`}"></div><div :style="{transform:`translateY(${-70}px)`}"></div>
+        </div>
     </div>
 </template>
 
@@ -63,7 +67,12 @@ export default {
   border-bottom: solid 1px white;
   margin-bottom: 10px;
 }
-.title-line, .imgs{
+.imgs-stalk div{
+  width: 6px;
+  height: 400px;
+  background-color: #a67c52;
+}
+.title-line, .imgs ,.imgs-stalk{
   position: absolute;
 
   width: 100%;
