@@ -24,7 +24,7 @@
                     There is my life now , if you hava some interesting , i'll introduce some about info of me now ,
                     such as 'aboout life ' or ‘work' , maybe more than and more than
                 </p>
-                <div class="btn" @click="handleGoLife">
+                <div class="btn" @click="handleGoDream">
                     into this
                 </div>
             </div>
@@ -44,7 +44,7 @@
                 <p class="contxt-p2">
                     It's respect that someone with their dream and pay their all attentions , even almost people is common , except...
                 </p>
-                <div class="btn" @click="handleGoDream">
+                <div class="btn" >
                     go on 
                 </div>
             </div>
@@ -67,7 +67,7 @@ import { useRouter } from 'vue-router'
     let Router = useRouter()
     function handleGoDream(){
         Router.push({
-            name:'dream'
+            name:'interreactiveResume'
         })
     }
 </script>

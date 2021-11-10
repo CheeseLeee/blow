@@ -40,11 +40,11 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path:'/Main/dream',
-    name: 'dream',
-    component: () => import('../views/dream/Dream.vue'),
+    path:'/Main/interreactive-Resume',
+    name: 'interreactiveResume',
+    component: () => import('../views/interreactiveResume/interreactiveResume.vue'),
     meta:{
-      title:'life'
+      title:'interreactiveResume'
     }
   }
 ]

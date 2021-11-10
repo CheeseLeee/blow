@@ -2,7 +2,10 @@
     <div  class="scroll-body" :style="{height:childsWidth + 'px'}">
         <div id="life">
             <div class="life-scroll-view" ref="childWidtgref" :style="{transform:`translateX(${scrollViweTranslateX}px)`}">
-                <div class="c2">2222</div>
+                <div class="c2">
+                    <gate positionLeft="1800" title="LEVEL1"></gate>
+                    <my-table :ribbonInfo="ribbonInfo" :tittleRow="tittleRow" :scores="scores" redText="我的职业"></my-table>
+                </div>
                 <div class="c2">2222</div>
                 <div class="c2">2222</div>
                 <div class="c2">2222</div>
@@ -12,6 +15,9 @@
                     <tree-item type="b" positionLeft="40"></tree-item>
                     <tree-item type="c" positionLeft="750"></tree-item>
                     <tree-item type="e" positionLeft="900"></tree-item>
+                    <tree-item type="d" positionLeft="2350"></tree-item>
+                    <tree-item type="b" positionLeft="2200"></tree-item>
+                    <tree-item type="a" positionLeft="2300"></tree-item>
                 </div>
                 <div class="cloud">
                     <cloud-item positionLeft="200" positionTop="40"></cloud-item>
@@ -33,51 +39,63 @@
 </template>
 
 <script lang='ts'>
-import {onMounted,ref} from 'vue'
 import TreeItem from '@/components/dream/TreeItem.vue'
 import CloudItem from '@/components/dream/CloudItem.vue'
 import MountainItem from '@/components/dream/MountainItem.vue'
-import {animate,scorllToward} from '../../utils/utils_fns/index'
+import {useComDreamCycle,useAnimateAndScroll} from './interreactiveResume'
+import Gate from '@/components/dream/Gate.vue'
+import MyTable from '@/components/dream/MyTable.vue'
+
 export default {
   components: {
     TreeItem,
     CloudItem,
-    MountainItem
+    MountainItem,
+    Gate,
+    MyTable,
+
   },
   setup(){
-    let childWidtgref = ref()
-    let childsWidth = ref()
-    let startScroll = ref(false)
-    let eyesLeft = ref(90)
-    var animateEl:any
-    var timer = true
-    onMounted(() => { 
-        animateEl= document.getElementById('animate')        
-        /*-------*/
-        let w = childWidtgref.value.clientWidth
-        childsWidth.value = w 
-        window.addEventListener('scroll', handleScroll)
-    })
-    let scrollViweTranslateX = ref(0)
-    
-    function handleScroll(e:any){
-        var afterScrollTop =  document.documentElement.scrollTop || document.body.scrollTop
-        let {t} = scorllToward(afterScrollTop)
-        //case:scroll down
-        if(t){     
-            animate(animateEl)
-        //case:scroll up            
-        }
- 
-        startScroll.value = true
-        let scrollHeight = document.documentElement.scrollTop || document.body.scrollTop
-        var h = window.innerWidth * 4 - window.innerHeight
-        var w = window.innerWidth * 3
-        scrollViweTranslateX.value =  -scrollHeight * ( w / h )
-    }
+    const tittleRow = ['S','A','B','C','D']
 
+    const ribbonInfo = [{
+        type:'yellow',
+        yellowText:"Programer",
+    },
+    {
+        type:'yellow',
+        yellowText:"Math",
+    },
+    {
+        type:'yellow',
+        yellowText:"English",
+    },
+    {
+        type:'yellow',
+        yellowText:"Photoshop",
+    }]
+    const scores = [
+        {
+            src:require('../../assets/main/plant-head-leaves.png'),
+            positionY:-225
+        },
+         {
+            src:require('../../assets/main/plant-head-leaves.png'),
+            positionY:-118
+        },
+         {
+            src:require('../../assets/main/plant-head-leaves.png'),
+            positionY:-172
+        },
+         {
+            src:require('../../assets/main/plant-head-leaves.png'),
+            positionY:-172
+        },
+    ]
+    let {childWidtgref,childsWidth} = useComDreamCycle()
+    let {eyesLeft,startScroll,scrollViweTranslateX} = useAnimateAndScroll()
     return {
-        scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft
+        scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft,tittleRow,ribbonInfo,scores,
     }
   }
 
@@ -171,4 +189,5 @@ animation-delay: 5s /* Opera */;
     overflow: hidden;
 
 }
+
 </style>
