@@ -1,5 +1,5 @@
 import {onMounted,onBeforeUnmount,ref} from 'vue'
-import {animate,scorllToward} from '../../utils/utils_fns/index'
+import {animate,scorllToward,animateTowardUp,animateTowardDown} from '../../utils/utils_fns/index'
 export function useComDreamCycle(){
     const childWidtgref = ref()
     const childsWidth = ref()
@@ -36,11 +36,24 @@ export function useAnimateAndScroll(){
         scrollViweTranslateX.value =  -scrollHeight * ( w / h )
         const {t} = scorllToward(scrollHeight)
         //case:scroll down
+
         if(t){     
+            if(scrollHeight > 3450 && scrollHeight < 3800){
+                console.log('到达跳跃临界值了')
+                animateTowardUp(animateEl,'right')
+            }else if(scrollHeight > 3800 && scrollHeight < 4000){
+                animateTowardDown(animateEl,'right')
+            }
             animate(animateEl)
             eyesLeft.value = 90
         //case:scroll up            
         }else{
+            console.log(scrollHeight)
+            if(scrollHeight < 380 && scrollHeight> 3500){
+                animateTowardUp(animateEl,'left')
+            }else{
+                animateTowardDown(animateEl,'left')
+            }
             animate(animateEl,'left')
             eyesLeft.value = 55
         } 

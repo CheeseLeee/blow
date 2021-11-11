@@ -69,9 +69,10 @@ export default {
     align-items: center;
     margin-top: 10px;
     margin-bottom: 10px;
-/*     position: absolute;
-    left:50%;
-    transform: translateX(-50%); */
+     position: absolute;
+     z-index: 200;
+/*     left:50%;
+    transform: translateX(-50%); */ 
 }
 .ribbon-mian{
     height: 55px;

@@ -1,9 +1,9 @@
 <template>
     <div class="plants-container">
-        <ribbon :redText="redText"></ribbon>
+        <ribbon redText="我的职业" positionLeft="250" positionTop="-60"></ribbon>
         <div class="title-line">
           <div class="ribbonInfo-item" v-for="(item,index) in ribbonInfo" :key="index">
-            <ribbon  :type="item.type" :yellowText="item.yellowText"></ribbon>
+            <ribbon  :type="item.type" :yellowText="item.yellowText" ></ribbon>
           </div>            
         </div>
         <div class="title-row">
@@ -26,25 +26,47 @@ export default {
     Ribbon
   },
   props:{
-    redText:{
-      type:String
-    },
-    tittleRow:{
-      type:Array,
-    },
-    ribbonInfo:{
-      type:Array,
-    },
-    scores:{
-      type:Array
- /*        validator(value) {
-        // 这个值必须匹配下列字符串中的一个
-        return ['success', 'warning', 'danger'].includes(value) 
-      }*/
-    }
+
   },
   setup() {
-    return {}
+      const scores = [
+        {
+            src:require('../../assets/main/plant-head-leaves.png'),
+            positionY:-225
+        },
+         {
+            src:require('../../assets/main/plant-head-leaves.png'),
+            positionY:-118
+        },
+         {
+            src:require('../../assets/main/plant-head-leaves.png'),
+            positionY:-172
+        },
+         {
+            src:require('../../assets/main/plant-head-leaves.png'),
+            positionY:-172
+        },
+    ]
+    const tittleRow = ['S','A','B','C','D']
+    const ribbonInfo = [{
+        type:'yellow',
+        yellowText:"Programer",
+      },
+      {
+          type:'yellow',
+          yellowText:"Math",
+      },
+      {
+          type:'yellow',
+          yellowText:"English",
+      },
+      {
+          type:'yellow',
+          yellowText:"Photoshop",
+      }]
+    return {
+      ribbonInfo,tittleRow,scores
+    }
   }
 }
 </script>

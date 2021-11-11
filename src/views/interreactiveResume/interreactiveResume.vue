@@ -4,12 +4,13 @@
             <div class="life-scroll-view" ref="childWidtgref" :style="{transform:`translateX(${scrollViweTranslateX}px)`}">
                 <div class="c2">
                     <gate positionLeft="1800" title="LEVEL1"></gate>
-                    <my-table :ribbonInfo="ribbonInfo" :tittleRow="tittleRow" :scores="scores" redText="我的职业"></my-table>
+                    <my-table  ></my-table>
                 </div>
-                <div class="c2">2222</div>
-                <div class="c2">2222</div>
-                <div class="c2">2222</div>
+
                 <img class="sun" src="../../assets/main/sun.png" />
+                <div class="grounds">
+                    <ground positionLeft=3700></ground>
+                </div>
                 <div class="trees">
                     <tree-item type="d" positionLeft="120"></tree-item>
                     <tree-item type="b" positionLeft="40"></tree-item>
@@ -19,12 +20,24 @@
                     <tree-item type="b" positionLeft="2200"></tree-item>
                     <tree-item type="a" positionLeft="2300"></tree-item>
                 </div>
+                <div class="ribbon">
+                    <ribbon type="red" positionLeft="4050" positionTop="0" redText="sports fan"></ribbon>
+                    <ribbon type="red" positionLeft="2555" positionTop="0" redText="my dream of liveing in USA"></ribbon>
+                </div>
+                <div class="builds">                    
+                    <build positionLeft="4100" type="a"></build>
+                    <build positionLeft="4400"  type="b"></build>
+                    <build  positionLeft="4750"  type="c"></build>
+                </div>
                 <div class="cloud">
                     <cloud-item positionLeft="200" positionTop="40"></cloud-item>
                     <cloud-item positionLeft="750" positionTop="100"> </cloud-item>
                 </div>
                 <div class="mountains">
                     <mountain-item positionLeft="900"></mountain-item>
+                </div>
+                <div class="fan">
+                    <fan></fan>
                 </div>
                 <div class="ground"></div>
                 <div class="grass"></div>
@@ -39,13 +52,16 @@
 </template>
 
 <script lang='ts'>
-import TreeItem from '@/components/dream/TreeItem.vue'
-import CloudItem from '@/components/dream/CloudItem.vue'
-import MountainItem from '@/components/dream/MountainItem.vue'
+import TreeItem from '@/components/interreactive/TreeItem.vue'
+import CloudItem from '@/components/interreactive/CloudItem.vue'
+import MountainItem from '@/components/interreactive/MountainItem.vue'
 import {useComDreamCycle,useAnimateAndScroll} from './interreactiveResume'
-import Gate from '@/components/dream/Gate.vue'
-import MyTable from '@/components/dream/MyTable.vue'
-
+import Gate from '@/components/interreactive/Gate.vue'
+import MyTable from '@/components/interreactive/MyTable.vue'
+import Ground from '@/components/interreactive/Ground.vue'
+import Build from '@/components/interreactive/Build.vue'
+import Ribbon from '@/components/interreactive/Ribbon.vue'
+import Fan from '@/components/interreactive/Fan.vue'
 export default {
   components: {
     TreeItem,
@@ -53,49 +69,17 @@ export default {
     MountainItem,
     Gate,
     MyTable,
+    Ground,
+    Build,
+    Ribbon,
+    Fan,
 
   },
   setup(){
-    const tittleRow = ['S','A','B','C','D']
-
-    const ribbonInfo = [{
-        type:'yellow',
-        yellowText:"Programer",
-    },
-    {
-        type:'yellow',
-        yellowText:"Math",
-    },
-    {
-        type:'yellow',
-        yellowText:"English",
-    },
-    {
-        type:'yellow',
-        yellowText:"Photoshop",
-    }]
-    const scores = [
-        {
-            src:require('../../assets/main/plant-head-leaves.png'),
-            positionY:-225
-        },
-         {
-            src:require('../../assets/main/plant-head-leaves.png'),
-            positionY:-118
-        },
-         {
-            src:require('../../assets/main/plant-head-leaves.png'),
-            positionY:-172
-        },
-         {
-            src:require('../../assets/main/plant-head-leaves.png'),
-            positionY:-172
-        },
-    ]
     let {childWidtgref,childsWidth} = useComDreamCycle()
     let {eyesLeft,startScroll,scrollViweTranslateX} = useAnimateAndScroll()
     return {
-        scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft,tittleRow,ribbonInfo,scores,
+        scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft,
     }
   }
 
@@ -167,7 +151,7 @@ animation-delay: 5s /* Opera */;
     background-image: url('../../assets/main/ground.png');
 }
 .scroll-body{
-    height: 4000px;
+    height: 8000px;
 }
 .c2{
     flex:25%;
@@ -176,7 +160,7 @@ animation-delay: 5s /* Opera */;
 }
 .life-scroll-view{
     height: 100%;
-    width: 400%;
+    width: 8000px;
     display: flex;
     background-color: rgb(34, 177, 210);
     position: relative;
