@@ -106,10 +106,10 @@ animation-delay: 5s /* Opera */;
     height: 200px;
     position: fixed;
     bottom: 90px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0px;
     background-color: red;
-    background:url('../../assets/main/robby-slides.png') no-repeat
+    background:url('../../assets/main/robby-slides.png') no-repeat;
+    transition: transform .5s;
 }
 .sun{
     position: absolute;
@@ -151,7 +151,7 @@ animation-delay: 5s /* Opera */;
     background-image: url('../../assets/main/ground.png');
 }
 .scroll-body{
-    height: 8000px;
+    height: 16000px;
 }
 .c2{
     flex:25%;

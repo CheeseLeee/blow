@@ -1,5 +1,6 @@
 import {onMounted,onBeforeUnmount,ref} from 'vue'
 import {animate,scorllToward,animateTowardUp,animateTowardDown} from '../../utils/utils_fns/index'
+import {Animate} from '../../utils/utils_fns/animate'
 export function useComDreamCycle(){
     const childWidtgref = ref()
     const childsWidth = ref()
@@ -8,7 +9,7 @@ export function useComDreamCycle(){
         childsWidth.value = w 
         window.addEventListener('beforeunload',e => {
             window.scrollTo(0,0)
-            console.log('啥啊这啥')
+
         })
     })
     return {
@@ -21,9 +22,13 @@ export function useAnimateAndScroll(){
     const startScroll = ref(false)
     const scrollViweTranslateX = ref(0)
     let animateEl:any = null
+    let preScrollTop:any = 0
+    let animate:any 
+    //let jumpKey:any = false
     onMounted(() => {
         animateEl= document.getElementById('animate')
         window.addEventListener('scroll', handleScroll)
+        animate = new Animate(animateEl)
     })
     onBeforeUnmount(() => {
         window.removeEventListener('scroll', handleScroll)
@@ -31,30 +36,48 @@ export function useAnimateAndScroll(){
     function handleScroll(e:any){
         startScroll.value = true
         const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop
-        const h = window.innerWidth * 4 - window.innerHeight
-        const w = window.innerWidth * 3
-        scrollViweTranslateX.value =  -scrollHeight * ( w / h )
+        const gap = scrollHeight - preScrollTop
+        console.log('gap',gap)
+/*         const h = window.innerWidth * 4 - window.innerHeight
+        const w = window.innerWidth * 3 */
+        scrollViweTranslateX.value =  -scrollHeight / 2
         const {t} = scorllToward(scrollHeight)
         //case:scroll down
-
+  
+        preScrollTop = scrollHeight
         if(t){     
-            if(scrollHeight > 3450 && scrollHeight < 3800){
-                console.log('到达跳跃临界值了')
-                animateTowardUp(animateEl,'right')
-            }else if(scrollHeight > 3800 && scrollHeight < 4000){
-                animateTowardDown(animateEl,'right')
+            //console.log(jumpKey)
+            if(scrollHeight > 7100 &&  scrollHeight < 7290){
+                //jumpKey = true
+
+                    animateTowardUp(animateEl,'right',scrollHeight)
+         
+                //console.log(jumpKey)
+                return
             }
-            animate(animateEl)
-            eyesLeft.value = 90
+            if(scrollHeight > 7880 && scrollHeight < 7990){
+                animateTowardDown(animateEl,'right')
+                return
+            }
+            animate.step('right')
+                //animate(animateEl)
+                eyesLeft.value = 90
+            
+        
         //case:scroll up            
         }else{
-            console.log(scrollHeight)
-            if(scrollHeight < 380 && scrollHeight> 3500){
+/*             if(scrollHeight < 7800 && jumpKey === false){
                 animateTowardUp(animateEl,'left')
-            }else{
-                animateTowardDown(animateEl,'left')
+                jumpKey = true
+                return
             }
-            animate(animateEl,'left')
+            if(scrollHeight < 7100 && jumpKey === true){
+                console.log("jump")
+                animateTowardDown(animateEl,'left')
+                jumpKey = false
+                return                
+            } */
+            animate.step('left')
             eyesLeft.value = 55
         } 
     }

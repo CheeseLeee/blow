@@ -31,8 +31,10 @@ let stepTimerto_right:any
 let stepTimerto_left:any
 
 export function animate(animateEle:HTMLElement,towards:any = 'right',countX = 1){  //有待优化~
+    if(notMove) return
     if(towards === 'left'){
         if(stepTimerto_left) return
+        console.log('执行力吗?')
         clearInterval(stepTimerto_right)
         stepTimerto_right = null
         animateEle.style.backgroundPosition =  0 + "px " + -200 + 'px'
@@ -67,75 +69,61 @@ export function animate(animateEle:HTMLElement,towards:any = 'right',countX = 1)
     }
 }
 
-let upKey = true
-export function animateTowardUp(animateEle:HTMLElement,type:any){
-    if(!upKey) return
-    if(type === 'right'){
-        const count = 7
-
-        animateEle.style.backgroundPosition =  -200 * count + "px " + 0 + 'px'
-        animateEle.style.transform = `translateY(${-180}px)` 
-        setTimeout(() => {
-            //animateEle.style.backgroundPosition =  -200 * 0 + "px " + 0 + 'px'
-            animateEle.style.transform = `translateY(${-80}px)` 
-            upKey = false
-            downKey= true
-        },200)
-/*          let jump:any = setInterval(() => {
-            animateEle.style.backgroundPosition =  -200 * count + "px " + 0 + 'px'
-            animateEle.style.transform = `translateY(${-180}px)`        
-            if(count === 0){
-                clearInterval(jump)
-                jump = null
-            }
-            count = 0
-            upKey = false
-            downKey= true
-        },200) */ 
-    }
-    if(type === 'left'){
-        const count = 7
-        animateEle.style.backgroundPosition =  -200 * count + "px " + -200 + 'px'
-        animateEle.style.transform = `translateY(${-180}px)` 
-        setTimeout(() => {
-            animateEle.style.backgroundPosition =  -200 * 0 + "px " + -200 + 'px'
-            animateEle.style.transform = `translateY(${-80}px)` 
-            upKey = false
-            downKey= true
-        },200)       
-    }
-
-}
+let jumpKey = true
 let downKey = true
-export function animateTowardDown(animateEle:HTMLElement,type:any){
-    if(!downKey) return
+let jumpTimer:any = null
+let notMove = false
+const timers:any = []
+
+export function animateTowardUp(animateEle:HTMLElement,type:any,scrollTop?:any){
+    if(!jumpKey) return
+    clearInterval(stepTimerto_right)
+     notMove = true
+    jumpKey = false
+    stepTimerto_right = null
     if(type === 'right'){
-        let count = 6
-        let jump:any = setInterval(() => {
-            animateEle.style.backgroundPosition =  -200 * count + "px " + 0 + 'px'
-            animateEle.style.transform = `translateY(${0}px)`
-            if(count === 0){
-                clearInterval(jump)
-                jump = null
+        animateEle.style.transform = `translateY(-220px)`
+        animateEle.style.backgroundPosition =  -200 * 7 + "px " + 0 + 'px'
+        
+        timers.push('jumpTimer')
+        jumpTimer = setTimeout(() => {
+            console.log('定时器1')  
+              clearInterval(stepTimerto_left)
+            stepTimerto_left = null
+            animateEle.style.backgroundPosition =  -200 * 0 + "px " + 0 + 'px'
+            if(scrollTop > 7880){
+                animateTowardDown(animateEle,'right')
+                //animateEle.style.transform = `translateY(-0px)` 
+            }else{
+                animateEle.style.transform = `translateY(-80px)` 
             }
-            count = 0
-            downKey = false
-            upKey = true
-        },200)
+                
+            notMove = false
+            downKey = true
+        },500)
     }
-    if(type === 'left'){
-        let count = 6
-        let jump:any = setInterval(() => {
-            animateEle.style.backgroundPosition =  -200 * count + "px " + -200 + 'px'
-            animateEle.style.transform = `translateY(${0}px)`
-            if(count === 0){
-                clearInterval(jump)
-                jump = null
-            }
-            count = 0
-            downKey = false
-            upKey = true
-        },200)
+}
+export function animateTowardDown(animateEle:HTMLElement,type:any){
+
+    console.log('downkey',downKey)
+    if(!downKey) return
+    downKey = false
+    clearInterval(stepTimerto_right)
+    stepTimerto_right = null
+    clearInterval(stepTimerto_left)
+    stepTimerto_left = null
+
+    clearTimeout(jumpTimer)
+    jumpTimer = null
+    
+    if(type === 'right'){
+        animateEle.style.transform = `translateY(-0px)`
+        animateEle.style.backgroundPosition =  -200 * 7 + "px " + 0 + 'px'
+        setTimeout(() => {            
+            animateEle.style.backgroundPosition =  -200 * 0 + "px " + 0 + 'px'
+            downKey = true
+            jumpKey = true
+        },300)
     }
 }
 
