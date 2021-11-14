@@ -1,6 +1,6 @@
 <template>
     <div class="plants-container">
-        <ribbon redText="我的职业" positionLeft="250" positionTop="-60"></ribbon>
+        <ribbon redText="我的职业" positionLeft="250" positionTop="-25%"></ribbon>
         <div class="title-line">
           <div class="ribbonInfo-item" v-for="(item,index) in ribbonInfo" :key="index">
             <ribbon  :type="item.type" :yellowText="item.yellowText" ></ribbon>
@@ -95,17 +95,19 @@ export default {
   background-color: #a67c52;
 }
 .title-line, .imgs ,.imgs-stalk{
-  position: absolute;
 
   width: 100%;
   display: flex;
   justify-content: space-around;
   align-content: center;
 }
+.imgs {
+  position:absolute;
+}
 .plants-container{
     position: relative;
     left: 2600px;
-    top:5%;
+    top:15%;
     width: 900px;
     height: 60%;
 }

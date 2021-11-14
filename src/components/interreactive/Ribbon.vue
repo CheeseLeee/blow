@@ -1,5 +1,5 @@
 <template>
-  <div  v-if="type === 'red'" id="ribbon" :style="{top:positionTop + 'px',left:positionLeft + 'px'}">
+  <div  v-if="type === 'red'" id="ribbon" :style="{top:computedTop ,left:positionLeft + 'px'}">
       <div class="ribbon">
           <img src="../../assets/main/ribbon-left.png"/>
           <div class="ribbon-mian">{{redText}}</div>
@@ -19,16 +19,21 @@
 
 
 <script lang='ts'>
+import {computed} from 'vue'
 export default {
   components: {
 
   },
+
   props:{
       type:{
           default:'red',
           type:String
       },
       positionTop:{
+          type:String || Number
+      },
+      positionTopPercentage:{
           type:String
       },
       positionLeft:{
@@ -43,8 +48,18 @@ export default {
           type:String,         
       }
   },
-  setup() {
-    return {}
+  setup(props:any) {
+     const computedTop = computed(() => {
+        let top = props.positionTop
+        console.log(typeof top)
+        if(typeof top === 'number'){
+            return top + 'px'
+        }else{
+            return top 
+        }
+        
+      })
+    return {computedTop}
   }
 }
 </script>

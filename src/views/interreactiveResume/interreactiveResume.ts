@@ -1,5 +1,5 @@
 import {onMounted,onBeforeUnmount,ref} from 'vue'
-import {animate,scorllToward,animateTowardUp,animateTowardDown} from '../../utils/utils_fns/index'
+import {scorllToward} from '../../utils/utils_fns/index'
 import {Animate} from '../../utils/utils_fns/animate'
 export function useComDreamCycle(){
     const childWidtgref = ref()
@@ -21,12 +21,20 @@ export function useAnimateAndScroll(){
     const eyesLeft = ref(90)
     const startScroll = ref(false)
     const scrollViweTranslateX = ref(0)
-    let animateEl:any = null
-    let preScrollTop:any = 0
-    let animate:any 
-    //let jumpKey:any = false
+    const scrollViewHeight = ref('100%') 
+    let animateEl:any = null 
+    let preScrollTop = 0 
+    let animate:Animate //人物对象
+    let jumpScrollHeight = 0 //滚动条到何处时触发跳跃动画
+    let downScrollHeight = 0 //滚动条到何处时触发跳跃动画
+    let jumpScrollHeight2 = 0 //滚动条到何处时触发跳跃动画
+    let downScrollHeight2 = 0 //滚动条到何处时触发跳跃动画
+    let goSeaScrollHeight = 0
+    let winWidthHelf:number
+
     onMounted(() => {
-        animateEl= document.getElementById('animate')
+        winWidthHelf = window.innerWidth / 2
+        animateEl = document.getElementById('animate')
         window.addEventListener('scroll', handleScroll)
         animate = new Animate(animateEl)
     })
@@ -36,52 +44,70 @@ export function useAnimateAndScroll(){
     function handleScroll(e:any){
         startScroll.value = true
         const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop
-        const gap = scrollHeight - preScrollTop
-        console.log('gap',gap)
-/*         const h = window.innerWidth * 4 - window.innerHeight
-        const w = window.innerWidth * 3 */
+        console.log(scrollHeight)
+        //跳跃点 = 跳跃点（人物） - 人物距离左侧屏幕距离 - 人物宽度 - 左侧方块宽度 - 屏幕宽度的一半 + 剧中偏移100
+        jumpScrollHeight = 7370 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
+        jumpScrollHeight2 = 10362 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
+        //跳跃点 = 跳跃点（人物） - 人物距离左侧屏幕距离 - 左侧方块宽度 - 屏幕宽度的一半 
+        downScrollHeight = 8000 - animateEl.offsetLeft  - 20 - winWidthHelf 
+        downScrollHeight2 = 11016 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
+        //跳跃点 入海
+        goSeaScrollHeight = 14646 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
+        console.log('swim',goSeaScrollHeight)
         scrollViweTranslateX.value =  -scrollHeight / 2
         const {t} = scorllToward(scrollHeight)
         //case:scroll down
-  
         preScrollTop = scrollHeight
-        if(t){     
-            //console.log(jumpKey)
-            if(scrollHeight > 7100 &&  scrollHeight < 7290){
-                //jumpKey = true
+        //滚动方向判断
+        if(t){  
+            const down1 = scrollHeight > downScrollHeight 
+            const jump1 = scrollHeight > jumpScrollHeight 
+            const down2 = scrollHeight > downScrollHeight2 
+            const jump2 = scrollHeight > jumpScrollHeight2 
+            //第一个跳跃地
+            if(scrollHeight < 7800){
+                if(down1){
+                    animate.jumpDown('right')
+                }else if(jump1){
+                    animate.jumpUp('right')                  
+                }
+            }
+            //第二个跳跃地
+            if(scrollHeight > 7800){                
+                if(down2){
+                    animate.jumpDown('right')
+                }else if(jump2){
+                    animate.jumpUp('right')
+                }
+            }
 
-                    animateTowardUp(animateEl,'right',scrollHeight)
-         
-                //console.log(jumpKey)
-                return
-            }
-            if(scrollHeight > 7880 && scrollHeight < 7990){
-                animateTowardDown(animateEl,'right')
-                return
-            }
-            animate.step('right')
-                //animate(animateEl)
-                eyesLeft.value = 90
-            
-        
+            animate.run('right')
+            eyesLeft.value = 90          
         //case:scroll up            
         }else{
-/*             if(scrollHeight < 7800 && jumpKey === false){
-                animateTowardUp(animateEl,'left')
-                jumpKey = true
-                return
+            //第一个跳跃地
+            if(scrollHeight < 7800){
+                if(scrollHeight < jumpScrollHeight ){
+                    animate.jumpDown('left')
+
+                }else if(scrollHeight < downScrollHeight ){
+
+                    animate.jumpUp('left')
+                }
             }
-            if(scrollHeight < 7100 && jumpKey === true){
-                console.log("jump")
-                animateTowardDown(animateEl,'left')
-                jumpKey = false
-                return                
-            } */
-            animate.step('left')
+            //第二个跳跃地
+            if(scrollHeight > 7800){
+                if(scrollHeight < jumpScrollHeight2 ){
+                    animate.jumpDown('left')
+                }else if(scrollHeight < downScrollHeight2 ){                  
+                    animate.jumpUp('left')
+                }
+            }
+            animate.run('left')
             eyesLeft.value = 55
         } 
     }
     return {
-        eyesLeft,startScroll,scrollViweTranslateX
+        eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight
     }
 }

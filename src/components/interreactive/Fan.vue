@@ -1,22 +1,47 @@
 <template>
   <div id="fan">
+      <img class="fan-img" style="margin:0 20px" src="../../assets/main/t1.png" /> 
       <div class="fan-flex-box">
-          <div v-for="(item,index) in t1" :key="index" :style="{backgroundImage: 'url(' + item.src + ')'}">{{item.name}}</div>
+          <div v-for="(item,index) in t1" :key="index" class="animate"
+          :style="{backgroundImage: 'url(' + item.src + ')' , transform:`translateY(${moveY}px)`}">
+          {{item.name}}
+          </div>
       </div>
-      <img class="fan-img" style="margin:0 20px" src="../../assets/main/lol.png" />
+      
       <div class="fan-flex-box">
-          <div v-for="(item,index) in fan" :key="index" :style="{backgroundImage: 'url(' + item.src + ')'}">{{item.name}}</div>
+          <div class="animate-quiet" 
+          v-for="(item,index) in fan" :key="index" 
+          :style="{backgroundImage: 'url(' + item.src + ')' , transform:`translateY(${moveY}px)`}">
+          {{item.name}}</div>
       </div>
 
   </div>
 </template>
 
 <script lang='ts'>
+import {onMounted,onBeforeUnmount,ref} from 'vue'
 export default {
   components: {
 
   },
   setup() {
+    let animateKey = true
+    let moveY = ref(-1500)
+    function handleScroll(){
+        const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop
+        console.log(scrollHeight)
+        if(scrollHeight > 10846 && animateKey){
+            animateKey = false
+            moveY.value = 0
+            window.removeEventListener('scroll', handleScroll)
+        }
+    }
+    onMounted(() => {
+        window.addEventListener('scroll', handleScroll)
+    })
+    onBeforeUnmount(() => {
+        window.removeEventListener('scroll', handleScroll)
+    })
     const t1 = [{
         name:'T',
         src:require('../../assets/main/nba-board-red.png')
@@ -39,14 +64,36 @@ export default {
         src:require('../../assets/main/nba-board-blue.png')     
     }
     ]
-    return {t1,fan}
+    return {t1,fan,moveY}
   }
 }
 </script>
 
 <style scoped >
 .fan-img{
-    transform: translateY(-50%);
+width: 900px;
+
+
+    height: 900px;
+
+
+    transform: translateY(100px);
+
+
+    position: relative;
+    top: 200px;
+
+;
+    /* left: 0
+px
+; */
+    opacity: 0.5;
+}
+.animate{
+    transition: transform 2.5s;
+}
+.animate-quiet{
+    transition: transform 1.5s;
 }
 .fan-flex-box div{
     font-size: 90px;
@@ -64,8 +111,8 @@ export default {
 }
 #fan{
     position: absolute;
-    left: 5700px;
+    left: 5840px;
     bottom: 115px;
-    display: flex;
+    overflow: hidden;
 }
 </style>

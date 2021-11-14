@@ -1,15 +1,21 @@
 <template>
     <div  class="scroll-body" >
         <div id="life">
-            <div class="life-scroll-view" ref="childWidtgref" :style="{transform:`translateX(${scrollViweTranslateX}px)`}">
+            <div class="life-scroll-view" 
+            ref="childWidtgref" 
+            :style="{transform:`translateX(${scrollViweTranslateX}px)`,
+            height:scrollViewHeight}">
                 <div class="c2">
                     <gate positionLeft="1800" title="LEVEL1"></gate>
                     <my-table  ></my-table>
                 </div>
-
+                <div class="gates">
+                    <gate positionLeft="7000" title="LEVEL2"></gate>
+                </div>
                 <img class="sun" src="../../assets/main/sun.png" />
                 <div class="grounds">
                     <ground positionLeft=3700></ground>
+                    <ground positionLeft=5200></ground>
                 </div>
                 <div class="trees">
                     <tree-item type="d" positionLeft="120"></tree-item>
@@ -21,8 +27,8 @@
                     <tree-item type="a" positionLeft="2300"></tree-item>
                 </div>
                 <div class="ribbon">
-                    <ribbon type="red" positionLeft="4050" positionTop="0" redText="sports fan"></ribbon>
-                    <ribbon type="red" positionLeft="2555" positionTop="0" redText="my dream of liveing in USA"></ribbon>
+                    <ribbon type="red" positionLeft="4300" positionTop="0" redText="sports fan"></ribbon>
+                    <ribbon type="red" positionLeft="2555" positionTop="0" redText="I dream of liveing in USA"></ribbon>
                 </div>
                 <div class="builds">                    
                     <build positionLeft="4100" type="a"></build>
@@ -41,12 +47,17 @@
                 </div>
                 <div class="ground"></div>
                 <div class="grass"></div>
+
+            </div>
+            <div class="life-scroll-view-sea">
+                <div class="sea-ground"></div>
             </div>
         </div>
     </div>
     <div id="animate" >
         <div class="animate-eyes" :style="{left:eyesLeft + 'px'}"></div>
     </div>
+    <div class="position-x"></div>
     <div v-if="!startScroll" class="welcome">welcome to here</div>
 
 </template>
@@ -77,9 +88,9 @@ export default {
   },
   setup(){
     let {childWidtgref,childsWidth} = useComDreamCycle()
-    let {eyesLeft,startScroll,scrollViweTranslateX} = useAnimateAndScroll()
+    let {eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight} = useAnimateAndScroll()
     return {
-        scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft,
+        scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft,scrollViewHeight
     }
   }
 
@@ -87,6 +98,23 @@ export default {
 </script>   
 
 <style scoped >
+.sea-ground{
+    width: 7000px;
+    height: 70px;
+    background-color: green;
+}
+.life-scroll-view-sea{
+    height: 1500px;
+    width: 7000px;
+    background-color: chocolate;
+}
+.position-x{
+    position: fixed;
+    bottom: 120px;
+    width: 20px;
+    height: 20px;
+    background-color: chartreuse;
+}
 .animate-eyes{
     background: url('../../assets/main/robby-eyes-close.png') no-repeat;
     position: absolute;
@@ -106,7 +134,8 @@ animation-delay: 5s /* Opera */;
     height: 200px;
     position: fixed;
     bottom: 90px;
-    left: 0px;
+    left: 50%;
+    margin-left:-100px;
     background-color: red;
     background:url('../../assets/main/robby-slides.png') no-repeat;
     transition: transform .5s;
@@ -135,7 +164,7 @@ animation-delay: 5s /* Opera */;
   to {opacity: 1;}
 }
 .grass{
-    width: 100%;
+    width: 7320px;
     height: 30px;
         position: fixed;
     bottom: 90px;
@@ -143,10 +172,10 @@ animation-delay: 5s /* Opera */;
     background-image: url('../../assets/main/grass.png');
 }
 .ground{
-    width: 100%;
-    height: 90px;
+    width: 7320px;
+    height: calc(100vh + 90px);
     position: fixed;
-    bottom: 0;
+    bottom: calc(-100vh);
     left: 0;
     background-image: url('../../assets/main/ground.png');
 }
