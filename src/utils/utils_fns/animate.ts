@@ -76,10 +76,9 @@ export class Animate {
             this.clearRunStark()
             notRunKey = true
             jumpUpKey = false    
-            jumpDownKey = true
-            const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop   
+            jumpDownKey = true   
             animateEle.style.transform = `translateY(-220px)` 
-            console.log('tttt')    
+ 
             if(towards === 'right'){
                 animateEle.style.backgroundPosition =  -200 * 7 + "px " + 0 + 'px'                
                 jumpTimer_right = setTimeout(() => {

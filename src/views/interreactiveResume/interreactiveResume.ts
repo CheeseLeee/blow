@@ -21,6 +21,7 @@ export function useAnimateAndScroll(){
     const eyesLeft = ref(90)
     const startScroll = ref(false)
     const scrollViweTranslateX = ref(0)
+
     const scrollViewHeight = ref('100%') 
     let animateEl:any = null 
     let preScrollTop = 0 
@@ -29,7 +30,7 @@ export function useAnimateAndScroll(){
     let downScrollHeight = 0 //滚动条到何处时触发跳跃动画
     let jumpScrollHeight2 = 0 //滚动条到何处时触发跳跃动画
     let downScrollHeight2 = 0 //滚动条到何处时触发跳跃动画
-    let goSeaScrollHeight = 0
+    let goSeaScrollHeight = 0 //第二阶段 入海点
     let winWidthHelf:number
 
     onMounted(() => {
@@ -52,12 +53,18 @@ export function useAnimateAndScroll(){
         downScrollHeight = 8000 - animateEl.offsetLeft  - 20 - winWidthHelf 
         downScrollHeight2 = 11016 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
         //跳跃点 入海
-        goSeaScrollHeight = 14646 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
+        goSeaScrollHeight = 14786 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
         console.log('swim',goSeaScrollHeight)
         scrollViweTranslateX.value =  -scrollHeight / 2
         const {t} = scorllToward(scrollHeight)
         //case:scroll down
         preScrollTop = scrollHeight
+        //第一阶段完成，第二阶段入海开始
+        if(scrollHeight > goSeaScrollHeight){
+            window.removeEventListener('scroll', handleScroll)
+            window.addEventListener('scroll', handleSeaViewScroll)
+            return
+        }
         //滚动方向判断
         if(t){  
             const down1 = scrollHeight > downScrollHeight 
@@ -107,7 +114,23 @@ export function useAnimateAndScroll(){
             eyesLeft.value = 55
         } 
     }
+    function handleSeaViewScroll(){
+        const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop
+        const {t} = scorllToward(scrollHeight)
+        if(t){
+            if(scrollHeight > goSeaScrollHeight){
+                console.log('sea')
+                scrollViewHeight.value = '0'
+/*                 animateEl.classList.add('transform-animate')
+                animateEl.style.transform = `translateY(120px)` 
+                animateEl.classList.remove('transform-animate') */
+            }
+        }else{
+            console.log('sea--')
+        }
+        preScrollTop = scrollHeight
+    }
     return {
-        eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight
+        eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight,
     }
 }

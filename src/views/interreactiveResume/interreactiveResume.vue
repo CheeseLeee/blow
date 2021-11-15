@@ -4,6 +4,7 @@
             <div class="life-scroll-view" 
             ref="childWidtgref" 
             :style="{transform:`translateX(${scrollViweTranslateX}px)`,
+            
             height:scrollViewHeight}">
                 <div class="c2">
                     <gate positionLeft="1800" title="LEVEL1"></gate>
@@ -47,11 +48,11 @@
                 </div>
                 <div class="ground"></div>
                 <div class="grass"></div>
+                <div class="life-scroll-view-sea">
+                    <div class="sea-ground"></div>
+                </div>
+            </div>
 
-            </div>
-            <div class="life-scroll-view-sea">
-                <div class="sea-ground"></div>
-            </div>
         </div>
     </div>
     <div id="animate" >
@@ -98,15 +99,22 @@ export default {
 </script>   
 
 <style scoped >
+.transform-animate{
+     transition: transform 1.5s;
+}
 .sea-ground{
     width: 7000px;
-    height: 70px;
-    background-color: green;
+    height: 15px;
+    background-image: url('../../assets/main/sea/sea-wave.png');
 }
 .life-scroll-view-sea{
     height: 1500px;
     width: 7000px;
-    background-color: chocolate;
+   position: relative; 
+    left: 7320px;
+    top:-120px;
+    background-color: #0072bc;
+
 }
 .position-x{
     position: fixed;
@@ -189,10 +197,12 @@ animation-delay: 5s /* Opera */;
 }
 .life-scroll-view{
     height: 100%;
-    width: 8000px;
-    display: flex;
+    width: 7320px;
+   
     background-color: rgb(34, 177, 210);
-    position: relative;
+/*     position: relative; */
+    transition: height 2s;
+    transition-timing-function:ease-in;
 }
 #life{
     position:fixed;
