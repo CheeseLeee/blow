@@ -26,16 +26,20 @@ export function useAnimateAndScroll(){
     let animateEl:any = null 
     let preScrollTop = 0 
     let animate:Animate //人物对象
+    let scrollView:any
     let jumpScrollHeight = 0 //滚动条到何处时触发跳跃动画
     let downScrollHeight = 0 //滚动条到何处时触发跳跃动画
     let jumpScrollHeight2 = 0 //滚动条到何处时触发跳跃动画
     let downScrollHeight2 = 0 //滚动条到何处时触发跳跃动画
     let goSeaScrollHeight = 0 //第二阶段 入海点
+    let goSeaKey = false
     let winWidthHelf:number
+    const seaTop = ref()
 
     onMounted(() => {
         winWidthHelf = window.innerWidth / 2
         animateEl = document.getElementById('animate')
+        scrollView =  document.getElementsByClassName('life-scroll-view')[0]
         window.addEventListener('scroll', handleScroll)
         animate = new Animate(animateEl)
     })
@@ -43,6 +47,7 @@ export function useAnimateAndScroll(){
         window.removeEventListener('scroll', handleScroll)
     })
     function handleScroll(e:any){
+       // scrollView.classList.remove("heightQueit")
         startScroll.value = true
         const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop
         console.log(scrollHeight)
@@ -117,20 +122,34 @@ export function useAnimateAndScroll(){
     function handleSeaViewScroll(){
         const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop
         const {t} = scorllToward(scrollHeight)
+        scrollViweTranslateX.value =  -scrollHeight / 2
         if(t){
+            
             if(scrollHeight > goSeaScrollHeight){
                 console.log('sea')
-                scrollViewHeight.value = '0'
-/*                 animateEl.classList.add('transform-animate')
-                animateEl.style.transform = `translateY(120px)` 
-                animateEl.classList.remove('transform-animate') */
+                scrollViewHeight.value = '0'      
+                goSeaKey = true
+                animate.swim('right')
             }
-        }else{
+            eyesLeft.value = 90  
+        }else{ 
+            
+            if(scrollHeight > goSeaScrollHeight){
+                animate.swim('left')
+            }
+            if(scrollHeight < goSeaScrollHeight && goSeaKey){
+                console.log('sea')
+                scrollViewHeight.value = '100%'
+                //scrollView.classList.add("heightQueit")
+                window.removeEventListener('scroll', handleSeaViewScroll)      
+                window.addEventListener('scroll', handleScroll)
+            }
             console.log('sea--')
+            eyesLeft.value = 55
         }
         preScrollTop = scrollHeight
     }
     return {
-        eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight,
+        eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight,seaTop
     }
 }

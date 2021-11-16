@@ -48,9 +48,14 @@
                 </div>
                 <div class="ground"></div>
                 <div class="grass"></div>
-                <div class="life-scroll-view-sea">
+                <div class="life-scroll-view-sea" :style="{height:seaTop}">
                     <div class="sea-ground"></div>
+                    <algae></algae>
+                    <sea-table title="Web Development" :skills="skills1" :itemsTittle="itemsTittle1"></sea-table>
                 </div>
+                <div class="view-sea-sky"></div>
+                <div class="view-sea-two"></div>
+                
             </div>
 
         </div>
@@ -74,6 +79,8 @@ import Ground from '@/components/interreactive/Ground.vue'
 import Build from '@/components/interreactive/Build.vue'
 import Ribbon from '@/components/interreactive/Ribbon.vue'
 import Fan from '@/components/interreactive/Fan.vue'
+import Algae from '@/components/interreactive/sea/Algae.vue'
+import SeaTable from '@/components/interreactive/sea/SeaTable.vue'
 export default {
   components: {
     TreeItem,
@@ -85,13 +92,30 @@ export default {
     Build,
     Ribbon,
     Fan,
+    Algae,
+    SeaTable,
 
   },
   setup(){
+    const skills1 = [
+        {pinkText:'JAVASCRIPT'},
+        {pinkText:'HTML'},
+        {pinkText:'CSS'},
+        {pinkText:'VUE'}
+    ]
+    const itemsTittle1 = [
+        {text:'BEGINNER',trues:[true,true,true,true],
+        src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png')},
+        {text:'ELEMENTARY',trues:[true,true,true,true],src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png')},
+        {text:'INTERMEDIATE',trues:[true,true,true,true],src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png')},
+        {text:'ADVANCED',trues:[true,false,false,true],src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png')},
+        {text:'EXPERT',trues:[true,false,false,false],src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png')},
+
+    ]
     let {childWidtgref,childsWidth} = useComDreamCycle()
-    let {eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight} = useAnimateAndScroll()
+    let {eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight,seaTop} = useAnimateAndScroll()
     return {
-        scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft,scrollViewHeight
+        scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft,scrollViewHeight,seaTop,skills1,itemsTittle1
     }
   }
 
@@ -107,14 +131,39 @@ export default {
     height: 15px;
     background-image: url('../../assets/main/sea/sea-wave.png');
 }
-.life-scroll-view-sea{
-    height: 1500px;
+.view-sea-sky{
+    height: 2500px;
     width: 7000px;
-   position: relative; 
+     position: absolute; 
     left: 7320px;
-    top:-120px;
-    background-color: #0072bc;
+    top:-100vh;
+    background-color: rgb(34, 177, 210);
+}
+.life-scroll-view-sea{
+    width: 7000px
+;
+  
+  height:calc( 100vh )
 
+;
+    position: fixed;
+    left: 7320px
+
+;
+    bottom: 0px
+;
+
+    bottom: calc(-100vh + 120px);
+    background-color: #0072bc;
+    z-index: 20;
+}
+.view-sea-two{
+    width: 7000px;
+     height:120px;
+     position: fixed;
+     bottom: -100vh;
+     left: 7320px;
+        background-color: #0072bc;
 }
 .position-x{
     position: fixed;
@@ -188,7 +237,7 @@ animation-delay: 5s /* Opera */;
     background-image: url('../../assets/main/ground.png');
 }
 .scroll-body{
-    height: 16000px;
+    height: 19000px;
 }
 .c2{
     flex:25%;
@@ -201,7 +250,11 @@ animation-delay: 5s /* Opera */;
    
     background-color: rgb(34, 177, 210);
 /*     position: relative; */
-    transition: height 2s;
+    transition: height .1s;
+    transition-timing-function:ease-in;
+}
+#life .heightQueit{
+        transition: height .1s;
     transition-timing-function:ease-in;
 }
 #life{

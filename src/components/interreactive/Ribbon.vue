@@ -15,6 +15,15 @@
       </div>       
     </div>
 </div>
+  <div v-if="type === 'pink'">
+    <div id="plan">
+       <div class="plan">
+          <img src="../../assets/main/sea/sea-ribbon-left.png"/>
+          <div class="pink" >{{pinkText}}</div>
+          <img src="../../assets/main/sea/sea-ribbon-right.png"/>
+      </div>       
+    </div>
+</div>
 </template>
 
 
@@ -46,7 +55,11 @@ export default {
       yellowText:{
         default:'暂无',
           type:String,         
-      }
+      },
+        pinkText:{
+            default:'暂无',
+            type:String,         
+        }
   },
   setup(props:any) {
      const computedTop = computed(() => {
@@ -65,6 +78,14 @@ export default {
 </script>
 
 <style scoped >
+.pink{
+    background-color: #f26d7d;
+        height: 40px;
+    line-height: 40px;
+    font-size: 20px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color:white
+}
 .plan-mian{
     background-color: #f7941d;
     height: 40px;
@@ -90,6 +111,7 @@ export default {
     transform: translateX(-50%); */ 
 }
 .ribbon-mian{
+    white-space: nowrap;
     height: 55px;
     line-height: 55px;
     background-color: #ed1c24;

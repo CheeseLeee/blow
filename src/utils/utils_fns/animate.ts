@@ -1,9 +1,11 @@
 export class Animate {
     public run:(towards:string) => void
     public jumpUp:(towards:string) => void
-    public jumpDown:(toward:string) => void
+    public jumpDown:(towards:string) => void
+    public swim:(towards:string) => void
     public clearRunStark:() => void
     public clearJumpStark:() => void
+    public clearSwimStark:() => void
     constructor(animateEle:HTMLElement){
         let runTimer_right:any
         let runTimer_left:any
@@ -12,6 +14,9 @@ export class Animate {
         let jumpTimer_right:any = null
         let jumpTimer_left:any = null
         let jumpDownKey = true
+        let swimTimerRight:any = null
+        let swimTimerLeft:any = null
+ 
         this.clearRunStark = () => {
             clearInterval(runTimer_right)
             runTimer_right = null
@@ -25,8 +30,15 @@ export class Animate {
             jumpTimer_right = null
             notRunKey = false
         }
+        this.clearSwimStark = () => {
+            clearInterval(swimTimerRight)
+            clearInterval(swimTimerLeft)
+            swimTimerRight = null
+            swimTimerLeft = null
+        }
         //X轴位移函数
         this.run = function (towards){
+            this.clearSwimStark()
             //console.log('run',notRunKey)
             if(notRunKey) return
             let countX = 1
@@ -70,6 +82,7 @@ export class Animate {
             }
             
         }
+        //jump
         this.jumpUp = function(towards:string){   
             console.log(jumpUpKey,'jumpupkey')         
             if(!jumpUpKey) return
@@ -120,6 +133,43 @@ export class Animate {
                     //jumpDownKey = true
                     jumpUpKey = true
                 },300)               
+            }
+        }
+        //swim
+        this.swim = function(towards){
+            this.clearRunStark()
+            let countX = 3 
+            if(towards === 'right'){     
+                if(swimTimerRight) return  
+                animateEle.style.backgroundPosition =  -200 * countX + "px " + 0 + 'px' 
+                clearInterval(swimTimerLeft)
+                swimTimerLeft = null         
+                swimTimerRight = setInterval(() => {
+                    animateEle.style.backgroundPosition =  -200 * countX + "px " + 0 + 'px'
+                    countX++
+                    if(countX === 6){
+                        clearInterval(swimTimerRight)
+                        swimTimerRight = null 
+                        countX = 3
+                       
+                    }
+                },200)
+            }
+            if(towards === 'left'){
+                if(swimTimerLeft) return
+                animateEle.style.backgroundPosition =  -200 * countX + "px " + -200 + 'px'
+                clearInterval(swimTimerRight)
+                swimTimerRight = null 
+                swimTimerLeft = setInterval(() => {
+                    animateEle.style.backgroundPosition =  -200 * countX + "px " + -200 + 'px'
+                    countX++
+                    if(countX === 6){
+                        clearInterval(swimTimerLeft)
+                        swimTimerLeft = null 
+                        countX = 3
+            
+                    }
+                },200)               
             }
         }
     }
