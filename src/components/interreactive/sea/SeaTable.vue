@@ -9,7 +9,7 @@
                 <div class="sea-table-item-titte">{{item.text}}</div>
                 <div class="sea-img-box" :class="[!showItem ? 'itemOpacity' :'']" v-for="(showItem,index) in item.trues" :key="index">
                     <img :src="item.src" />
-                    <img class="item-eyes" :src="item.eyes" />
+                    <img class="item-eyes" :class="[eyesOpen ? 'open-eyes' : '']" :src="item.eyes" />
                 </div>
            </div>
       </div>
@@ -38,28 +38,45 @@ export default {
         require:true
     },
     itemsTittle:{
-         type:Array,
+        type:Array,
         require:true       
     }
  },
    setup() {
-    let eyesClose = ref(true)
-    let eyesIndex = ref()
-    let itemIndex = ref()
-    onMounted(() => {
-        setInterval(() => {
-            eyesIndex.value = getRandomInt(1,5)
-            itemIndex.value = getRandomInt(1,4)
-            console.log( eyesIndex.value,itemIndex.value)
-        },3000)
-    }) 
+       let eyesOpen = ref(false)
+       onMounted(() => {
+           setInterval(() => {
+               eyesOpen.value = !eyesOpen.value
+           },5000)
+       })
+        var n = Math.floor(Math.random() * 20) + 1
+        var x:any = Math.pow(2,n)
+        console.log(x)
+        var numString = '01234567899996666'//x.toString("2")
+        console.log(numString)
+        //var result = Number(arr)
+        //console.log('222',result)
+        let numArr = []
+        for(var i = 0 ; i < 4 ; i++){
+            if(i === 0){
+                numArr.push(numString.slice(i,4))
+                
+            }else{
+                numArr.push(numString.slice(i * 4 + 1, 5 + i * 4))
+            }
+            
+        }
+        console.log(numArr)
 
-    return {}
+    return {eyesOpen}
   }
 }
 </script>
 
 <style scoped >
+.open-eyes{
+    opacity: 1 !important;
+}
 .itemOpacity{
      opacity: 0;
 }
@@ -70,8 +87,8 @@ export default {
     position:absolute;
     top:45px;
     left: 18px;
-    opacity: 1;
-    transition:opacity .5s ;
+    opacity: 0;
+    transition:opacity .5s ease-in;
 }
     
 
