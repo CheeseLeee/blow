@@ -1,17 +1,17 @@
 <template>
   <div  v-if="type === 'red'" id="ribbon" :style="{top:computedTop ,left:positionLeft + 'px'}">
       <div class="ribbon">
-          <img src="../../assets/main/ribbon-left.png"/>
+          <img src="../../assets/main/ground/ribbon-left.png"/>
           <div class="ribbon-mian">{{redText}}</div>
-          <img src="../../assets/main/ribbon-right.png"/>
+          <img src="../../assets/main/ground/ribbon-right.png"/>
       </div>
   </div>
   <div v-if="type === 'yellow'">
     <div id="plan">
        <div class="plan">
-          <img src="../../assets/main/plant-ribbon-left.png"/>
+          <img src="../../assets/main/ground/plant-ribbon-left.png"/>
           <div class="plan-mian">{{yellowText}}</div>
-          <img src="../../assets/main/plant-ribbon-right.png"/>
+          <img src="../../assets/main/ground/plant-ribbon-right.png"/>
       </div>       
     </div>
 </div>

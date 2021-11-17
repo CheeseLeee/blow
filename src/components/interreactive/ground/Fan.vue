@@ -1,6 +1,6 @@
 <template>
   <div id="fan">
-      <img class="fan-img" style="margin:0 20px" src="../../assets/main/t1.png" /> 
+      <img class="fan-img" style="margin:0 20px" src="../../../assets/main/ground/t1.png" /> 
       <div class="fan-flex-box">
           <div v-for="(item,index) in t1" :key="index" class="animate"
           :style="{backgroundImage: 'url(' + item.src + ')' , transform:`translateY(${moveY}px)`}">
@@ -44,24 +44,24 @@ export default {
     })
     const t1 = [{
         name:'T',
-        src:require('../../assets/main/nba-board-red.png')
+        src:require('../../../assets/main/ground/nba-board-red.png')
     },
     {
         name:'1',
-        src:require('../../assets/main/nba-board-red.png')
+        src:require('../../../assets/main/ground/nba-board-red.png')
     }
     ] 
     const fan = [
     {  name:'F',
-        src:require('../../assets/main/nba-board-blue.png')
+        src:require('../../../assets/main/ground/nba-board-blue.png')
     },
     {
         name:'A',
-        src:require('../../assets/main/nba-board-blue.png')
+        src:require('../../../assets/main/ground/nba-board-blue.png')
     },
     {
         name:'N',
-        src:require('../../assets/main/nba-board-blue.png')     
+        src:require('../../../assets/main/ground/nba-board-blue.png')     
     }
     ]
     return {t1,fan,moveY}

@@ -7,32 +7,32 @@ export class Animate {
     public clearJumpStark:() => void
     public clearSwimStark:() => void
     constructor(animateEle:HTMLElement){
-        let runTimer_right:any
-        let runTimer_left:any
+        let runTimer_right:NodeJS.Timer | null
+        let runTimer_left:NodeJS.Timer | null
         let jumpUpKey = true
         let notRunKey = false
-        let jumpTimer_right:any = null
-        let jumpTimer_left:any = null
+        let jumpTimer_right:NodeJS.Timer | null = null
+        let jumpTimer_left:NodeJS.Timer | null = null
         let jumpDownKey = true
-        let swimTimerRight:any = null
-        let swimTimerLeft:any = null
+        let swimTimerRight:NodeJS.Timer | null = null
+        let swimTimerLeft:NodeJS.Timer | null = null
  
         this.clearRunStark = () => {
-            clearInterval(runTimer_right)
+            clearInterval(Number(runTimer_right))
             runTimer_right = null
-            clearInterval(runTimer_left)
+            clearInterval(Number(runTimer_left))
             runTimer_left = null        
         }
         this.clearJumpStark = () => {
-            clearTimeout(jumpTimer_right)
-            clearTimeout(jumpTimer_left)
+            clearTimeout(Number(jumpTimer_right))
+            clearTimeout(Number(jumpTimer_left))
             jumpTimer_left = null
             jumpTimer_right = null
             notRunKey = false
         }
         this.clearSwimStark = () => {
-            clearInterval(swimTimerRight)
-            clearInterval(swimTimerLeft)
+            clearInterval(Number(swimTimerRight))
+            clearInterval(Number(swimTimerLeft))
             swimTimerRight = null
             swimTimerLeft = null
         }
@@ -46,14 +46,14 @@ export class Animate {
             if(towards === 'right'){
                  //case 右移定时器（动画未执行完）
                 if(runTimer_right) return
-                clearInterval(runTimer_left)
+                clearInterval(Number(runTimer_left))
                 runTimer_left = null
                 animateEle.style.backgroundPosition =  -200 * 0 + "px " + 0 + 'px'
                 runTimer_right = setInterval(() => {
                     animateEle.style.backgroundPosition =  -200 * countX + "px " + 0 + 'px'
                     countX++
                     if(countX === 3){           
-                        clearInterval(runTimer_right)
+                        clearInterval(Number(runTimer_right))
                         runTimer_right = null
                         setTimeout(() => {
                             animateEle.style.backgroundPosition =  -200 * 0 + "px " + 0 + 'px'
@@ -64,7 +64,7 @@ export class Animate {
             if(towards === 'left'){
                 //case 左移定时器（动画未执行完）
                 if(runTimer_left) return 
-                clearInterval(runTimer_right)
+                clearInterval(Number(runTimer_right))
                 runTimer_right = null
                 let countX = 1                
                 animateEle.style.backgroundPosition =  0 + "px " + -200 + 'px'
@@ -72,7 +72,7 @@ export class Animate {
                     animateEle.style.backgroundPosition =  -200 * countX + "px " + -200 + 'px'
                     countX++
                     if(countX === 3){           
-                        clearInterval(runTimer_left)
+                        clearInterval(Number(runTimer_left))
                         runTimer_left = null
                         setTimeout(() => {
                             animateEle.style.backgroundPosition =  -200 * 0 + "px " + -200 + 'px'
@@ -142,13 +142,13 @@ export class Animate {
             if(towards === 'right'){     
                 if(swimTimerRight) return  
                 animateEle.style.backgroundPosition =  -200 * countX + "px " + 0 + 'px' 
-                clearInterval(swimTimerLeft)
+                clearInterval(Number(swimTimerLeft))
                 swimTimerLeft = null         
                 swimTimerRight = setInterval(() => {
                     animateEle.style.backgroundPosition =  -200 * countX + "px " + 0 + 'px'
                     countX++
                     if(countX === 6){
-                        clearInterval(swimTimerRight)
+                        clearInterval(Number(swimTimerRight))
                         swimTimerRight = null 
                         countX = 3
                        
@@ -158,13 +158,13 @@ export class Animate {
             if(towards === 'left'){
                 if(swimTimerLeft) return
                 animateEle.style.backgroundPosition =  -200 * countX + "px " + -200 + 'px'
-                clearInterval(swimTimerRight)
+                clearInterval(Number(swimTimerRight))
                 swimTimerRight = null 
                 swimTimerLeft = setInterval(() => {
                     animateEle.style.backgroundPosition =  -200 * countX + "px " + -200 + 'px'
                     countX++
                     if(countX === 6){
-                        clearInterval(swimTimerLeft)
+                        clearInterval(Number(swimTimerLeft))
                         swimTimerLeft = null 
                         countX = 3
             

@@ -1,8 +1,8 @@
 <template>
   <div id="build" :style="{left:positionLeft + 'px'}">
-      <img v-if="type === 'a'" src="../../assets/main/building-a.png" />
-      <img v-if="type === 'b'"  src="../../assets/main/building-b.png" />
-      <img v-if="type === 'c'"  src="../../assets/main/building-c.png" />
+      <img v-if="type === 'a'" src="../../../assets/main/ground/building-a.png" />
+      <img v-if="type === 'b'"  src="../../../assets/main/ground/building-b.png" />
+      <img v-if="type === 'c'"  src="../../../assets/main/ground/building-c.png" />
   </div>
 </template>
 

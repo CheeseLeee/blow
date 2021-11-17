@@ -137,13 +137,13 @@ import { useRouter } from 'vue-router'
     position: relative;
 }
 .main-body-3{
-    background-image: url('../../assets/main/design-portfolio.jpeg');
+    background-image: url('../../assets/main/ground/design-portfolio.jpeg');
 }
 .main-body-2{
-    background-image: url('../../assets/main/illustration-portfolio.png') ;
+    background-image: url('../../assets/main/ground/illustration-portfolio.png') ;
 }
 .main-body-1{
-    background-image: url('../../assets/main/interactive-resume.png');
+    background-image: url('../../assets/main/ground/interactive-resume.png');
 }
 .frame {
   

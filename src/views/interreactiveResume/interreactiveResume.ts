@@ -7,14 +7,31 @@ export function useComDreamCycle(){
     onMounted(() => {
         const w = childWidtgref.value.clientWidth
         childsWidth.value = w 
-        window.addEventListener('beforeunload',e => {
+        window.addEventListener('beforeunload',() => {
             window.scrollTo(0,0)
-
         })
     })
     return {
         childWidtgref,childsWidth
     }
+}
+
+export function eyesOpenOrClose(){
+    const isOpen = ref(false)
+    let eyesTimer:NodeJS.Timer | null
+    
+    onMounted(() => {
+        eyesTimer = setInterval(() => {
+            isOpen.value = true
+            setTimeout(() => {
+                isOpen.value = false
+            },500)
+        }, 5000);
+    }) 
+    onBeforeUnmount(() => {
+        clearInterval(Number(eyesTimer))
+    })
+    return {isOpen}
 }
 
 export function useAnimateAndScroll(){
@@ -23,10 +40,10 @@ export function useAnimateAndScroll(){
     const scrollViweTranslateX = ref(0)
 
     const scrollViewHeight = ref('100%') 
-    let animateEl:any = null 
+    let animateEl:HTMLElement
     let preScrollTop = 0 
     let animate:Animate //人物对象
-    let scrollView:any
+    let scrollView:HTMLElement
     let jumpScrollHeight = 0 //滚动条到何处时触发跳跃动画
     let downScrollHeight = 0 //滚动条到何处时触发跳跃动画
     let jumpScrollHeight2 = 0 //滚动条到何处时触发跳跃动画
@@ -38,8 +55,8 @@ export function useAnimateAndScroll(){
 
     onMounted(() => {
         winWidthHelf = window.innerWidth / 2
-        animateEl = document.getElementById('animate')
-        scrollView =  document.getElementsByClassName('life-scroll-view')[0]
+        animateEl = document.getElementById('animate') as HTMLElement
+        scrollView =  document.getElementsByClassName('life-scroll-view')[0] as HTMLElement
         window.addEventListener('scroll', handleScroll)
         animate = new Animate(animateEl)
     })

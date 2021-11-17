@@ -47,6 +47,6 @@ export default {
     height: 300px;
      position: absolute;
 
-     background-image: url('../../assets/main/gate.png');
+     background-image: url('../../assets/main/ground/gate.png');
 }
 </style>

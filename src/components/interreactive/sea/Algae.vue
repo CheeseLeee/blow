@@ -1,7 +1,7 @@
 <template>
-    <div class="algae">
-        <img src="../../../assets/main/sea/algae-a.png" />
-    
+    <div class="algae" :style="{left:positionLeft + 'px'}">
+        <img v-if="type === '1'" src="../../../assets/main/sea/algae-a.png" />
+        <img v-if="type === '2'" src="../../../assets/main/sea/algae-b.png" />
     </div>
 </template>
 
@@ -9,6 +9,14 @@
 export default {
   components: {
 
+  },
+  props:{
+    type:{
+       type:String
+    },
+    positionLeft:{
+      type:String
+    }
   },
   setup() {
     return {}
@@ -18,8 +26,6 @@ export default {
 
 <style scoped >
 .algae{
-    position: relative;
-    left: 20px;
-    bottom: calc(-100vh + 70px);
+  position: absolute;
 }
 </style>

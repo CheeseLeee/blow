@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img :style="{bottom:positionBottom + 'px',left:positionLeft + 'px'}" class="cloud-position" src="../../assets/main/mountain.png" />
+    <img :style="{top:positionTop + 'px',left:positionLeft + 'px'}" class="cloud-position" src="../../../assets/main/ground/cloud.png" />
 
   </div>
 </template>
@@ -11,8 +11,8 @@ export default {
 
   },
   props:{
-    positionBottom:{
-        default:'120',
+
+    positionTop:{
         type:String,
     },
 
@@ -30,6 +30,6 @@ export default {
 <style scoped >
 .cloud-position{
     position: absolute;
-
+    z-index: 20;
 }
 </style>

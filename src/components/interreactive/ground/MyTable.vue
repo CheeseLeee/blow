@@ -20,7 +20,7 @@
 </template>
 
 <script lang='ts'>
-import Ribbon from './Ribbon.vue'
+import Ribbon from '../Ribbon.vue'
 export default {
   components: {
     Ribbon
@@ -31,19 +31,19 @@ export default {
   setup() {
       const scores = [
         {
-            src:require('../../assets/main/plant-head-leaves.png'),
+            src:require('../../../assets/main/ground/plant-head-leaves.png'),
             positionY:-225
         },
          {
-            src:require('../../assets/main/plant-head-leaves.png'),
+            src:require('../../../assets/main/ground/plant-head-leaves.png'),
             positionY:-118
         },
          {
-            src:require('../../assets/main/plant-head-leaves.png'),
+            src:require('../../../assets/main/ground/plant-head-leaves.png'),
             positionY:-172
         },
          {
-            src:require('../../assets/main/plant-head-leaves.png'),
+            src:require('../../../assets/main/ground/plant-head-leaves.png'),
             positionY:-172
         },
     ]

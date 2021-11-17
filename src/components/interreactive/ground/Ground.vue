@@ -29,11 +29,11 @@ export default {
 
 }
 .grass-img{
-    background-image: url('../../assets/main/grass.png');    height: 23px;
+    background-image: url('../../../assets/main/ground/grass.png');    height: 23px;
     width: 300px;
 }
 .ground-img{
-    background-image: url('../../assets/main/ground.png');    height: 60px;
+    background-image: url('../../../assets/main/ground/ground.png');    height: 60px;
     width: 300px;
 }
 </style>

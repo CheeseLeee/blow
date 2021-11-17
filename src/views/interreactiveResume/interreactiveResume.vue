@@ -3,17 +3,16 @@
         <div id="life">
             <div class="life-scroll-view" 
             ref="childWidtgref" 
-            :style="{transform:`translateX(${scrollViweTranslateX}px)`,
-            
+            :style="{transform:`translateX(${scrollViweTranslateX}px)`,            
             height:scrollViewHeight}">
-                <div class="c2">
-                    <gate positionLeft="1800" title="LEVEL1"></gate>
+                <div class="table">                  
                     <my-table  ></my-table>
                 </div>
                 <div class="gates">
                     <gate positionLeft="7000" title="LEVEL2"></gate>
+                    <gate positionLeft="1800" title="LEVEL1"></gate>
                 </div>
-                <img class="sun" src="../../assets/main/sun.png" />
+                <img class="sun" src="../../assets/main/ground/sun.png" />
                 <div class="grounds">
                     <ground positionLeft=3700></ground>
                     <ground positionLeft=5200></ground>
@@ -34,7 +33,7 @@
                 <div class="builds">                    
                     <build positionLeft="4100" type="a"></build>
                     <build positionLeft="4400"  type="b"></build>
-                    <build  positionLeft="4750"  type="c"></build>
+                    <build positionLeft="4750"  type="c"></build>
                 </div>
                 <div class="cloud">
                     <cloud-item positionLeft="200" positionTop="40"></cloud-item>
@@ -49,19 +48,41 @@
                 <div class="ground"></div>
                 <div class="grass"></div>
                 <div class="life-scroll-view-sea" :style="{height:seaTop}">
+                    <div class="deepWaters">
+                        <deep-water type="1"></deep-water>
+                    </div>
                     <div class="sea-ground"></div>
-                    <algae></algae>
-                    <sea-table title="Web Development" :skills="skills1" :itemsTittle="itemsTittle1"></sea-table>
+
+                    <div class="sea-tables">
+                    <sea-table  :itemsY="itemsY1"  headtitle="Web Developoment" :itemsX="itemsX1"></sea-table>
+                    <sea-table  eye_positionLeft="30" headtitle="Sports and Race" eye_positionTop="40" positionTop="-560" positionLeft="1550" :itemsY="itemsY2" :itemsX="itemsX2"></sea-table>
+                    <sea-table  eye_positionLeft="3" headtitle="Owner info" eye_positionTop="27" positionTop="-1090" positionLeft="2750" :itemsY="itemsY3" :itemsX="itemsX3"></sea-table>
+                  <!--   <sea-table title="Web Development" :itemsY="itemsY1" :itemsX="itemsX1"></sea-table> -->
+                   </div>
+                   <div  v-if="bulleIsShow">--><!--:positionLeft="item"-->
+                        <bubble :class="[ccc ? 'bubbleMove' : '']" v-for="(item,index) in bubbles" :key="index" ></bubble>  
+                   </div>
                 </div>
                 <div class="view-sea-sky"></div>
-                <div class="view-sea-two"></div>
-                
+                <div class="view-sea-two">
+                    <div class="sand-box">
+                         <sand-box type="1" positionLeft="950"></sand-box>
+                        <sand-box type="2" positionLeft="1950"></sand-box>
+                    </div> 
+                    <div class="algaes">
+                        <algae type="1"></algae>
+                        <algae type="2" positionLeft="1050"> </algae>
+                        <algae type="1" positionLeft="3100"></algae>
+                        <algae type="2" positionLeft="3200"></algae>
+                    </div>
+
+                </div>                
             </div>
 
         </div>
     </div>
     <div id="animate" >
-        <div class="animate-eyes" :style="{left:eyesLeft + 'px'}"></div>
+        <div :class="[isOpen ? 'animate-eyes' : '']" :style="{left:eyesLeft + 'px'}"></div>
     </div>
     <div class="position-x"></div>
     <div v-if="!startScroll" class="welcome">welcome to here</div>
@@ -69,18 +90,23 @@
 </template>
 
 <script lang='ts'>
-import TreeItem from '@/components/interreactive/TreeItem.vue'
-import CloudItem from '@/components/interreactive/CloudItem.vue'
-import MountainItem from '@/components/interreactive/MountainItem.vue'
-import {useComDreamCycle,useAnimateAndScroll} from './interreactiveResume'
+import {reactive,ref} from 'vue'
+import {getRandomInt} from '../../utils/utils_fns/index'
+import TreeItem from '@/components/interreactive/ground/TreeItem.vue'
+import CloudItem from '@/components/interreactive/ground/CloudItem.vue'
+import MountainItem from '@/components/interreactive/ground/MountainItem.vue'
+import {useComDreamCycle,useAnimateAndScroll,eyesOpenOrClose} from './interreactiveResume'
 import Gate from '@/components/interreactive/Gate.vue'
-import MyTable from '@/components/interreactive/MyTable.vue'
-import Ground from '@/components/interreactive/Ground.vue'
-import Build from '@/components/interreactive/Build.vue'
+import MyTable from '@/components/interreactive/ground/MyTable.vue'
+import Ground from '@/components/interreactive/ground/Ground.vue'
+import Build from '@/components/interreactive/ground/Build.vue'
 import Ribbon from '@/components/interreactive/Ribbon.vue'
-import Fan from '@/components/interreactive/Fan.vue'
+import Fan from '@/components/interreactive/ground/Fan.vue'
 import Algae from '@/components/interreactive/sea/Algae.vue'
 import SeaTable from '@/components/interreactive/sea/SeaTable.vue'
+import Bubble from '@/components/interreactive/sea/Bubble.vue'
+import SandBox from '@/components/interreactive/sea/SandBox.vue'
+import DeepWater from '@/components/interreactive/sea/DeepWater.vue'
 export default {
   components: {
     TreeItem,
@@ -94,28 +120,68 @@ export default {
     Fan,
     Algae,
     SeaTable,
-
+    Bubble,
+    SandBox,
+    DeepWater
   },
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   setup(){
-    const skills1 = [
+    let bulleIsShow = ref(true)
+    let ccc = ref(true)
+    let bubbles:any = reactive([])
+    let int = getRandomInt(1,6)
+    for(var i = 1 ; i < int ; i++){
+        var left = getRandomInt(1,3300)
+        bubbles.push(left)
+    }
+    setTimeout(() => {
+        ccc.value = true
+    },5000)
+    
+    const itemsY1 = [
         {pinkText:'JAVASCRIPT'},
         {pinkText:'HTML'},
         {pinkText:'CSS'},
         {pinkText:'VUE'}
     ]
-    const itemsTittle1 = [
-        {text:'BEGINNER',trues:[true,true,true,true],
-        src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png')},
+    const itemsX1 = [
+        {text:'BEGINNER',trues:[true,true,true,true], src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png')},     
         {text:'ELEMENTARY',trues:[true,true,true,true],src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png')},
         {text:'INTERMEDIATE',trues:[true,true,true,true],src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png')},
         {text:'ADVANCED',trues:[true,false,false,true],src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png')},
         {text:'EXPERT',trues:[true,false,false,false],src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png')},
-
+    ]
+    const itemsY2 = [
+        {pinkText:'GAME'},
+        {pinkText:'FOOTBALL'},
+        {pinkText:'PINGPONG'},
+        {pinkText:'BADMINTON'},
+    ]
+    const itemsX2 = [
+        {text:'BEGINNER',trues:[true,true,true,true], src:require('../../assets/main/sea/crab.png'),eyes:require('../../assets/main/sea/crab-eyes.png')},     
+        {text:'ELEMENTARY',trues:[true,true,true,true],src:require('../../assets/main/sea/crab.png'),eyes:require('../../assets/main/sea/crab-eyes.png')},
+        {text:'INTERMEDIATE',trues:[true,true,true,true],src:require('../../assets/main/sea/crab.png'),eyes:require('../../assets/main/sea/crab-eyes.png')},
+        {text:'ADVANCED',trues:[true,false,false,true],src:require('../../assets/main/sea/crab.png'),eyes:require('../../assets/main/sea/crab-eyes.png')},
+        {text:'EXPERT',trues:[true,false,false,false],src:require('../../assets/main/sea/crab.png'),eyes:require('../../assets/main/sea/crab-eyes.png')},
+    ]
+    const itemsY3 = [
+        {pinkText:'FACE'},
+        {pinkText:'HEIGHT'},
+        {pinkText:'WEIGHT'},
+        {pinkText:'EMOTION'},
+    ]
+    const itemsX3 = [
+        {text:'BEGINNER',trues:[true,true,true,true], src:require('../../assets/main/sea/turtle.png'),eyes:require('../../assets/main/sea/turtle-eyes.png')},     
+        {text:'ELEMENTARY',trues:[true,true,true,true],src:require('../../assets/main/sea/turtle.png'),eyes:require('../../assets/main/sea/turtle-eyes.png')},
+        {text:'INTERMEDIATE',trues:[true,true,true,true],src:require('../../assets/main/sea/turtle.png'),eyes:require('../../assets/main/sea/turtle-eyes.png')},
+        {text:'ADVANCED',trues:[true,false,false,true],src:require('../../assets/main/sea/turtle.png'),eyes:require('../../assets/main/sea/turtle-eyes.png')},
+        {text:'EXPERT',trues:[true,false,false,false],src:require('../../assets/main/sea/turtle.png'),eyes:require('../../assets/main/sea/turtle-eyes.png')},
     ]
     let {childWidtgref,childsWidth} = useComDreamCycle()
+    let {isOpen} = eyesOpenOrClose()
     let {eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight,seaTop} = useAnimateAndScroll()
     return {
-        scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft,scrollViewHeight,seaTop,skills1,itemsTittle1
+        ccc,bulleIsShow,bubbles,scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft,scrollViewHeight,seaTop,itemsY1,itemsX1,isOpen,itemsY2,itemsX2,itemsY3,itemsX3
     }
   }
 
@@ -123,12 +189,42 @@ export default {
 </script>   
 
 <style scoped >
+    .bubbleMove{
+       top:22vh;
+        transition:transform 3s ease-in;
+    }
+.sea-tables{
+    width: 100%;
+    height: 100px;
+     display: flex;
+     position: absolute;
+     left: 50px;
+     top:50%;
+     transform: translateY(-50%);
+}
+.algaes,.deepWaters{
+/*     display: flex;
+    justify-content: space-around; */
+    width: 100%;
+   
+  
+    position: relative;
+}
+.sand-box{
+    position: absolute;
+
+    width: 100%;
+    height: 100px;
+  
+}
 .transform-animate{
      transition: transform 1.5s;
 }
 .sea-ground{
     width: 7000px;
     height: 15px;
+    transform: translateY(-6px);
+    background-repeat: repeat-x;
     background-image: url('../../assets/main/sea/sea-wave.png');
 }
 .view-sea-sky{
@@ -173,7 +269,7 @@ export default {
     background-color: chartreuse;
 }
 .animate-eyes{
-    background: url('../../assets/main/robby-eyes-close.png') no-repeat;
+    background: url('../../assets/main/ground/robby-eyes-close.png') no-repeat;
     position: absolute;
     bottom: 140px;
     left: 90px;
@@ -182,9 +278,7 @@ export default {
         animation-name: opacity;
   animation-duration: .5s;
   animation-timing-function: ease-in;
-animation-delay: 5s /* Opera */;
-    animation-iteration-count: infinite;
-    animation-direction:alternate;
+
 }
 #animate{
     width: 200px;
@@ -194,7 +288,7 @@ animation-delay: 5s /* Opera */;
     left: 50%;
     margin-left:-100px;
     background-color: red;
-    background:url('../../assets/main/robby-slides.png') no-repeat;
+    background:url('../../assets/main/ground/robby-slides.png') no-repeat;
     transition: transform .5s;
 }
 .sun{
@@ -217,8 +311,8 @@ animation-delay: 5s /* Opera */;
     animation-direction:alternate;
 }
 @keyframes opacity {
-  from {opacity: 0;}
-  to {opacity: 1;}
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }
 .grass{
     width: 7320px;
@@ -226,7 +320,7 @@ animation-delay: 5s /* Opera */;
         position: fixed;
     bottom: 90px;
     left: 0;
-    background-image: url('../../assets/main/grass.png');
+    background-image: url('../../assets/main/ground/grass.png');
 }
 .ground{
     width: 7320px;
@@ -234,10 +328,10 @@ animation-delay: 5s /* Opera */;
     position: fixed;
     bottom: calc(-100vh);
     left: 0;
-    background-image: url('../../assets/main/ground.png');
+    background-image: url('../../assets/main/ground/ground.png');
 }
 .scroll-body{
-    height: 19000px;
+    height: 23000px;
 }
 .c2{
     flex:25%;
