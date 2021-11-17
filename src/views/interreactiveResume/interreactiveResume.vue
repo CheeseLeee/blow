@@ -49,7 +49,9 @@
                 <div class="grass"></div>
                 <div class="life-scroll-view-sea" :style="{height:seaTop}">
                     <div class="deepWaters">
-                        <deep-water type="1"></deep-water>
+                        <deep-water type="1" positionLeft="300" positionTop="400"></deep-water>
+                        <deep-water type="1" positionLeft="2300" positionTop="320"></deep-water>
+                        <deep-water type="2" positionLeft="800" positionTop="180"></deep-water>
                     </div>
                     <div class="sea-ground"></div>
 
@@ -59,8 +61,8 @@
                     <sea-table  eye_positionLeft="3" headtitle="Owner info" eye_positionTop="27" positionTop="-1090" positionLeft="2750" :itemsY="itemsY3" :itemsX="itemsX3"></sea-table>
                   <!--   <sea-table title="Web Development" :itemsY="itemsY1" :itemsX="itemsX1"></sea-table> -->
                    </div>
-                   <div  v-if="bulleIsShow">--><!--:positionLeft="item"-->
-                        <bubble :class="[ccc ? 'bubbleMove' : '']" v-for="(item,index) in bubbles" :key="index" ></bubble>  
+                   <div  v-if="bubbleIsShow">
+                        <bubble :class="[bubbleMoved ? 'bubbleMove' : '']" v-for="(item,index) in bubbles" :key="index" :positionLeft="item"></bubble>  
                    </div>
                 </div>
                 <div class="view-sea-sky"></div>
@@ -77,6 +79,7 @@
                     </div>
 
                 </div>                
+                <div class="mechanical"></div>
             </div>
 
         </div>
@@ -90,12 +93,11 @@
 </template>
 
 <script lang='ts'>
-import {reactive,ref} from 'vue'
-import {getRandomInt} from '../../utils/utils_fns/index'
+
 import TreeItem from '@/components/interreactive/ground/TreeItem.vue'
 import CloudItem from '@/components/interreactive/ground/CloudItem.vue'
 import MountainItem from '@/components/interreactive/ground/MountainItem.vue'
-import {useComDreamCycle,useAnimateAndScroll,eyesOpenOrClose} from './interreactiveResume'
+import {useComDreamCycle,useAnimateAndScroll,eyesOpenOrClose,useRandomBubble} from './interreactiveResume'
 import Gate from '@/components/interreactive/Gate.vue'
 import MyTable from '@/components/interreactive/ground/MyTable.vue'
 import Ground from '@/components/interreactive/ground/Ground.vue'
@@ -107,6 +109,7 @@ import SeaTable from '@/components/interreactive/sea/SeaTable.vue'
 import Bubble from '@/components/interreactive/sea/Bubble.vue'
 import SandBox from '@/components/interreactive/sea/SandBox.vue'
 import DeepWater from '@/components/interreactive/sea/DeepWater.vue'
+import {useConfig} from '@/components/comConfig/index'
 export default {
   components: {
     TreeItem,
@@ -126,62 +129,13 @@ export default {
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   setup(){
-    let bulleIsShow = ref(true)
-    let ccc = ref(true)
-    let bubbles:any = reactive([])
-    let int = getRandomInt(1,6)
-    for(var i = 1 ; i < int ; i++){
-        var left = getRandomInt(1,3300)
-        bubbles.push(left)
-    }
-    setTimeout(() => {
-        ccc.value = true
-    },5000)
-    
-    const itemsY1 = [
-        {pinkText:'JAVASCRIPT'},
-        {pinkText:'HTML'},
-        {pinkText:'CSS'},
-        {pinkText:'VUE'}
-    ]
-    const itemsX1 = [
-        {text:'BEGINNER',trues:[true,true,true,true], src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png')},     
-        {text:'ELEMENTARY',trues:[true,true,true,true],src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png')},
-        {text:'INTERMEDIATE',trues:[true,true,true,true],src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png')},
-        {text:'ADVANCED',trues:[true,false,false,true],src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png')},
-        {text:'EXPERT',trues:[true,false,false,false],src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png')},
-    ]
-    const itemsY2 = [
-        {pinkText:'GAME'},
-        {pinkText:'FOOTBALL'},
-        {pinkText:'PINGPONG'},
-        {pinkText:'BADMINTON'},
-    ]
-    const itemsX2 = [
-        {text:'BEGINNER',trues:[true,true,true,true], src:require('../../assets/main/sea/crab.png'),eyes:require('../../assets/main/sea/crab-eyes.png')},     
-        {text:'ELEMENTARY',trues:[true,true,true,true],src:require('../../assets/main/sea/crab.png'),eyes:require('../../assets/main/sea/crab-eyes.png')},
-        {text:'INTERMEDIATE',trues:[true,true,true,true],src:require('../../assets/main/sea/crab.png'),eyes:require('../../assets/main/sea/crab-eyes.png')},
-        {text:'ADVANCED',trues:[true,false,false,true],src:require('../../assets/main/sea/crab.png'),eyes:require('../../assets/main/sea/crab-eyes.png')},
-        {text:'EXPERT',trues:[true,false,false,false],src:require('../../assets/main/sea/crab.png'),eyes:require('../../assets/main/sea/crab-eyes.png')},
-    ]
-    const itemsY3 = [
-        {pinkText:'FACE'},
-        {pinkText:'HEIGHT'},
-        {pinkText:'WEIGHT'},
-        {pinkText:'EMOTION'},
-    ]
-    const itemsX3 = [
-        {text:'BEGINNER',trues:[true,true,true,true], src:require('../../assets/main/sea/turtle.png'),eyes:require('../../assets/main/sea/turtle-eyes.png')},     
-        {text:'ELEMENTARY',trues:[true,true,true,true],src:require('../../assets/main/sea/turtle.png'),eyes:require('../../assets/main/sea/turtle-eyes.png')},
-        {text:'INTERMEDIATE',trues:[true,true,true,true],src:require('../../assets/main/sea/turtle.png'),eyes:require('../../assets/main/sea/turtle-eyes.png')},
-        {text:'ADVANCED',trues:[true,false,false,true],src:require('../../assets/main/sea/turtle.png'),eyes:require('../../assets/main/sea/turtle-eyes.png')},
-        {text:'EXPERT',trues:[true,false,false,false],src:require('../../assets/main/sea/turtle.png'),eyes:require('../../assets/main/sea/turtle-eyes.png')},
-    ]
+    let {itemsY1,itemsX1,itemsY2,itemsX2,itemsY3,itemsX3} = useConfig()
     let {childWidtgref,childsWidth} = useComDreamCycle()
     let {isOpen} = eyesOpenOrClose()
     let {eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight,seaTop} = useAnimateAndScroll()
+    let {bubbleIsShow,bubbleMoved,bubbles} = useRandomBubble()
     return {
-        ccc,bulleIsShow,bubbles,scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft,scrollViewHeight,seaTop,itemsY1,itemsX1,isOpen,itemsY2,itemsX2,itemsY3,itemsX3
+        bubbleIsShow,bubbleMoved,bubbles,scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft,scrollViewHeight,seaTop,itemsY1,itemsX1,isOpen,itemsY2,itemsX2,itemsY3,itemsX3
     }
   }
 
@@ -189,8 +143,16 @@ export default {
 </script>   
 
 <style scoped >
+.mechanical{
+    position: fixed;
+    left: calc(7320px + 4100px);
+    bottom: -100vh;
+    width: 4500px;
+    height: calc(100vh + 90px);
+    background-color: green;
+}
     .bubbleMove{
-       top:22vh;
+       transform:translateY(-900px);
         transition:transform 3s ease-in;
     }
 .sea-tables{
@@ -198,7 +160,7 @@ export default {
     height: 100px;
      display: flex;
      position: absolute;
-     left: 50px;
+     left: 500px;
      top:50%;
      transform: translateY(-50%);
 }
@@ -236,7 +198,7 @@ export default {
     background-color: rgb(34, 177, 210);
 }
 .life-scroll-view-sea{
-    width: 7000px
+    width: 4100px
 ;
   
   height:calc( 100vh )
@@ -254,7 +216,7 @@ export default {
     z-index: 20;
 }
 .view-sea-two{
-    width: 7000px;
+    width: 4100px;
      height:120px;
      position: fixed;
      bottom: -100vh;

@@ -1,5 +1,5 @@
-import {onMounted,onBeforeUnmount,ref} from 'vue'
-import {scorllToward} from '../../utils/utils_fns/index'
+import {onMounted,onBeforeUnmount,ref,reactive} from 'vue'
+import {scorllToward,getRandomInt} from '../../utils/utils_fns/index'
 import {Animate} from '../../utils/utils_fns/animate'
 export function useComDreamCycle(){
     const childWidtgref = ref()
@@ -13,6 +13,36 @@ export function useComDreamCycle(){
     })
     return {
         childWidtgref,childsWidth
+    }
+}
+
+export function useRandomBubble(){
+    const bubbleIsShow = ref(true)
+    const bubbleMoved = ref(false)
+    const bubbles:any = reactive([])
+    const randonBubbles = setInterval(() => {
+        bubbleIsShow.value = true
+        bubbleMoved.value = false
+        bubbles.length = 0
+        const int = getRandomInt(1,6)
+            for(let i = 1 ; i < int ; i++){
+                const left = getRandomInt(1,3300)
+                bubbles.push(left)
+
+            }
+               setTimeout(() => {
+
+                bubbleMoved.value = true
+                    setTimeout(() => {
+                        bubbleIsShow.value = false
+                    },3000)
+                },1000)
+    },6000)
+    onBeforeUnmount(() => {
+        clearInterval(randonBubbles)
+    })
+    return {
+        bubbleIsShow,bubbleMoved,bubbles
     }
 }
 
@@ -139,6 +169,7 @@ export function useAnimateAndScroll(){
     function handleSeaViewScroll(){
         const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop
         const {t} = scorllToward(scrollHeight)
+        console.log(scrollHeight)
         scrollViweTranslateX.value =  -scrollHeight / 2
         if(t){
             

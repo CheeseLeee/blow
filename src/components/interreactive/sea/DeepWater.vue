@@ -1,5 +1,5 @@
 <template>
-  <div id="deepWater" :style="{left:positionLeft + 'px'}">
+  <div id="deepWater" :style="{left:positionLeft + 'px',top:positionTop + 'px'}">
       <img v-if="type === '1'" src="../../../assets/main/sea/bg1.png" />
       <img v-if="type === '2'"  src="../../../assets/main/sea/bg2.png" />
   </div>
@@ -12,10 +12,13 @@ export default {
   },
   props:{
       type:{
-          type:String
+        type:String
       },
       positionLeft:{
-           type:String
+        type:String
+      },
+      positionTop:{
+        type:String
       }
   },
   setup() {

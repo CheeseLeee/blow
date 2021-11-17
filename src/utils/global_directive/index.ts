@@ -33,6 +33,7 @@ export const globalDirectives:globalDirective[] = [
             }
         }
     },
+    //移动端show
     {
         name:'mobileView',
         cycle:{
@@ -48,6 +49,7 @@ export const globalDirectives:globalDirective[] = [
             }
         }
     },
+    //pc show
     {
         name:'pcView',
         cycle:{
@@ -59,6 +61,26 @@ export const globalDirectives:globalDirective[] = [
                 }else{
                     el.style.display = 'none'
                     return false
+                }
+            }
+        }
+    },
+    {
+        name:'moveAnimate',
+        cycle:{
+            mounted(el:HTMLElement,scrollValue:any){
+                const winWidthHelf = window.innerWidth / 2
+                const animateEl = document.getElementById('animate') as HTMLElement
+                window.addEventListener('scroll', handleScroll)
+                el.style.transform = `translateX(300px)`
+                el.style.transition = `transform 2s easy-in`
+                function handleScroll(){
+                    const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop
+                    const animatePoint = scrollValue.value - animateEl.offsetLeft  - 220 - winWidthHelf + 100
+                    if(scrollHeight > animatePoint){
+                        el.style.transform = `translateX(0)`
+                        window.removeEventListener('scroll', handleScroll)
+                    }
                 }
             }
         }

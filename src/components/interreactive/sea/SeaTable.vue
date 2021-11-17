@@ -9,7 +9,7 @@
           </div>
            <div class="sea-table-item"  v-for="(item,indexX) in itemsX" :key="indexX">
                 <div class="sea-table-item-titte">{{item.text}}</div>
-                <div class="sea-img-box" :class="[!showItem ? 'itemOpacity' :'']" v-for="(showItem,indexY) in item.trues" :key="indexY">
+                <div v-moveAnimate="item.animatetoPosition" class="sea-img-box" :class="[!showItem ? 'itemOpacity' :'']" v-for="(showItem,indexY) in item.trues" :key="indexY">
                     <img :src="item.src" />
                     <img class="item-eyes" :style="{left:eye_positionLeft +'px',top:eye_positionTop + 'px'}" :class="[openEyes(indexX,indexY) ? 'open-eyes' : '']" :src="item.eyes" />
                 </div>
@@ -103,6 +103,7 @@ export default {
 }
 .sea-img-box{
     position: relative;
+    transition: transform 1s;
 }
 .item-eyes{
     position:absolute;
@@ -131,6 +132,7 @@ export default {
         display: flex;
    flex-direction: column;
     justify-content: space-evenly;
+    overflow: hidden;
 }
 .sea-table-main{
     width: 100%;
