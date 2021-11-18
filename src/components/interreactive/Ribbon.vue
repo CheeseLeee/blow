@@ -98,8 +98,7 @@ export default {
    align-content: center;
 }
 #ribbon{
-    width: 50%;
-    margin: 0 auto;
+
     display: flex;
     justify-content: center;
     align-items: center;

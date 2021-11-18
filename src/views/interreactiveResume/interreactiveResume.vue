@@ -11,6 +11,8 @@
                 <div class="gates">
                     <gate positionLeft="7000" title="LEVEL2"></gate>
                     <gate positionLeft="1800" title="LEVEL1"></gate>
+                    <gate positionLeft="11420" positionBottom="170" title="LEVEL3"></gate>
+                     <gate positionLeft="15920" positionBottom="170" title="LEVEL4"></gate>
                 </div>
                 <img class="sun" src="../../assets/main/ground/sun.png" />
                 <div class="grounds">
@@ -29,6 +31,7 @@
                 <div class="ribbon">
                     <ribbon type="red" positionLeft="4300" positionTop="0" redText="sports fan"></ribbon>
                     <ribbon type="red" positionLeft="2555" positionTop="0" redText="I dream of liveing in USA"></ribbon>
+                    <ribbon type="red" positionLeft="12155" positionTop="0" redText="what to do"></ribbon>
                 </div>
                 <div class="builds">                    
                     <build positionLeft="4100" type="a"></build>
@@ -68,7 +71,7 @@
                 <div class="view-sea-sky"></div>
                 <div class="view-sea-two">
                     <div class="sand-box">
-                         <sand-box type="1" positionLeft="950"></sand-box>
+                        <sand-box type="1" positionLeft="950"></sand-box>
                         <sand-box type="2" positionLeft="1950"></sand-box>
                     </div> 
                     <div class="algaes">
@@ -78,8 +81,34 @@
                         <algae type="2" positionLeft="3200"></algae>
                     </div>
 
-                </div>                
+                </div>
+                <div class="boxs">
+                    <box positionLeft="11920" type="1"></box>
+                     <box positionLeft="13520" type="2"></box>
+                      <box positionLeft="15220" type="2"></box>
+                </div>
+                <div class="blacks">
+                    <black positionLeft="12500"></black>
+                    <black positionLeft="14000"></black>
+                </div>
+                <div class="robots">
+                   <mechaincl type="1" positionLeft="12800"></mechaincl>
+                   <mechaincl type="2" positionLeft="14800" positionTop="-200"></mechaincl>
+                </div>
+                <div class="clis">
+                    <cli positionLeft="13400"></cli>
+                     <cli positionLeft="14600"></cli>
+                </div>
+                <img class="title-experience" src="../../assets/main/mechanical/title-experience.png" />
+                <div  class="life-scroll-view-mechanicl"></div>
+                <div class="floor"></div>                
                 <div class="mechanical"></div>
+                <div class="sky">
+                    <div class="dock-floor"></div>
+                    <div class="sea-water1"></div>
+                    <div class="sea-body" ></div>
+                    <water-full></water-full>
+                </div>
             </div>
 
         </div>
@@ -110,6 +139,11 @@ import Bubble from '@/components/interreactive/sea/Bubble.vue'
 import SandBox from '@/components/interreactive/sea/SandBox.vue'
 import DeepWater from '@/components/interreactive/sea/DeepWater.vue'
 import {useConfig} from '@/components/comConfig/index'
+import Box from '@/components/interreactive/mechaincl/Box.vue'
+import Black from '@/components/interreactive/mechaincl/Black.vue'
+import Cli from '@/components/interreactive/mechaincl/Cli.vue'
+import Mechaincl from '@/components/interreactive/mechaincl/Mechaincl.vue'
+import WaterFull from '@/components/interreactive/sky/WaterFull.vue'
 export default {
   components: {
     TreeItem,
@@ -125,7 +159,12 @@ export default {
     SeaTable,
     Bubble,
     SandBox,
-    DeepWater
+    DeepWater,
+    Box,
+    Cli,
+    Black,
+    Mechaincl,
+    WaterFull   
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   setup(){
@@ -143,13 +182,63 @@ export default {
 </script>   
 
 <style scoped >
+.sea-body{
+background-color: #0072bc;
+    position: absolute;
+    top:56px;
+    left:0px;
+    width: 3000px;
+    height:100vh;
+ 
+}
+.sea-water1{
+    position: absolute;
+    top:50px;
+    left:0px;
+    width: 3000px;
+    height: 6px;
+    background-image: url('../../assets/main/sea/sea-wave.png');  
+}
+.dock-floor{
+    position: absolute;
+    top:0;
+    left:0px;
+    width: 3000px;
+    height: 50px;
+    background-image: url('../../assets/main/sky/dock-floor.png');
+}
+.sky{
+    position: absolute; 
+    left: calc(7320px + 4100px + 4500px);
+    bottom: -100vh;
+    width: 3000px;
+    height: calc(100vh + 170px);
+    
+}
+.title-experience{
+    position: absolute;
+    left: 11499px
+
+;
+    top: 60px;
+}
+.floor{
+    position: fixed;
+    left: calc(7320px + 4100px);
+    bottom: 120px;
+    width: 4500px;
+    height: 50px;
+   /*  background-color: green; */
+   background-image: url('../../assets/main/mechanical/floor.png');
+}
 .mechanical{
     position: fixed;
     left: calc(7320px + 4100px);
     bottom: -100vh;
     width: 4500px;
-    height: calc(100vh + 90px);
-    background-color: green;
+    height: calc(100vh + 120px);
+   /*  background-color: green; */
+   background-image: url('../../assets/main/mechanical/panel.png');
 }
     .bubbleMove{
        transform:translateY(-900px);
@@ -183,7 +272,7 @@ export default {
      transition: transform 1.5s;
 }
 .sea-ground{
-    width: 7000px;
+    width: 4100px;
     height: 15px;
     transform: translateY(-6px);
     background-repeat: repeat-x;
@@ -191,7 +280,7 @@ export default {
 }
 .view-sea-sky{
     height: 2500px;
-    width: 7000px;
+    width: 11000px;
      position: absolute; 
     left: 7320px;
     top:-100vh;
@@ -215,6 +304,21 @@ export default {
     background-color: #0072bc;
     z-index: 20;
 }
+/* .life-scroll-view-mechanicl{
+    width: 4100px;
+    height:calc( 100vh );
+;
+    position: fixed;
+    left: 7320px
+
+;
+    bottom: 0px
+;
+
+    bottom: calc(-100vh + 120px);
+    background-color: #0072bc;
+    z-index: 20;
+} */
 .view-sea-two{
     width: 4100px;
      height:120px;
@@ -293,7 +397,7 @@ export default {
     background-image: url('../../assets/main/ground/ground.png');
 }
 .scroll-body{
-    height: 23000px;
+    height: 36000px;
 }
 .c2{
     flex:25%;

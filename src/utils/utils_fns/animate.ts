@@ -1,6 +1,6 @@
 export class Animate {
     public run:(towards:string) => void
-    public jumpUp:(towards:string) => void
+    public jumpUp:(towards:string,jumpHeight?:string) => void
     public jumpDown:(towards:string) => void
     public swim:(towards:string) => void
     public clearRunStark:() => void
@@ -83,7 +83,7 @@ export class Animate {
             
         }
         //jump
-        this.jumpUp = function(towards:string){   
+        this.jumpUp = function(towards:string,jumpHeight = '80'){   
             console.log(jumpUpKey,'jumpupkey')         
             if(!jumpUpKey) return
             this.clearRunStark()
@@ -97,7 +97,7 @@ export class Animate {
                 jumpTimer_right = setTimeout(() => {
                     animateEle.style.backgroundPosition =  -200 * 0 + "px " + 0 + 'px'
                    // console.log(scrollHeight,'ccc')
-                    animateEle.style.transform = `translateY(-80px)`                                    
+                    animateEle.style.transform = `translateY(-${jumpHeight}px)`                                    
                     notRunKey = false                  
                 },500)
             }
@@ -105,7 +105,7 @@ export class Animate {
                 animateEle.style.backgroundPosition =  -200 * 7 + "px " + -200 + 'px'
                 jumpTimer_left = setTimeout(() => {
                     animateEle.style.backgroundPosition =  -200 * 0 + "px " + -200 + 'px'
-                    animateEle.style.transform = `translateY(-80px)`                       
+                    animateEle.style.transform = `translateY(-${jumpHeight}px)`                       
                     notRunKey = false
                    
                 },500)  

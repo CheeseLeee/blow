@@ -79,7 +79,9 @@ export function useAnimateAndScroll(){
     let jumpScrollHeight2 = 0 //滚动条到何处时触发跳跃动画
     let downScrollHeight2 = 0 //滚动条到何处时触发跳跃动画
     let goSeaScrollHeight = 0 //第二阶段 入海点
+    let goMechanicalHeight = 0 //第三关 出海进入赛博朋克
     let goSeaKey = false
+    let goMechanicalKey = false
     let winWidthHelf:number
     const seaTop = ref()
 
@@ -106,6 +108,8 @@ export function useAnimateAndScroll(){
         downScrollHeight2 = 11016 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
         //跳跃点 入海
         goSeaScrollHeight = 14786 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
+        //跳跃点 第三关赛博朋克
+        goMechanicalHeight = 22792 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
         console.log('swim',goSeaScrollHeight)
         scrollViweTranslateX.value =  -scrollHeight / 2
         const {t} = scorllToward(scrollHeight)
@@ -174,28 +178,98 @@ export function useAnimateAndScroll(){
         if(t){
             
             if(scrollHeight > goSeaScrollHeight){
-                console.log('sea')
+                
                 scrollViewHeight.value = '0'      
                 goSeaKey = true
                 animate.swim('right')
             }
-            eyesLeft.value = 90  
-        }else{ 
-            
+            if(scrollHeight > goMechanicalHeight){
+                scrollViewHeight.value = '109%'
+                goMechanicalKey = true
+                //第二关结束，第三关赛博朋克开始
+                window.removeEventListener('scroll', handleSeaViewScroll)
+                window.addEventListener('scroll',handleMechanicalViewScroll)
+            }
+            eyesLeft.value = 90
+        }else{             
             if(scrollHeight > goSeaScrollHeight){
                 animate.swim('left')
             }
             if(scrollHeight < goSeaScrollHeight && goSeaKey){
-                console.log('sea')
+                goSeaKey = false
                 scrollViewHeight.value = '100%'
                 //scrollView.classList.add("heightQueit")
                 window.removeEventListener('scroll', handleSeaViewScroll)      
                 window.addEventListener('scroll', handleScroll)
             }
+            if(scrollHeight < goMechanicalHeight  && goMechanicalKey){
+                goMechanicalKey = false
+                scrollViewHeight.value = '0'
+            }
             console.log('sea--')
             eyesLeft.value = 55
         }
         preScrollTop = scrollHeight
+    }
+
+    function handleMechanicalViewScroll(){
+        const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop
+        const jumpBoxPoint =  27006 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
+        const jumpDownBoxPOint = 27862 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
+        const jumpUpBoxLeftPoint = 27908 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
+        const jumpDownBoxLeftPoint = 26994 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
+
+        const jumpUpBoxPoint2 = 30407 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
+        const jumpDownBoxPoint2 = 31340 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
+        const {t} = scorllToward(scrollHeight)     
+        console.log('????',scrollHeight) 
+        scrollViweTranslateX.value =  -scrollHeight / 2
+        if(t){
+            if(scrollHeight < 28230){
+                //to do
+                if(scrollHeight > jumpDownBoxPOint){
+                    animate.jumpDown('right')
+                }else if(scrollHeight > jumpBoxPoint){
+                    animate.jumpUp('right','150')
+                }
+            }
+            if(scrollHeight > 28230){
+                if(scrollHeight > jumpDownBoxPoint2){
+                    animate.jumpDown('right')
+                }else if(scrollHeight > jumpUpBoxPoint2){
+                    animate.jumpUp('right','150')
+                }               
+            }
+            animate.run('right')
+            eyesLeft.value = 90
+        }else{
+            //回到sea
+            if(scrollHeight < goMechanicalHeight){
+                window.addEventListener('scroll', handleSeaViewScroll)
+                window.removeEventListener('scroll',handleMechanicalViewScroll)
+                scrollViewHeight.value = '0'             
+            }else{
+                if(scrollHeight < 28230){
+                    if(scrollHeight < jumpDownBoxLeftPoint){
+                        animate.jumpDown('left')
+                        console.log('1')
+                    }else if(scrollHeight < jumpUpBoxLeftPoint){
+                        animate.jumpUp('left','150')
+                    }
+                }
+                if(scrollHeight > 28230){
+                    if(scrollHeight < jumpUpBoxPoint2){
+                        animate.jumpDown('left')
+                        console.log('1')
+                    }else if(scrollHeight < jumpDownBoxPoint2){
+                        animate.jumpUp('left','150')
+                    }                   
+                }
+
+                animate.run('left')
+            }
+            eyesLeft.value = 55
+        } 
     }
     return {
         eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight,seaTop
