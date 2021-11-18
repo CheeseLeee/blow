@@ -33,7 +33,7 @@
             <div class="contxt2">
                 <p class="contxt-p1">I PUT MY PAST INTO HERE</p>
                 <p class="contxt-p2">I give up past experience never , even with regrets , if you want to see my heart , you can do this</p>
-                <div class="btn">
+                <div class="btn" @click="handleError">
                     next
                 </div>
             </div>
@@ -44,7 +44,7 @@
                 <p class="contxt-p2">
                     It's respect that someone with their dream and pay their all attentions , even almost people is common , except...
                 </p>
-                <div class="btn" >
+                <div class="btn" @click="handleError">
                     go on 
                 </div>
             </div>
@@ -53,6 +53,7 @@
 </template>
 
 <script setup lang='ts'>
+import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
     const mainHeadImgs = [
         {src:require('../../assets/main/qq.png'),
@@ -60,15 +61,21 @@ import { useRouter } from 'vue-router'
         {src:require('../../assets/main/wechat.png'),
         content:'WECHAT:DecWaltzX'},
         {src:require('../../assets/main/github.png'),
-        content:'github:github@958986887.com'},
+        content:'GITHUB:github@958986887.com'},
         {src:require('../../assets/main/email.png'),    
-        content:'em:958986887@qq.com'}
+        content:'EM:958986887@qq.com'}
     ]
     let Router = useRouter()
     function handleGoDream(){
         Router.push({
             name:'interreactiveResume'
         })
+    }
+    function handleError(){      
+      ElMessage({
+        message: 'comming soon',
+        type: 'error',
+      })
     }
 </script>
 

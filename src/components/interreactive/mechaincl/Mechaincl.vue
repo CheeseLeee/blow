@@ -1,12 +1,12 @@
 <template>
   <div id="mechaincl" :style="{top:positionTop + 'px' ,left:positionLeft + 'px'}">
-      <div v-if="type === '1'" class="m1">
+      <div v-if="type === '1'" class="m1" >
         <div class="m1-body">
-          <p class="m1-body-p">to do</p>
+          <p class="m1-body-p">emotion</p>
         </div>
         <div class="m1-info">
-          <p class="m1-info-p">to do</p>
-          <p class="m1-info-p-1">what to do</p>
+          <p class="m1-info-p">love</p>
+          <p class="m1-info-p-1">friend</p>
         </div>
         <div class="hand-left" v-for="(item,index) in handsImgLt" :key="index"  :class="[item.className]"  :style="{backgroundImage:`url(${item.src})`,opacity:item.opacity}">
 
@@ -16,13 +16,13 @@
         </div>
       </div>
 
-      <div v-if="type === '2' " class="m2">
+      <div v-if="type === '2' " v-moveAnimate="29000" class="m2">
         <div class="m2-body">
-          <p class="m2-body-p">to do</p>
+          <p class="m2-body-p">trip</p>
         </div> 
         <div class="m2-info">
-          <p class="m2-info-p">to do</p>
-          <p class="m2-info-p-1">what to do</p>
+          <p class="m2-info-p">eating</p>
+          <p class="m2-info-p-1">watching</p>
         </div>
         <div class="m2-hand"></div> 
         <div class="m2-bottom"></div>     
@@ -127,15 +127,16 @@ export default {
 }
 .m2-info-p{
   position: absolute;
-  left: 230px;
+  left: 200px;
   top: 120px;
 }
 .m2-info-p-1{
   position: absolute;
   top: 160px;
-  left: 230px;
+  left: 200px;
 }
 .m2{
+  transition: transform 1.5s;
     color:white;
   font-weight: 500;
   font-family: sans-serif;
@@ -238,12 +239,29 @@ export default {
 #mechaincl{
     position: absolute;
 }
+@-webkit-keyframes domMove {
+      0% {transform: translateX(-200px);}
+/*     25% {transform: translate(-200px,200px);}
+    50% {transform: translate(200px,200px);} */
+    100% {transform: translateX(0);}
+}/* Safari and Chrome */
+@keyframes ccc
+{
+    0% {transform: translateX(-200px);}
+/*     25% {transform: translate(-200px,200px);}
+    50% {transform: translate(200px,200px);} */
+    100% {transform: translateX(0);}
+}
+
 .m1{
+    animation:ccc;
+    animation-iteration-count:99;
     position: relative;
     width: 500px;
     height: 400px;
     background-image: url('../../../assets/main/mechanical/robot-body.png');
 }
+
 
 .robot-hand-a-lt{
       width: 160px;

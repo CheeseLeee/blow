@@ -65,6 +65,7 @@ export const globalDirectives:globalDirective[] = [
             }
         }
     },
+    //X轴隐藏过度动画
     {
         name:'moveAnimate',
         cycle:{
@@ -84,6 +85,29 @@ export const globalDirectives:globalDirective[] = [
                 }
             }
         }
-    }
+    },
+    //Y轴隐藏过度动画
+    {
+        name:'moveAnimateY',
+        cycle:{
+            mounted(el:HTMLElement,scrollValue:any){
+                console.log(scrollValue.value ,'vvv')
+                const winWidthHelf = window.innerWidth / 2
+                const animateEl = document.getElementById('animate') as HTMLElement
+                window.addEventListener('scroll', handleScroll)
+                el.style.transform = `translateY(-300px)`
+                el.style.transition = `transform 2s easy-in`
+                function handleScroll(){
+                    const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop
+                    const animatePoint = scrollValue.value - animateEl.offsetLeft  - 220 - winWidthHelf + 100
+                    console.log(animatePoint,'888')
+                    if(scrollHeight > animatePoint){
+                        el.style.transform = `translateY(0)`
+                        window.removeEventListener('scroll', handleScroll)
+                    }
+                }
+            }
+        }
+    },
 ]
 

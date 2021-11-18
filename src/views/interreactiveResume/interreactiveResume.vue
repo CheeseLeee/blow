@@ -53,15 +53,16 @@
                 <div class="life-scroll-view-sea" :style="{height:seaTop}">
                     <div class="deepWaters">
                         <deep-water type="1" positionLeft="300" positionTop="400"></deep-water>
-                        <deep-water type="1" positionLeft="2300" positionTop="320"></deep-water>
+                        <deep-water type="1" positionLeft="2200" positionTop="320"></deep-water>
                         <deep-water type="2" positionLeft="800" positionTop="180"></deep-water>
+                        <deep-water type="2" positionLeft="2670" positionTop="220"></deep-water>
                     </div>
                     <div class="sea-ground"></div>
 
                     <div class="sea-tables">
                     <sea-table  :itemsY="itemsY1"  headtitle="Web Developoment" :itemsX="itemsX1"></sea-table>
                     <sea-table  eye_positionLeft="30" headtitle="Sports and Race" eye_positionTop="40" positionTop="-560" positionLeft="1550" :itemsY="itemsY2" :itemsX="itemsX2"></sea-table>
-                    <sea-table  eye_positionLeft="3" headtitle="Owner info" eye_positionTop="27" positionTop="-1090" positionLeft="2750" :itemsY="itemsY3" :itemsX="itemsX3"></sea-table>
+                    <sea-table  eye_positionLeft="3" headtitle="Evaluation Myself" eye_positionTop="27" positionTop="-1090" positionLeft="2750" :itemsY="itemsY3" :itemsX="itemsX3"></sea-table>
                   <!--   <sea-table title="Web Development" :itemsY="itemsY1" :itemsX="itemsX1"></sea-table> -->
                    </div>
                    <div  v-if="bubbleIsShow">
@@ -89,7 +90,7 @@
                 </div>
                 <div class="blacks">
                     <black positionLeft="12500"></black>
-                    <black positionLeft="14000"></black>
+                    <black positionLeft="14000" animatePosition="27750"></black>
                 </div>
                 <div class="robots">
                    <mechaincl type="1" positionLeft="12800"></mechaincl>
@@ -117,7 +118,7 @@
         <div :class="[isOpen ? 'animate-eyes' : '']" :style="{left:eyesLeft + 'px'}"></div>
     </div>
     <div class="position-x"></div>
-    <div v-if="!startScroll" class="welcome">welcome to here</div>
+    <div v-if="!startScroll" class="welcome">Scorll down mouse or up</div>
 
 </template>
 
@@ -220,7 +221,7 @@ background-color: #0072bc;
     left: 11499px
 
 ;
-    top: 60px;
+    bottom: 20px;
 }
 .floor{
     position: fixed;

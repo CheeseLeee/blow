@@ -9,7 +9,7 @@ const itemsY1 = [
     {text:'ELEMENTARY',trues:[true,true,true,true],src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png'),animatetoPosition:15912},
     {text:'INTERMEDIATE',trues:[true,true,true,true],src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png'),animatetoPosition:15912},
     {text:'ADVANCED',trues:[true,false,false,true],src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png'),animatetoPosition:15912},
-    {text:'EXPERT',trues:[true,false,false,false],src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png'),animatetoPosition:15912},
+    {text:'EXPERT',trues:[false,false,false,false],src:require('../../assets/main/sea/fish.png'),eyes:require('../../assets/main/sea/fish-eyes.png'),animatetoPosition:15912},
 ]
 const itemsY2 = [
     {pinkText:'GAME'},
@@ -34,8 +34,8 @@ const itemsX3 = [
     {text:'BEGINNER',trues:[true,true,true,true], src:require('../../assets/main/sea/turtle.png'),eyes:require('../../assets/main/sea/turtle-eyes.png'),animatetoPosition:20122,},    
     {text:'ELEMENTARY',trues:[true,true,true,true],src:require('../../assets/main/sea/turtle.png'),eyes:require('../../assets/main/sea/turtle-eyes.png'),animatetoPosition:20122},
     {text:'INTERMEDIATE',trues:[true,true,true,true],src:require('../../assets/main/sea/turtle.png'),eyes:require('../../assets/main/sea/turtle-eyes.png'),animatetoPosition:20122},
-    {text:'ADVANCED',trues:[true,false,false,true],src:require('../../assets/main/sea/turtle.png'),eyes:require('../../assets/main/sea/turtle-eyes.png'),animatetoPosition:20122},
-    {text:'EXPERT',trues:[true,false,false,false],src:require('../../assets/main/sea/turtle.png'),eyes:require('../../assets/main/sea/turtle-eyes.png'),animatetoPosition:20122},
+    {text:'ADVANCED',trues:[false,false,false,true],src:require('../../assets/main/sea/turtle.png'),eyes:require('../../assets/main/sea/turtle-eyes.png'),animatetoPosition:20122},
+    {text:'EXPERT',trues:[false,false,false,true],src:require('../../assets/main/sea/turtle.png'),eyes:require('../../assets/main/sea/turtle-eyes.png'),animatetoPosition:20122},
 ] 
 export function useConfig(){
     return all
