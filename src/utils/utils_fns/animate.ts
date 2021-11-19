@@ -62,6 +62,7 @@ export class Animate {
                 },200)
             }
             if(towards === 'left'){
+                console.log('run,left',animateEle)
                 //case 左移定时器（动画未执行完）
                 if(runTimer_left) return 
                 clearInterval(Number(runTimer_right))

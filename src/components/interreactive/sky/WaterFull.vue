@@ -33,10 +33,21 @@ export default {
     position: absolute;
     top:-1500px;
     display: flex;
+    height: 1500px;
+    overflow: hidden;
 }
 .water{
     width: 700px;
+    height: 3000px;
      background-image: url('../../../assets/main/sky/water1.png');
+     animation: waterFall 3s infinite;
+}
+@keyframes waterFall {
+    0% {transform: translateY(0);}
+    25% {transform: translateY(200px);}
+    50% {transform: translateY(400px);}
+    75% {transform: translateY(600px);}
+    100% {transform: translateY(800px);}
 }
 .ground-left{
     background-image: url('../../../assets/main/sky/ground.png');

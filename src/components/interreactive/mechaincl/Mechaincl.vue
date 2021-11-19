@@ -245,17 +245,15 @@ export default {
     50% {transform: translate(200px,200px);} */
     100% {transform: translateX(0);}
 }/* Safari and Chrome */
-@keyframes ccc
-{
-    0% {transform: translateX(-200px);}
+@keyframes domMove{
+      0% {transform: translateX(-200px);}
 /*     25% {transform: translate(-200px,200px);}
     50% {transform: translate(200px,200px);} */
     100% {transform: translateX(0);}
 }
-
 .m1{
-    animation:ccc;
-    animation-iteration-count:99;
+    animation:domMove;
+    animation-iteration-count:infinite;
     position: relative;
     width: 500px;
     height: 400px;

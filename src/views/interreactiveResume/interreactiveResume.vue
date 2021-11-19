@@ -3,7 +3,7 @@
         <div id="life">
             <div class="life-scroll-view" 
             ref="childWidtgref" 
-            :style="{transform:`translateX(${scrollViweTranslateX}px)`,            
+            :style="{transform:`translate(${scrollViweTranslateX}px,${scrollViweTranslateY}px)`,            
             height:scrollViewHeight}">
                 <div class="table">                  
                     <my-table  ></my-table>
@@ -109,14 +109,20 @@
                     <div class="sea-water1"></div>
                     <div class="sea-body" ></div>
                     <water-full></water-full>
+                     <balloon type='1' v-if="scrollViweTranslateY === 0"></balloon> 
+                    
                 </div>
             </div>
 
         </div>
     </div>
-    <div id="animate" >
+    <div id="animate" v-show="!takeingBallon" :style="{bottom:screenBottom + 'px'}">
         <div :class="[isOpen ? 'animate-eyes' : '']" :style="{left:eyesLeft + 'px'}"></div>
     </div>
+    <balloon v-if="scrollViweTranslateY > 0" type="2" :positionLeft="skyLeft" ></balloon>
+    <div class="animate-clone" v-if="takeingBallon" :style="{left:skyLeft}">
+                        <div :class="[isOpen ? 'animate-eyes' : '']" :style="{left:eyesLeft + 'px'}"></div>
+                    </div>
     <div class="position-x"></div>
     <div v-if="!startScroll" class="welcome">Scorll down mouse or up</div>
 
@@ -145,6 +151,7 @@ import Black from '@/components/interreactive/mechaincl/Black.vue'
 import Cli from '@/components/interreactive/mechaincl/Cli.vue'
 import Mechaincl from '@/components/interreactive/mechaincl/Mechaincl.vue'
 import WaterFull from '@/components/interreactive/sky/WaterFull.vue'
+import Balloon from '@/components/interreactive/sky/Balloon.vue'
 export default {
   components: {
     TreeItem,
@@ -165,17 +172,18 @@ export default {
     Cli,
     Black,
     Mechaincl,
-    WaterFull   
+    WaterFull,
+    Balloon   
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   setup(){
     let {itemsY1,itemsX1,itemsY2,itemsX2,itemsY3,itemsX3} = useConfig()
     let {childWidtgref,childsWidth} = useComDreamCycle()
     let {isOpen} = eyesOpenOrClose()
-    let {eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight,seaTop} = useAnimateAndScroll()
+    let {eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight,seaTop,takeingBallon,screenBottom,scrollViweTranslateY,skyLeft} = useAnimateAndScroll()
     let {bubbleIsShow,bubbleMoved,bubbles} = useRandomBubble()
     return {
-        bubbleIsShow,bubbleMoved,bubbles,scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft,scrollViewHeight,seaTop,itemsY1,itemsX1,isOpen,itemsY2,itemsX2,itemsY3,itemsX3
+        skyLeft,scrollViweTranslateY,screenBottom,bubbleIsShow,bubbleMoved,bubbles,scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft,scrollViewHeight,seaTop,itemsY1,itemsX1,isOpen,itemsY2,itemsX2,itemsY3,itemsX3,takeingBallon
     }
   }
 
@@ -351,12 +359,27 @@ background-color: #0072bc;
     width: 200px;
     height: 200px;
     position: fixed;
+    z-index: 1000;
     bottom: 90px;
     left: 50%;
     margin-left:-100px;
     background-color: red;
     background:url('../../assets/main/ground/robby-slides.png') no-repeat;
     transition: transform .5s;
+}
+.animate-clone{
+    
+     width: 200px;
+    height: 200px;
+    position: fixed;
+    z-index: 100;
+    bottom: 150px;
+    left: 50%;
+    margin-left: -100px;
+    background-color: red;
+    background:url('../../assets/main/ground/robby-slides.png') no-repeat;
+    transition: transform .5s;   
+    transition: left 1s;
 }
 .sun{
     position: absolute;
@@ -398,7 +421,7 @@ background-color: #0072bc;
     background-image: url('../../assets/main/ground/ground.png');
 }
 .scroll-body{
-    height: 36000px;
+    height: 41000px;
 }
 .c2{
     flex:25%;

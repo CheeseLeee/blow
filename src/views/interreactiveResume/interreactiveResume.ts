@@ -27,7 +27,8 @@ export function useRandomBubble(){
         const int = getRandomInt(1,6)
             for(let i = 1 ; i < int ; i++){
                 const left = getRandomInt(1,3300)
-                bubbles.push(left)
+                
+                bubbles.push(left + '')
 
             }
                setTimeout(() => {
@@ -65,10 +66,14 @@ export function eyesOpenOrClose(){
 }
 
 export function useAnimateAndScroll(){
+    const skyLeft = ref('50%')
+    const scrollViweTranslateY = ref(0)
+    const hY = ref(10)
+    const screenBottom = ref(90)
     const eyesLeft = ref(90)
     const startScroll = ref(false)
     const scrollViweTranslateX = ref(0)
-
+    const takeingBallon = ref(false)
     const scrollViewHeight = ref('100%') 
     let animateEl:HTMLElement
     let preScrollTop = 0 
@@ -83,6 +88,8 @@ export function useAnimateAndScroll(){
     let goSeaKey = false
     let goMechanicalKey = false
     let winWidthHelf:number
+    let takeBalloonHeight: number
+    let canScroll = true
     const seaTop = ref()
 
     onMounted(() => {
@@ -110,8 +117,12 @@ export function useAnimateAndScroll(){
         goSeaScrollHeight = 14786 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
         //跳跃点 第三关赛博朋克
         goMechanicalHeight = 22792 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
-        console.log('swim',goSeaScrollHeight)
-        scrollViweTranslateX.value =  -scrollHeight / 2
+
+        
+       
+            scrollViweTranslateX.value =  -scrollHeight / 2
+        
+        
         const {t} = scorllToward(scrollHeight)
         //case:scroll down
         preScrollTop = scrollHeight
@@ -119,10 +130,12 @@ export function useAnimateAndScroll(){
         if(scrollHeight > goSeaScrollHeight){
             window.removeEventListener('scroll', handleScroll)
             window.addEventListener('scroll', handleSeaViewScroll)
+            
             return
         }
         //滚动方向判断
-        if(t){  
+        if(t){
+
             const down1 = scrollHeight > downScrollHeight 
             const jump1 = scrollHeight > jumpScrollHeight 
             const down2 = scrollHeight > downScrollHeight2 
@@ -184,11 +197,13 @@ export function useAnimateAndScroll(){
                 animate.swim('right')
             }
             if(scrollHeight > goMechanicalHeight){
-                scrollViewHeight.value = '109%'
+                scrollViewHeight.value = '100%'
+                screenBottom.value = 140
                 goMechanicalKey = true
                 //第二关结束，第三关赛博朋克开始
                 window.removeEventListener('scroll', handleSeaViewScroll)
                 window.addEventListener('scroll',handleMechanicalViewScroll)
+                
             }
             eyesLeft.value = 90
         }else{             
@@ -198,6 +213,7 @@ export function useAnimateAndScroll(){
             if(scrollHeight < goSeaScrollHeight && goSeaKey){
                 goSeaKey = false
                 scrollViewHeight.value = '100%'
+                screenBottom.value = 90
                 //scrollView.classList.add("heightQueit")
                 window.removeEventListener('scroll', handleSeaViewScroll)      
                 window.addEventListener('scroll', handleScroll)
@@ -213,6 +229,7 @@ export function useAnimateAndScroll(){
     }
 
     function handleMechanicalViewScroll(){
+        
         const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop
         const jumpBoxPoint =  27006 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
         const jumpDownBoxPOint = 27862 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
@@ -221,10 +238,24 @@ export function useAnimateAndScroll(){
 
         const jumpUpBoxPoint2 = 30407 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
         const jumpDownBoxPoint2 = 31340 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
+        //坐气球
+        takeBalloonHeight = 34222 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
         const {t} = scorllToward(scrollHeight)     
         console.log('????',scrollHeight) 
-        scrollViweTranslateX.value =  -scrollHeight / 2
+        if(canScroll){
+            console.log(canScroll,'can')
+            scrollViweTranslateX.value =  -scrollHeight / 2
+        }
+        //坐气球了
         if(t){
+            if(scrollHeight > takeBalloonHeight){
+                console.log('stop')
+                takeingBallon.value = true
+                canScroll = false
+                window.addEventListener('scroll',handleSkyViewCroll)
+                window.removeEventListener('scroll',handleMechanicalViewScroll)
+                
+            }
             if(scrollHeight < 28230){
                 //to do
                 if(scrollHeight > jumpDownBoxPOint){
@@ -243,6 +274,8 @@ export function useAnimateAndScroll(){
             animate.run('right')
             eyesLeft.value = 90
         }else{
+            canScroll = true
+            takeingBallon.value = false
             //回到sea
             if(scrollHeight < goMechanicalHeight){
                 window.addEventListener('scroll', handleSeaViewScroll)
@@ -265,13 +298,44 @@ export function useAnimateAndScroll(){
                         animate.jumpUp('left','150')
                     }                   
                 }
-
                 animate.run('left')
             }
             eyesLeft.value = 55
         } 
     }
+
+    function handleSkyViewCroll(){
+        const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop
+        const {t} = scorllToward(scrollHeight)  
+        if(t){
+            hY.value  = hY.value + 10
+            scrollViweTranslateY.value =  hY.value
+            if(hY.value > 50 && hY.value < 100){
+                skyLeft.value = '60%'
+            }
+            if(hY.value > 100 && hY.value < 150){
+                skyLeft.value = '80%'
+            }
+        }else{
+            if(scrollViweTranslateY.value !==0){
+                hY.value  = hY.value - 10
+                scrollViweTranslateY.value =  hY.value
+                if(hY.value > 50 && hY.value < 100){
+                    skyLeft.value = '60%'
+                }
+                if(hY.value < 50 && hY.value > 10){
+                    skyLeft.value = '50%'
+                }
+            }
+            else if(scrollHeight < takeBalloonHeight){
+                //返回机械
+                window.addEventListener('scroll',handleMechanicalViewScroll)
+                window.removeEventListener('scroll',handleSkyViewCroll)  
+            }
+            console.log('left,sky')
+        }
+    }
     return {
-        eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight,seaTop
+        skyLeft,eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight,seaTop,takeingBallon,screenBottom,scrollViweTranslateY
     }
 }
