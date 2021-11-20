@@ -31,8 +31,8 @@
         </div>
         <div class="main-body-2">
             <div class="contxt2">
-                <p class="contxt-p1">I PUT MY PAST INTO HERE</p>
-                <p class="contxt-p2">I give up past experience never , even with regrets , if you want to see my heart , you can do this</p>
+                <p class="contxt-p1">here is experience to study</p>
+                <p class="contxt-p2">i am going to write some experience in here ,but i am lazy ,so,it's empty ,wait please</p>
                 <div class="btn" @click="handleError">
                     next
                 </div>

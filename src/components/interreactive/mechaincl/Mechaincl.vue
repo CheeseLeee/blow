@@ -2,11 +2,11 @@
   <div id="mechaincl" :style="{top:positionTop + 'px' ,left:positionLeft + 'px'}">
       <div v-if="type === '1'" class="m1" >
         <div class="m1-body">
-          <p class="m1-body-p">emotion</p>
+          <p class="m1-body-p">game</p>
         </div>
         <div class="m1-info">
-          <p class="m1-info-p">love</p>
-          <p class="m1-info-p-1">friend</p>
+          <p class="m1-info-p">sports</p>
+          <p class="m1-info-p-1">learing</p>
         </div>
         <div class="hand-left" v-for="(item,index) in handsImgLt" :key="index"  :class="[item.className]"  :style="{backgroundImage:`url(${item.src})`,opacity:item.opacity}">
 

@@ -29,9 +29,9 @@
                     <tree-item type="a" positionLeft="2300"></tree-item>
                 </div>
                 <div class="ribbon">
-                    <ribbon type="red" positionLeft="4300" positionTop="0" redText="sports fan"></ribbon>
-                    <ribbon type="red" positionLeft="2555" positionTop="0" redText="I dream of liveing in USA"></ribbon>
-                    <ribbon type="red" positionLeft="12155" positionTop="0" redText="what to do"></ribbon>
+                    <ribbon type="red" positionLeft="6305" positionTop="5%" redText="sports fan"></ribbon>
+                    <ribbon type="red" positionLeft="4555" positionTop="5%" redText="I dream of liveing in USA"></ribbon>
+                   
                 </div>
                 <div class="builds">                    
                     <build positionLeft="4100" type="a"></build>
@@ -44,6 +44,7 @@
                 </div>
                 <div class="mountains">
                     <mountain-item positionLeft="900"></mountain-item>
+                    <mountain-item positionLeft="1800"></mountain-item>
                 </div>
                 <div class="fan">
                     <fan></fan>
@@ -70,6 +71,7 @@
                    </div>
                 </div>
                 <div class="view-sea-sky"></div>
+                 <div class="view-sea-sky-2"></div>
                 <div class="view-sea-two">
                     <div class="sand-box">
                         <sand-box type="1" positionLeft="950"></sand-box>
@@ -90,7 +92,7 @@
                 </div>
                 <div class="blacks">
                     <black positionLeft="12500"></black>
-                    <black positionLeft="14000" animatePosition="27750"></black>
+                    <black positionLeft="14000" animatePosition="27750" textTop="老骥伏枥，志在千里" textBottom="烈士暮年，壮心不已"></black>
                 </div>
                 <div class="robots">
                    <mechaincl type="1" positionLeft="12800"></mechaincl>
@@ -109,19 +111,33 @@
                     <div class="sea-water1"></div>
                     <div class="sea-body" ></div>
                     <water-full></water-full>
-                     <balloon type='1' v-if="scrollViweTranslateY === 0"></balloon> 
-                    
+                    <balloon type='1' v-if="scrollViweTranslateY < 0 ||  scrollViweTranslateY == 0 "></balloon> 
+                    <div>
+                        <banner  v-for="(item,index) in bannerConfig" :key="index" 
+                        :type="item.type" 
+                        :positionBottom="item.positionBottom"
+                        :title="item.title"
+                        :context="item.context">
+                        </banner>
+                        <cloud-item positionLeft="750" positionTop="-2000"> </cloud-item>
+                        <cloud-item positionLeft="950" positionTop="-2300"> </cloud-item>
+                        <cloud-item positionLeft="750" positionTop="-2600"> </cloud-item>
+                        <cloud-item positionLeft="1350" positionTop="-2900"> </cloud-item>
+                        <sky-cloud></sky-cloud>
+                        <sky-table></sky-table>
+                    </div>
                 </div>
+                <div class="sky-bg"></div>
             </div>
 
         </div>
     </div>
     <div id="animate" v-show="!takeingBallon" :style="{bottom:screenBottom + 'px'}">
-        <div :class="[isOpen ? 'animate-eyes' : '']" :style="{left:eyesLeft + 'px'}"></div>
+        <div  :class="[isOpen ? 'animate-eyes' : '']" :style="{left:eyesLeft + 'px'}"></div>
     </div>
-    <balloon v-if="scrollViweTranslateY > 0" type="2" :positionLeft="skyLeft" ></balloon>
-    <div class="animate-clone" v-if="takeingBallon" :style="{left:skyLeft}">
-                        <div :class="[isOpen ? 'animate-eyes' : '']" :style="{left:eyesLeft + 'px'}"></div>
+    <balloon v-if="scrollViweTranslateY > 0" type="2" :positionLeft="skyLeft" :translateY="cloneBalloonMove"></balloon>
+    <div class="animate-clone" v-show="takeingBallon" :style="{left:skyLeft}">
+                        
                     </div>
     <div class="position-x"></div>
     <div v-if="!startScroll" class="welcome">Scorll down mouse or up</div>
@@ -145,13 +161,16 @@ import SeaTable from '@/components/interreactive/sea/SeaTable.vue'
 import Bubble from '@/components/interreactive/sea/Bubble.vue'
 import SandBox from '@/components/interreactive/sea/SandBox.vue'
 import DeepWater from '@/components/interreactive/sea/DeepWater.vue'
-import {useConfig} from '@/components/comConfig/index'
+import {useConfig,useBannerConfig} from '@/components/comConfig/index'
 import Box from '@/components/interreactive/mechaincl/Box.vue'
 import Black from '@/components/interreactive/mechaincl/Black.vue'
 import Cli from '@/components/interreactive/mechaincl/Cli.vue'
 import Mechaincl from '@/components/interreactive/mechaincl/Mechaincl.vue'
 import WaterFull from '@/components/interreactive/sky/WaterFull.vue'
 import Balloon from '@/components/interreactive/sky/Balloon.vue'
+import Banner from '@/components/interreactive/sky/Banner.vue'
+import SkyCloud from '@/components/interreactive/sky/SkyCloud.vue'
+import SkyTable from '@/components/interreactive/sky/SkyTable.vue'
 export default {
   components: {
     TreeItem,
@@ -173,17 +192,21 @@ export default {
     Black,
     Mechaincl,
     WaterFull,
-    Balloon   
+    Balloon,
+    Banner,
+    SkyCloud,
+    SkyTable
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   setup(){
     let {itemsY1,itemsX1,itemsY2,itemsX2,itemsY3,itemsX3} = useConfig()
+    let {bannerConfig} = useBannerConfig()
     let {childWidtgref,childsWidth} = useComDreamCycle()
     let {isOpen} = eyesOpenOrClose()
-    let {eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight,seaTop,takeingBallon,screenBottom,scrollViweTranslateY,skyLeft} = useAnimateAndScroll()
+    let {eyesLeft,cloneBalloonMove,startScroll,scrollViweTranslateX,scrollViewHeight,seaTop,takeingBallon,screenBottom,scrollViweTranslateY,skyLeft} = useAnimateAndScroll()
     let {bubbleIsShow,bubbleMoved,bubbles} = useRandomBubble()
     return {
-        skyLeft,scrollViweTranslateY,screenBottom,bubbleIsShow,bubbleMoved,bubbles,scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft,scrollViewHeight,seaTop,itemsY1,itemsX1,isOpen,itemsY2,itemsX2,itemsY3,itemsX3,takeingBallon
+        bannerConfig,cloneBalloonMove,skyLeft,scrollViweTranslateY,screenBottom,bubbleIsShow,bubbleMoved,bubbles,scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft,scrollViewHeight,seaTop,itemsY1,itemsX1,isOpen,itemsY2,itemsX2,itemsY3,itemsX3,takeingBallon
     }
   }
 
@@ -191,6 +214,7 @@ export default {
 </script>   
 
 <style scoped >
+
 .sea-body{
 background-color: #0072bc;
     position: absolute;
@@ -288,11 +312,19 @@ background-color: #0072bc;
     background-image: url('../../assets/main/sea/sea-wave.png');
 }
 .view-sea-sky{
-    height: 2500px;
+    height: 4500px;
     width: 11000px;
      position: absolute; 
     left: 7320px;
     top:-100vh;
+    background-color: rgb(34, 177, 210);
+}
+.view-sea-sky-2{
+    height: 17500px;
+    width: 11000px;
+     position: absolute; 
+    left: 7320px;
+    top:calc(100vh - 7500px);
     background-color: rgb(34, 177, 210);
 }
 .life-scroll-view-sea{
@@ -338,6 +370,7 @@ background-color: #0072bc;
 }
 .position-x{
     position: fixed;
+    display: none;
     bottom: 120px;
     width: 20px;
     height: 20px;
@@ -421,7 +454,7 @@ background-color: #0072bc;
     background-image: url('../../assets/main/ground/ground.png');
 }
 .scroll-body{
-    height: 41000px;
+    height: 57800px;
 }
 .c2{
     flex:25%;

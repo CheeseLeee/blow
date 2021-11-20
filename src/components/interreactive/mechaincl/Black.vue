@@ -2,8 +2,8 @@
   <div v-moveAnimateY="animatePosition" id="black" :style="{top:positionTop + 'px' ,left:positionLeft + 'px'}">
     <img src="../../../assets/main/mechanical/chain-block.png" />
     <div class="black">
-      <div class="black-1">业精于勤荒于嬉</div>
-      <div class="black-2">行成于思毁于随</div>
+      <div class="black-1">{{textTop}}</div>
+      <div class="black-2">{{textBottom}}</div>
     </div>
   </div>
 </template>
@@ -15,6 +15,14 @@ export default {
 
   },
     props:{
+      textTop:{
+        type:String,
+        default:'业精于勤荒于嬉'
+      },
+      textBottom:{
+        type:String,
+        default:'行成于思毁于随'
+      },
       animatePosition:{
         type:String,
         default:'24532'

@@ -78,6 +78,11 @@ export default {
 </script>
 
 <style scoped >
+.ribbon{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
 .pink{
     background-color: #f26d7d;
         height: 40px;

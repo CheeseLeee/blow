@@ -1,7 +1,7 @@
 <template>
   <div >
       <div v-if="type==='1'" id="balloon"></div>
-      <div v-if="type==='2'" class="balloon-clone" :style="{left:positionLeft}"></div>
+      <div v-if="type==='2'" class="balloon-clone" :style="{left:positionLeft,bottom:`${translateY}px`}" ></div>
   </div>
 </template>
 
@@ -14,6 +14,10 @@ export default {
       positionLeft:{
         type:String,
         default:'50%'
+      },
+      translateY:{
+        type:String,
+        default:'150'
       },
       type:{
         type:String
@@ -28,7 +32,7 @@ export default {
 
 <style scoped >
 .balloon-clone{
-    transition: left 1s;
+    transition: bottom 1s;
     height: 700px;
     width: 400px;
     position: fixed;
@@ -37,7 +41,7 @@ export default {
     z-index: 1001;
     bottom: 150px;;
     background-image: url('../../../assets/main/sky/balloon.png');
-  
+    
 }
 #balloon{
     height: 700px;

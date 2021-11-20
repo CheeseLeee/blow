@@ -3,9 +3,11 @@ export class Animate {
     public jumpUp:(towards:string,jumpHeight?:string) => void
     public jumpDown:(towards:string) => void
     public swim:(towards:string) => void
+    public win:() => void
     public clearRunStark:() => void
     public clearJumpStark:() => void
     public clearSwimStark:() => void
+    public clearWinStark:() => void
     constructor(animateEle:HTMLElement){
         let runTimer_right:NodeJS.Timer | null
         let runTimer_left:NodeJS.Timer | null
@@ -16,7 +18,7 @@ export class Animate {
         let jumpDownKey = true
         let swimTimerRight:NodeJS.Timer | null = null
         let swimTimerLeft:NodeJS.Timer | null = null
- 
+        let winnerTimer:NodeJS.Timer | null = null
         this.clearRunStark = () => {
             clearInterval(Number(runTimer_right))
             runTimer_right = null
@@ -172,6 +174,26 @@ export class Animate {
                     }
                 },200)               
             }
+        }
+        this.win = () => {
+            clearInterval(Number(winnerTimer))
+            let countX = 0
+            winnerTimer = setInterval(() => {
+               if(countX === 0){
+                    animateEle.style.backgroundPosition =  -200 * 8 + "px " + 0 + 'px' 
+                    countX = 8 
+                }else if(countX === 8){
+                    animateEle.style.backgroundPosition =  -200 * 0 + "px " + 0 + 'px'  
+                    countX = 0
+                }
+
+
+                
+            },1000)
+        }
+        this.clearWinStark = () => {
+            animateEle.style.backgroundPosition =  -200 * 0 + "px " + -200 + 'px'  
+            clearInterval(Number(winnerTimer))
         }
     }
 }

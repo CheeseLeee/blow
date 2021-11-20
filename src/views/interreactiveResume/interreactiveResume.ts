@@ -66,8 +66,10 @@ export function eyesOpenOrClose(){
 }
 
 export function useAnimateAndScroll(){
+    const cloneBalloonMove = ref(150)
     const skyLeft = ref('50%')
     const scrollViweTranslateY = ref(0)
+    let animateElClone:HTMLElement
     const hY = ref(10)
     const screenBottom = ref(90)
     const eyesLeft = ref(90)
@@ -95,6 +97,7 @@ export function useAnimateAndScroll(){
     onMounted(() => {
         winWidthHelf = window.innerWidth / 2
         animateEl = document.getElementById('animate') as HTMLElement
+        animateElClone = document.getElementsByClassName('animate-clone')[0] as HTMLElement
         scrollView =  document.getElementsByClassName('life-scroll-view')[0] as HTMLElement
         window.addEventListener('scroll', handleScroll)
         animate = new Animate(animateEl)
@@ -305,27 +308,29 @@ export function useAnimateAndScroll(){
     }
 
     function handleSkyViewCroll(){
+        console.log(hY.value)
         const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop
         const {t} = scorllToward(scrollHeight)  
         if(t){
-            hY.value  = hY.value + 10
-            scrollViweTranslateY.value =  hY.value
-            if(hY.value > 50 && hY.value < 100){
-                skyLeft.value = '60%'
-            }
-            if(hY.value > 100 && hY.value < 150){
-                skyLeft.value = '80%'
+
+            if(hY.value > 4210){
+                takeingBallon.value = false
+                cloneBalloonMove.value = 900
+                animate.win()
+                return
+            }else{
+                animateElClone.style.backgroundPosition =  0 + "px " + 0 + 'px'
+                hY.value  = hY.value + 20
+                scrollViweTranslateY.value =  hY.value
             }
         }else{
-            if(scrollViweTranslateY.value !==0){
-                hY.value  = hY.value - 10
+            animate.clearWinStark()
+            takeingBallon.value = true
+            cloneBalloonMove.value = 150
+            animateElClone.style.backgroundPosition =  0 + "px " + -200 + 'px'
+            if(scrollViweTranslateY.value > 0){
+                hY.value  = hY.value - 20
                 scrollViweTranslateY.value =  hY.value
-                if(hY.value > 50 && hY.value < 100){
-                    skyLeft.value = '60%'
-                }
-                if(hY.value < 50 && hY.value > 10){
-                    skyLeft.value = '50%'
-                }
             }
             else if(scrollHeight < takeBalloonHeight){
                 //返回机械
@@ -336,6 +341,6 @@ export function useAnimateAndScroll(){
         }
     }
     return {
-        skyLeft,eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight,seaTop,takeingBallon,screenBottom,scrollViweTranslateY
+        cloneBalloonMove,skyLeft,eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight,seaTop,takeingBallon,screenBottom,scrollViweTranslateY
     }
 }

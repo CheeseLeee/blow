@@ -1,6 +1,6 @@
 <template>
     <div class="plants-container">
-        <ribbon redText="我的职业" positionLeft="250" positionTop="-25%"></ribbon>
+        <ribbon redText="Evaluation skills " positionLeft="450" positionTop="-15%"></ribbon>
         <div class="title-line">
           <div class="ribbonInfo-item" v-for="(item,index) in ribbonInfo" :key="index">
             <ribbon  :type="item.type" :yellowText="item.yellowText" ></ribbon>
@@ -105,7 +105,7 @@ export default {
   position:absolute;
 }
 .plants-container{
-    position: relative;
+    position: absolute ;
     left: 2600px;
     top:15%;
     width: 900px;

@@ -172,31 +172,31 @@ import { ElNotification } from 'element-plus'
           hisControllerValue.unshift(controllerValue.value)
           hisIndex.value = 0    
           switch(controllerValue.value){
-            case '-- help':
+            case '--help':
               console.log('right')
               controllerValue.children.push('-- start:开始','-- end:undefined','-- clear:清理掉操作信息','-- deepclear:清理掉操作历史栈及信息','-- gobang:gobang is inventing','-- author:作者信息')   
               break
-            case '-- start':
+            case '--start':
               Router.push({
                 name:'Home'
               })
               break
-            case '-- end':
+            case '--end':
               controllerValue.children.push('I haven not figured out what to do')
               break
-            case '-- clear':
+            case '--clear':
               userOrders.length = 0
               break
-            case '-- deepclear':
+            case '--deepclear':
                hisIndex.value = 0
                hisControllerValue = []
               break
-            case '-- gobang':
+            case '--gobang':
                 Router.push({
                 name:'Gobang'
               })
               break
-            case '-- author':
+            case '--author':
               controllerValue.children.push('Name:lzx,Born:1997-12-05,University:undefiend')
               break
             default:
