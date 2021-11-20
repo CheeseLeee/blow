@@ -47,14 +47,14 @@ export function useConfig(){
 }
 
 const bannerConfig = [
-    {type:"1",positionBottom:"1600",title:'Dec 1997',context:'I born'},
-    {type:"2",positionBottom:"2000",title:'Mar 2013',context:'Make monery frist time'},    
-    {type:"1",positionBottom:"2400",title:'Feb 2016',context:'Meet the person which i love'},
-    {type:"2",positionBottom:"2800",title:'Aug 2017',context:'Passed CET-4'},
-    {type:"1",positionBottom:"3200",title:'Jun 2019',context:'Finish university'},
-    {type:"2",positionBottom:"3600",title:'Jun 2019',context:'Work frist time'},
-    {type:"1",positionBottom:"4000",title:'Mar 2021',context:'Go to guangzhou'},
-    {type:"2",positionBottom:"4400",title:'Nove 2021',context:'Make this web'},
+    {type:"1",positionBottom:"4600",title:'Dec 1997',context:'I born'},
+    {type:"2",positionBottom:"5000",title:'Mar 2013',context:'Make monery frist time'},    
+    {type:"1",positionBottom:"5400",title:'Feb 2016',context:'Meet the person which i love'},
+    {type:"2",positionBottom:"5800",title:'Aug 2017',context:'Passed CET-4'},
+    {type:"1",positionBottom:"6200",title:'Jun 2019',context:'Finish university'},
+    {type:"2",positionBottom:"6600",title:'Jun 2019',context:'Work frist time'},
+    {type:"1",positionBottom:"7000",title:'Mar 2021',context:'Go to guangzhou'},
+    {type:"2",positionBottom:"7400",title:'Nove 2021',context:'Make this web'},
 ]
 
 

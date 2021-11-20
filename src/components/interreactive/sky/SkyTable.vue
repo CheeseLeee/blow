@@ -80,7 +80,7 @@ export default {
 }
 #skytable{
     position: absolute;
-    bottom: 5140px;
+    bottom: 8450px;
     left: 500px;
 }
 #skytable input{

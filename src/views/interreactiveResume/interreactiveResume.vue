@@ -41,6 +41,10 @@
                 <div class="cloud">
                     <cloud-item positionLeft="200" positionTop="40"></cloud-item>
                     <cloud-item positionLeft="750" positionTop="100"> </cloud-item>
+                    <cloud-item positionLeft="1750" positionTop="100"> </cloud-item>
+                    <cloud-item positionLeft="1250" positionTop="90"> </cloud-item>
+                    <cloud-item positionLeft="4250" positionTop="60"> </cloud-item>
+                     <cloud-item positionLeft="3850" positionTop="70"> </cloud-item>
                 </div>
                 <div class="mountains">
                     <mountain-item positionLeft="900"></mountain-item>
@@ -243,9 +247,9 @@ background-color: #0072bc;
 .sky{
     position: absolute; 
     left: calc(7320px + 4100px + 4500px);
-    bottom: -100vh;
+    bottom: -4000px;
     width: 3000px;
-    height: calc(100vh + 170px);
+    height: calc(4000px + 170px);
     
 }
 .title-experience{
@@ -267,9 +271,9 @@ background-color: #0072bc;
 .mechanical{
     position: fixed;
     left: calc(7320px + 4100px);
-    bottom: -100vh;
+    bottom: -3000px;
     width: 4500px;
-    height: calc(100vh + 120px);
+    height: calc(3000px + 120px);
    /*  background-color: green; */
    background-image: url('../../assets/main/mechanical/panel.png');
 }
@@ -420,6 +424,7 @@ background-color: #0072bc;
     left: 5px;
 }
 .welcome{
+    white-space: nowrap;
     position: absolute;
     bottom: 30px;
     left: 50%;
@@ -447,9 +452,9 @@ background-color: #0072bc;
 }
 .ground{
     width: 7320px;
-    height: calc(100vh + 90px);
+    height: calc(3000px + 90px);
     position: fixed;
-    bottom: calc(-100vh);
+    bottom: calc(-3000px);
     left: 0;
     background-image: url('../../assets/main/ground/ground.png');
 }

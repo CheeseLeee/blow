@@ -178,7 +178,7 @@ import { ElNotification } from 'element-plus'
               break
             case '--start':
               Router.push({
-                name:'Home'
+                name:'Main'
               })
               break
             case '--end':

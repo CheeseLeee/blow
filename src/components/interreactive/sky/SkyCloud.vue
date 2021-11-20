@@ -22,7 +22,7 @@ export default {
     position: absolute;
     width: 100%;
     right:0 ;
-    bottom: 5000px;
+    bottom: 8250px;
     z-index: 20;
 }
 .skycloud-body{
