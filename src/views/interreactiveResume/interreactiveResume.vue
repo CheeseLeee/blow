@@ -53,8 +53,10 @@
                 <div class="fan">
                     <fan></fan>
                 </div>
-                <div class="ground"></div>
-                <div class="grass"></div>
+                <div class="aaa" >
+                    <div class="grass"></div>
+                    <div class="ground"></div>
+                </div>
                 <div class="life-scroll-view-sea" :style="{height:seaTop}">
                     <div class="deepWaters">
                         <deep-water type="1" positionLeft="300" positionTop="400"></deep-water>
@@ -136,7 +138,7 @@
 
         </div>
     </div>
-    <div id="animate" v-show="!takeingBallon" :style="{bottom:screenBottom + 'px'}">
+    <div id="animate" v-show="!takeingBallon" >
         <div  :class="[isOpen ? 'animate-eyes' : '']" :style="{left:eyesLeft + 'px'}"></div>
     </div>
     <balloon v-if="scrollViweTranslateY > 0" type="2" :positionLeft="skyLeft" :translateY="cloneBalloonMove"></balloon>
@@ -397,7 +399,7 @@ background-color: #0072bc;
     height: 200px;
     position: fixed;
     z-index: 1000;
-    bottom: 90px;
+    bottom: 16vh;
     left: 50%;
     margin-left:-100px;
     background-color: red;
@@ -442,19 +444,20 @@ background-color: #0072bc;
   0% {opacity: 0;}
   100% {opacity: 1;}
 }
+.aaa{
+    height: 200vh;
+    bottom: -180vh;
+    position: fixed;
+}
 .grass{
     width: 7320px;
     height: 30px;
-        position: fixed;
-    bottom: 90px;
     left: 0;
     background-image: url('../../assets/main/ground/grass.png');
 }
 .ground{
     width: 7320px;
-    height: calc(3000px + 90px);
-    position: fixed;
-    bottom: calc(-3000px);
+    height: 190px;
     left: 0;
     background-image: url('../../assets/main/ground/ground.png');
 }
