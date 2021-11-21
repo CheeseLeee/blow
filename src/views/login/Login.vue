@@ -70,7 +70,7 @@
     </el-dialog>
     <div v-pcView class="thanks-info">
       <p>author:lzx</p>
-      <p>thanks:</p>
+      <p>thanks:http://www.rleonardi.com/interactive-resume/</p>
     </div>
   </div>
 
