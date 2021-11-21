@@ -151,7 +151,7 @@
 </template>
 
 <script lang='ts'>
-
+import {onMounted} from 'vue'
 import TreeItem from '@/components/interreactive/ground/TreeItem.vue'
 import CloudItem from '@/components/interreactive/ground/CloudItem.vue'
 import MountainItem from '@/components/interreactive/ground/MountainItem.vue'
@@ -205,6 +205,17 @@ export default {
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   setup(){
+/*       const convertStyle = () => {
+        //document.body.style.setProperty('height', `${window.innerHeight}px`);
+        //alert(window.innerHeight)
+        //scrollViewHeight.value = `${window.innerHeight}`
+    }
+
+   
+    //window.addEventListener("DOMContentLoaded", convertStyle);
+      onMounted(() => {
+           window.addEventListener("resize", convertStyle);
+      }) */
     let {itemsY1,itemsX1,itemsY2,itemsX2,itemsY3,itemsX3} = useConfig()
     let {bannerConfig} = useBannerConfig()
     let {childWidtgref,childsWidth} = useComDreamCycle()
@@ -220,7 +231,15 @@ export default {
 </script>   
 
 <style scoped >
+html {
+        height: -webkit-fill-available;
+    }
 
+    body {
+        min-height: 100vh;
+        /* mobile viewport bug fix */
+        min-height: -webkit-fill-available;
+    }
 .sea-body{
 background-color: #0072bc;
     position: absolute;
@@ -447,17 +466,18 @@ background-color: #0072bc;
 .aaa{
     height: 200vh;
     bottom: -180vh;
-    position: fixed;
+    position: absolute;
+    min-height: -webkit-fill-available;
 }
 .grass{
     width: 7320px;
-    height: 30px;
+    height: 2%;
     left: 0;
     background-image: url('../../assets/main/ground/grass.png');
 }
 .ground{
     width: 7320px;
-    height: 190px;
+    height:98%;
     left: 0;
     background-image: url('../../assets/main/ground/ground.png');
 }
@@ -483,10 +503,12 @@ background-color: #0072bc;
     transition-timing-function:ease-in;
 }
 #life{
+    
     position:fixed;
     top:0;
     height: 100vh;
     width: 100%;
+    height: -webkit-fill-available;
     overflow: hidden;
 
 }
