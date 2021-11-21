@@ -485,6 +485,7 @@ background-color: #0072bc;
     height: 100vh;
     width: 100%;
     overflow: hidden;
+    height: -webkit-fill-available;
 
 }
 
