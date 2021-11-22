@@ -8,16 +8,16 @@
 import { ElMessageBox, ElMessage } from 'element-plus'
 const winWidth = window.innerWidth;
 if(winWidth < 700){
-ElMessageBox.alert('in honest ,i really hope you can use PC to open this, because i only made simple MOBILE compatible', 'tip', {
-        confirmButtonText: 'OK',
-        callback: (action:any) => {
-          ElMessage({
-            type: 'info',
-            center:true,
-            message: `welcomt to here`,
-          })
-        },
-      })
+  ElMessageBox.alert('in honest ,i really hope you can use PC to open this, because i only made simple MOBILE compatible', 'tip', {
+      confirmButtonText: 'OK',
+      callback: () => {
+        ElMessage({
+          type: 'info',
+          center:true,
+          message: `welcomt to here`,
+        })
+      },
+    })
 }
 import { inject } from 'vue'
 /* 

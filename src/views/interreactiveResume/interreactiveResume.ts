@@ -19,7 +19,7 @@ export function useComDreamCycle(){
 export function useRandomBubble(){
     const bubbleIsShow = ref(true)
     const bubbleMoved = ref(false)
-    const bubbles:any = reactive([])
+    const bubbles:string[] = reactive([])
     const randonBubbles = setInterval(() => {
         bubbleIsShow.value = true
         bubbleMoved.value = false
@@ -105,7 +105,7 @@ export function useAnimateAndScroll(){
     onBeforeUnmount(() => {
         window.removeEventListener('scroll', handleScroll)
     })
-    function handleScroll(e:any){
+    function handleScroll(){
        // scrollView.classList.remove("heightQueit")
         startScroll.value = true
         const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop

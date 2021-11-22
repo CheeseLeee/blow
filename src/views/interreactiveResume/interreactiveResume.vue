@@ -9,10 +9,11 @@
                     <my-table  ></my-table>
                 </div>
                 <div class="gates">
-                    <gate positionLeft="7000" title="LEVEL2"></gate>
-                    <gate positionLeft="1800" title="LEVEL1"></gate>
-                    <gate positionLeft="11420" positionBottom="170" title="LEVEL3"></gate>
-                     <gate positionLeft="15920" positionBottom="170" title="LEVEL4"></gate>
+                    <gate v-for="(item,index) in gatesConfig" :key="index" 
+                    :positionLeft="item.positionLeft"
+                    :title="item.title"
+                    :positionBottom="item.positionBottom" >                   
+                    </gate>
                 </div>
                 <img class="sun" src="../../assets/main/ground/sun.png" />
                 <div class="grounds">
@@ -20,31 +21,17 @@
                     <ground positionLeft=5200></ground>
                 </div>
                 <div class="trees">
-                    <tree-item type="d" positionLeft="120"></tree-item>
-                    <tree-item type="b" positionLeft="40"></tree-item>
-                    <tree-item type="c" positionLeft="750"></tree-item>
-                    <tree-item type="e" positionLeft="900"></tree-item>
-                    <tree-item type="d" positionLeft="2350"></tree-item>
-                    <tree-item type="b" positionLeft="2200"></tree-item>
-                    <tree-item type="a" positionLeft="2300"></tree-item>
+                    <tree-item v-for="(item,index) in treesConfig" :key="index" :type="item.type" :positionLeft="item.positionLeft"></tree-item>
                 </div>
                 <div class="ribbon">
                     <ribbon type="red" positionLeft="6305" positionTop="5%" redText="sports fan"></ribbon>
-                    <ribbon type="red" positionLeft="4555" positionTop="5%" redText="I dream of liveing in USA"></ribbon>
-                   
+                    <ribbon type="red" positionLeft="4555" positionTop="5%" redText="I dream of liveing in USA"></ribbon>                   
                 </div>
                 <div class="builds">                    
-                    <build positionLeft="4100" type="a"></build>
-                    <build positionLeft="4400"  type="b"></build>
-                    <build positionLeft="4750"  type="c"></build>
+                    <build v-for="(item,index) in buildsConfig" :key="index" :type="item.type" :positionLeft="item.positionLeft"></build>
                 </div>
                 <div class="cloud">
-                    <cloud-item positionLeft="200" positionTop="40"></cloud-item>
-                    <cloud-item positionLeft="750" positionTop="100"> </cloud-item>
-                    <cloud-item positionLeft="1750" positionTop="100"> </cloud-item>
-                    <cloud-item positionLeft="1250" positionTop="90"> </cloud-item>
-                    <cloud-item positionLeft="4250" positionTop="60"> </cloud-item>
-                     <cloud-item positionLeft="3850" positionTop="70"> </cloud-item>
+                    <cloud-item v-for="(item,index) in cloudsConfig" :key="index" :positionLeft="item.positionLeft" :positionTop="item.positionTop"></cloud-item>
                 </div>
                 <div class="mountains">
                     <mountain-item positionLeft="900"></mountain-item>
@@ -57,18 +44,20 @@
                 <div class="grass"></div>
                 <div class="life-scroll-view-sea" :style="{height:seaTop}">
                     <div class="deepWaters">
-                        <deep-water type="1" positionLeft="300" positionTop="400"></deep-water>
-                        <deep-water type="1" positionLeft="2200" positionTop="320"></deep-water>
-                        <deep-water type="2" positionLeft="800" positionTop="180"></deep-water>
-                        <deep-water type="2" positionLeft="2670" positionTop="220"></deep-water>
+                        <deep-water v-for="(item,index) in deepwatersConfig" :key="index" :type="item.type" :positionLeft="item.positionLeft" :positionTop="item.posipositionToptionLeft"></deep-water>
+
                     </div>
                     <div class="sea-ground"></div>
 
                     <div class="sea-tables">
-                    <sea-table  :itemsY="itemsY1"  headtitle="Web Developoment" :itemsX="itemsX1"></sea-table>
-                    <sea-table  eye_positionLeft="30" headtitle="Sports and Race" eye_positionTop="40" positionTop="-560" positionLeft="1550" :itemsY="itemsY2" :itemsX="itemsX2"></sea-table>
-                    <sea-table  eye_positionLeft="3" headtitle="Evaluation Myself" eye_positionTop="27" positionTop="-1090" positionLeft="2750" :itemsY="itemsY3" :itemsX="itemsX3"></sea-table>
-                  <!--   <sea-table title="Web Development" :itemsY="itemsY1" :itemsX="itemsX1"></sea-table> -->
+                        <sea-table v-for="(item,index) in seaTableItemConfig" :key="index" 
+                        :data="item.data" 
+                        :headtitle="item.headtitle"
+                        :eye_positionLeft="item.eye_positionLeft"
+                        :eye_positionTop="item.eye_positionTop"
+                        :positionTop="item.positionTop"
+                        :positionLeft="item.positionLeft" >                       
+                        </sea-table>
                    </div>
                    <div  v-if="bubbleIsShow">
                         <bubble :class="[bubbleMoved ? 'bubbleMove' : '']" v-for="(item,index) in bubbles" :key="index" :positionLeft="item"></bubble>  
@@ -82,17 +71,11 @@
                         <sand-box type="2" positionLeft="1950"></sand-box>
                     </div> 
                     <div class="algaes">
-                        <algae type="1"></algae>
-                        <algae type="2" positionLeft="1050"> </algae>
-                        <algae type="1" positionLeft="3100"></algae>
-                        <algae type="2" positionLeft="3200"></algae>
+                        <algae v-for="(item,index) in algaesConfig" :key="index" :type="item.type" :positionLeft="item.positionLeft"></algae>
                     </div>
-
                 </div>
                 <div class="boxs">
-                    <box positionLeft="11920" type="1"></box>
-                     <box positionLeft="13520" type="2"></box>
-                      <box positionLeft="15220" type="2"></box>
+                    <box v-for="(item,index) in boxsConfig" :key="index" :positionLeft="item.positionLeft" :type="item.type"></box>
                 </div>
                 <div class="blacks">
                     <black positionLeft="12500"></black>
@@ -104,7 +87,7 @@
                 </div>
                 <div class="clis">
                     <cli positionLeft="13400"></cli>
-                     <cli positionLeft="14600"></cli>
+                    <cli positionLeft="14600"></cli>
                 </div>
                 <img class="title-experience" src="../../assets/main/mechanical/title-experience.png" />
                 <div  class="life-scroll-view-mechanicl"></div>
@@ -117,32 +100,27 @@
                     <water-full></water-full>
                     <balloon type='1' v-if="scrollViweTranslateY < 0 ||  scrollViweTranslateY == 0 "></balloon> 
                     <div>
-                        <banner  v-for="(item,index) in bannerConfig" :key="index" 
+                        <banner  
+                        v-for="(item,index) in bannerConfig" :key="index" 
                         :type="item.type" 
                         :positionBottom="item.positionBottom"
                         :title="item.title"
                         :context="item.context">
                         </banner>
-                        <cloud-item positionLeft="750" positionTop="-2000"> </cloud-item>
-                        <cloud-item positionLeft="950" positionTop="-2300"> </cloud-item>
-                        <cloud-item positionLeft="750" positionTop="-2600"> </cloud-item>
-                        <cloud-item positionLeft="1350" positionTop="-2900"> </cloud-item>
+                        <cloud-item v-for="(item,index) in skycloudConfig" :key="index" :positionLeft="item.positionLeft" :positionTop="item.positionTop"> </cloud-item>
                         <sky-cloud></sky-cloud>
                         <sky-table></sky-table>
                     </div>
                 </div>
                 <div class="sky-bg"></div>
             </div>
-
         </div>
     </div>
     <div id="animate" v-show="!takeingBallon" :style="{bottom:screenBottom + 'px'}">
         <div  :class="[isOpen ? 'animate-eyes' : '']" :style="{left:eyesLeft + 'px'}"></div>
     </div>
     <balloon v-if="scrollViweTranslateY > 0" type="2" :positionLeft="skyLeft" :translateY="cloneBalloonMove"></balloon>
-    <div class="animate-clone" v-show="takeingBallon" :style="{left:skyLeft}">
-                        
-                    </div>
+    <div class="animate-clone" v-show="takeingBallon" :style="{left:skyLeft}"></div>               
     <div class="position-x"></div>
     <div v-if="!startScroll" class="welcome">Scorll down mouse or up</div>
 
@@ -165,7 +143,7 @@ import SeaTable from '@/components/interreactive/sea/SeaTable.vue'
 import Bubble from '@/components/interreactive/sea/Bubble.vue'
 import SandBox from '@/components/interreactive/sea/SandBox.vue'
 import DeepWater from '@/components/interreactive/sea/DeepWater.vue'
-import {useConfig,useBannerConfig} from '@/components/comConfig/index'
+import {useConfig} from '@/components/comConfig/index'
 import Box from '@/components/interreactive/mechaincl/Box.vue'
 import Black from '@/components/interreactive/mechaincl/Black.vue'
 import Cli from '@/components/interreactive/mechaincl/Cli.vue'
@@ -203,14 +181,13 @@ export default {
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   setup(){
-    let {itemsY1,itemsX1,itemsY2,itemsX2,itemsY3,itemsX3} = useConfig()
-    let {bannerConfig} = useBannerConfig()
+    let {bannerConfig,seaTableItemConfig,gatesConfig,treesConfig,buildsConfig,cloudsConfig,deepwatersConfig,algaesConfig,boxsConfig,skycloudConfig} = useConfig()
     let {childWidtgref,childsWidth} = useComDreamCycle()
     let {isOpen} = eyesOpenOrClose()
     let {eyesLeft,cloneBalloonMove,startScroll,scrollViweTranslateX,scrollViewHeight,seaTop,takeingBallon,screenBottom,scrollViweTranslateY,skyLeft} = useAnimateAndScroll()
     let {bubbleIsShow,bubbleMoved,bubbles} = useRandomBubble()
     return {
-        bannerConfig,cloneBalloonMove,skyLeft,scrollViweTranslateY,screenBottom,bubbleIsShow,bubbleMoved,bubbles,scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft,scrollViewHeight,seaTop,itemsY1,itemsX1,isOpen,itemsY2,itemsX2,itemsY3,itemsX3,takeingBallon
+        skycloudConfig,boxsConfig,algaesConfig,deepwatersConfig,cloudsConfig,buildsConfig,treesConfig,gatesConfig,seaTableItemConfig,bannerConfig,cloneBalloonMove,skyLeft,scrollViweTranslateY,screenBottom,bubbleIsShow,bubbleMoved,bubbles,scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft,scrollViewHeight,seaTop,isOpen,takeingBallon
     }
   }
 

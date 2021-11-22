@@ -5,9 +5,9 @@
       </div>
       <div class="sea-table-main">
           <div class="sea-table-itemsY">
-             <ribbon v-for="(item,index) in itemsY" :key="index"  type="pink" :pinkText="item.pinkText"></ribbon>
+             <ribbon v-for="(item,index) in data.dataY" :key="index"  type="pink" :pinkText="item.pinkText"></ribbon>
           </div>
-           <div class="sea-table-item"  v-for="(item,indexX) in itemsX" :key="indexX">
+           <div class="sea-table-item"  v-for="(item,indexX) in data.dataX" :key="indexX">
                 <div class="sea-table-item-titte">{{item.text}}</div>
                 <div v-moveAnimate="item.animatetoPosition" class="sea-img-box" :class="[!showItem ? 'itemOpacity' :'']" v-for="(showItem,indexY) in item.trues" :key="indexY">
                     <img :src="item.src" />
@@ -19,58 +19,65 @@
 </template>
 
 <script lang='ts'>
+
 import Ribbon from '../Ribbon.vue'
 import {reactive} from 'vue'
-
 export default {
-  components: {
-    Ribbon
-  },
- props:{
-    headtitle:{
-        type:String,
+    components: {
+        Ribbon
     },
-     eye_positionLeft:{
-         type:String,
-         default:'18'
-     },
-     eye_positionTop:{
-         type:String,
-         default:'45'
-     },
-    positionTop:{
-        type:String,
-       
+    props:{
+        data:{
+            type:Object,
+            validator(this:void,value:any):boolean{
+                let keys = Object.keys(value)
+                let values = []
+                for(var k of keys){                
+                    values.push(value[k])
+                }
+                let typeValues = values.every((item) => {
+                    return Array.isArray(item)
+                })  
+                return keys.includes('dataX' || 'dataY') && typeValues
+            }
+        },
+        headtitle:{
+            type:String,
+        },
+        eye_positionLeft:{
+            type:String,
+            default:'18'
+        },
+        eye_positionTop:{
+            type:String,
+            default:'45'
+        },
+        positionTop:{
+            type:String,
+        
+        },
+        positionLeft:{
+            type:String,
+            default:'300'
+        },
     },
-    positionLeft:{
-        type:String,
-        default:'300'
-    },
-    itemsY:{
-        type:Array,
-        require:true
-    },
-    itemsX:{
-        type:Array,
-        require:true       
-    }
- },
-   setup() {
-        let numArr:any = reactive([])
-        function openEyes(x:any,y:any){           
+    setup() {
+        let numArr = reactive<string[]>([])
+        function openEyes(x:number,y:number){           
             if(numArr[x][y] === '1'){
                 return true
             }else{
                 return false
             }                       
         }
+        
         rendomEyes()
         function rendomEyes(){
             numArr.length = 0
             console.log(numArr,'before')
             var x:any = Math.floor(Math.random()* 2**20) 
             var twoX = x.toString("2")
-            twoX = twoX.length !== 20? '0'.repeat(20-twoX.length) + twoX : twoX        
+            twoX = twoX.length !== 20? '0'.repeat(20 - twoX.length) + twoX : twoX        
             for(var i = 0 ; i < 5 ; i++){
                 if(i === 0){
                     numArr.push(twoX.slice(i,4))                

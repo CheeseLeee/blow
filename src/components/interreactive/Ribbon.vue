@@ -28,53 +28,54 @@
 
 
 <script lang='ts'>
+import {defineComponent} from 'vue'
 import {computed} from 'vue'
-export default {
-  components: {
+export default defineComponent({
+    components: {
 
-  },
+    },
 
-  props:{
-      type:{
-          default:'red',
-          type:String
-      },
-      positionTop:{
-          type:String || Number
-      },
-      positionTopPercentage:{
-          type:String
-      },
-      positionLeft:{
-          type:String
-      },
-      redText:{
-          default:'XXXXXXXXXXXXXXXXXXX',
-          type:String,
-      },
-      yellowText:{
-        default:'暂无',
-          type:String,         
-      },
+    props:{
+        type:{
+            default:'red',
+            type:String
+        },
+        positionTop:{
+            type:String
+        },
+        positionTopPercentage:{
+            type:String
+        },
+        positionLeft:{
+            type:String
+        },
+        redText:{
+            default:'XXXXXXXXXXXXXXXXXXX',
+            type:String,
+        },
+        yellowText:{
+            default:'暂无',
+            type:String,         
+        },
         pinkText:{
             default:'暂无',
             type:String,         
         }
-  },
-  setup(props:any) {
-     const computedTop = computed(() => {
-        let top = props.positionTop
-        console.log(typeof top)
-        if(typeof top === 'number'){
-            return top + 'px'
-        }else{
-            return top 
-        }
-        
-      })
-    return {computedTop}
-  }
-}
+    },
+    setup(props) {
+        const computedTop = computed(() => {
+            let top = props.positionTop
+            console.log(typeof top)
+            if(typeof top === 'number'){
+                return top + 'px'
+            }else{
+                return top 
+            }
+            
+        })
+        return {computedTop}
+    }
+})
 </script>
 
 <style scoped >

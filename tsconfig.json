@@ -24,7 +24,8 @@
       "dom",
       "dom.iterable",
       "scripthost"
-    ]
+    ],
+   
   },
   "include": [
     "src/**/*.ts",
@@ -33,6 +34,7 @@
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
+
   "exclude": [
     "node_modules"
   ]
