@@ -1,6 +1,6 @@
 import { ElMenu, ElMenuItem, ElSlider, 
   ElPopover,ElForm,ElFormItem,ElInput,ElButton, ElMessageBox ,ElDialog,ElNotification,ElCarousel,ElCarouselItem} from 'element-plus'
-export const eleComponents: any[] = [
+export const eleComponents = [
   ElMenu,
   ElMenuItem,
   ElSlider,
@@ -14,4 +14,4 @@ export const eleComponents: any[] = [
   ElCarousel,
   ElCarouselItem
 ]
-export const eleplugins: any[] = [ElMessageBox,ElNotification]
+export const eleplugins = [ElMessageBox,ElNotification]
