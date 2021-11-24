@@ -25,6 +25,14 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
+    path: '/tetris',
+    name: ' ',
+    component: () => import('../views/game/tetris/Tetris.vue'),
+    meta:{
+      title:'tetis'
+    }
+  },
+  {
     path: '/main',
     name: 'Main',
     component: () => import('../views/main/Main.vue'),
