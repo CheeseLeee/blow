@@ -1,0 +1,1 @@
+export const formSubmit = `/api/formSubmit`

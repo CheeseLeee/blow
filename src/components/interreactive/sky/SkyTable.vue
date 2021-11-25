@@ -14,6 +14,7 @@
 <script lang='ts'>
 import { ElNotification} from 'element-plus'
 import {reactive,h } from 'vue'
+import {postFormSubimt} from '../../../request/request'
 export default {
   components: {
 
@@ -27,14 +28,15 @@ export default {
     })
 
     function handleSumit(){
-      console.log(tableInfo)
+      postFormSubimt().then(res => console.log(res))
+/*       console.log(tableInfo)
         ElNotification({
         title: 'success',
         message: h('i', { style: 'color: teal' }, 'submit right'),
-      })
-    tableInfo.em = ''
-    tableInfo.sub = ''
-    tableInfo.msg = ''
+      }) */
+      tableInfo.em = ''
+      tableInfo.sub = ''
+      tableInfo.msg = ''
     }
     return {tableInfo,handleSumit}
   }
