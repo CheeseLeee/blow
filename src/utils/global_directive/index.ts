@@ -51,10 +51,12 @@ export const globalDirectives:globalDirective[] = [
     },
     //pc show
     {
-        name:'pcView',
+        name:'isPc',
         cycle:{
             beforeMount(el:HTMLElement){
+                console.log('eee',el)
                 const winWidth = window.innerWidth;
+                console.log('wwww',winWidth)
                 if(winWidth > 415){
                     el.style.display = 'block'
                     return true

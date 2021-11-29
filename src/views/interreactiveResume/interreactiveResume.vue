@@ -59,8 +59,8 @@
                         :positionLeft="item.positionLeft" >                       
                         </sea-table>
                    </div>
-                   <div  v-if="bubbleIsShow">
-                        <bubble :class="[bubbleMoved ? 'bubbleMove' : '']" v-for="(item,index) in bubbles" :key="index" :positionLeft="item"></bubble>  
+                   <div  v-if="isBubbleIsShow">
+                        <bubble :class="[isBubbleMoved ? 'bubbleMove' : '']" v-for="(item,index) in bubbles" :key="index" :positionLeft="item"></bubble>  
                    </div>
                 </div>
                 <div class="view-sea-sky"></div>
@@ -143,7 +143,7 @@ import SeaTable from '@/components/interreactive/sea/SeaTable.vue'
 import Bubble from '@/components/interreactive/sea/Bubble.vue'
 import SandBox from '@/components/interreactive/sea/SandBox.vue'
 import DeepWater from '@/components/interreactive/sea/DeepWater.vue'
-import {useConfig} from '@/components/comConfig/index'
+import {useConfig} from '@/components/comConfig/interreative'
 import Box from '@/components/interreactive/mechaincl/Box.vue'
 import Black from '@/components/interreactive/mechaincl/Black.vue'
 import Cli from '@/components/interreactive/mechaincl/Cli.vue'
@@ -184,10 +184,11 @@ export default {
     let {bannerConfig,seaTableItemConfig,gatesConfig,treesConfig,buildsConfig,cloudsConfig,deepwatersConfig,algaesConfig,boxsConfig,skycloudConfig} = useConfig()
     let {childWidtgref,childsWidth} = useComDreamCycle()
     let {isOpen} = eyesOpenOrClose()
-    let {eyesLeft,cloneBalloonMove,startScroll,scrollViweTranslateX,scrollViewHeight,seaTop,takeingBallon,screenBottom,scrollViweTranslateY,skyLeft} = useAnimateAndScroll()
-    let {bubbleIsShow,bubbleMoved,bubbles} = useRandomBubble()
+    let {eyesLeft,cloneBalloonMove,startScroll,scrollViweTranslateX,scrollViewHeight,takeingBallon,screenBottom,scrollViweTranslateY,skyLeft} = useAnimateAndScroll()
+    let {isBubbleIsShow,isBubbleMoved,bubbles} = useRandomBubble()
+
     return {
-        skycloudConfig,boxsConfig,algaesConfig,deepwatersConfig,cloudsConfig,buildsConfig,treesConfig,gatesConfig,seaTableItemConfig,bannerConfig,cloneBalloonMove,skyLeft,scrollViweTranslateY,screenBottom,bubbleIsShow,bubbleMoved,bubbles,scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft,scrollViewHeight,seaTop,isOpen,takeingBallon
+        skycloudConfig,boxsConfig,algaesConfig,deepwatersConfig,cloudsConfig,buildsConfig,treesConfig,gatesConfig,seaTableItemConfig,bannerConfig,cloneBalloonMove,skyLeft,scrollViweTranslateY,screenBottom,isBubbleIsShow,isBubbleMoved,bubbles,scrollViweTranslateX,childWidtgref,childsWidth,startScroll,eyesLeft,scrollViewHeight,isOpen,takeingBallon
     }
   }
 

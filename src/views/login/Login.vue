@@ -1,6 +1,6 @@
 <template>
   <div class="home" @keydown="handleSendOrder" v-bgi="'homedeepimg'">
-    <div class="home-controller" v-if="isControllerShow && !dialogVisible">
+    <div class="home-controller" v-if="isControllerShow && !isDialogVisible">
       <div class="home-controller-head">
         <div class="home-controller-btns">
           <div class="circle-red" @click="handleClose"><span></span></div>
@@ -42,19 +42,19 @@
     </div>
     <!--the author tip-->
     <el-dialog
-        v-model="dialogVisible"
+        v-model="isDialogVisible"
         title="Tips"
         width="60%"
-        v-pcView
+        
       >
         <span>
          <template  v-for="(item,index) in spansMapInnerHTML"  :key="index">
             <span :class="[index === 3 ? 'text-ident-4' : index === 1 ? 'class-color' : '' , index === 4 ? 'class-yellow' : '']">{{item}}</span>
             <br v-if="index === 2"  />
-            <br v-if="index === 5 && !textOver" />           
+            <br v-if="index === 5 && !isTextOver" />           
         </template> 
        </span> 
-        <span v-if="textOver">_</span>
+        <span v-if="isTextOver">_</span>
         <!--<span style="color:red;font-size:21px">{{wordInnherHTML[1]}}</span>-->
        <!--  <span>{{spanWord_3_innerHtml}}</span> -->
        <!--  <span> But the author is still happy and hope you have a great experience . if you have some ideas then you can call me at frist , Then are you readly?</span> -->
@@ -62,13 +62,13 @@
         <template #footer>
           <span class="dialog-footer">
 
-            <el-button type="primary" @click="handleDialogVisible"
+            <el-button type="primary" @click="handleisDialogVisible"
               >let is go</el-button
             >
           </span>
         </template>
     </el-dialog>
-    <div v-pcView class="thanks-info">
+    <div v-isPc class="thanks-info">
       <p>author:lzx</p>
       <p>thanks:http://www.rleonardi.com/interactive-resume/</p>
     </div>
@@ -77,61 +77,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref,reactive ,nextTick,onMounted} from 'vue'
+import { ref,onMounted} from 'vue'
 import {getEquipment} from '../../utils/utils_fns'
 import { useRouter } from 'vue-router'
 import { ElNotification } from 'element-plus'
-  interface iControllerValue {
-    value:string,
-    children:string[]
-  }
-  let textOver = ref(true)
-  const spansMap = [
-    '<div id='," 'app' ",'>',
-    " Hi , Am i , The writre of page , because the author is very pround and impatient , So , it's just a ",
-    " development version ",
-    " which now you can see the view , even only 10% complete .  But the author is still happy and hope you have a great experience . if you have some ideas then you can call me at frist , Then are you readly?   ",
-    '</div>'
-  ]
-  let spansMapInnerHTML:string[] = reactive([])  
-
-  function createTypeStark(typeMap:string[],contextInnerHTML:string[],index = 0){
-    let context = ''
-    let arrIndex = 0
-    const spanWord_timer = setInterval(() => {      
-      context += typeMap[index][arrIndex] 
-      arrIndex++      
-      
-      contextInnerHTML[index] = context
-      if(contextInnerHTML[index].length ===  typeMap[index].length){
-        clearInterval(spanWord_timer)
-        index++
-        if(index !== typeMap.length){
-          createTypeStark(typeMap,contextInnerHTML,index)
-        }else{
-          // over then to do
-          textOver.value = false
-          console.log(spansMap)
-        }
-      }
-    }, 80)
-  }
-  createTypeStark(spansMap,spansMapInnerHTML)
-  const winWidth = window.innerWidth;
-  let pc_view = winWidth >=414 ? true : false
-  console.log(pc_view)
-  let dialogVisibleSession = sessionStorage.getItem('dialogVisible') || !pc_view ? ref(false) : ref(true)
-
-  let dialogVisible = dialogVisibleSession 
-  console.log(dialogVisible)
-    function handleDialogVisible(){
-    dialogVisible.value = false
-    sessionStorage.setItem('dialogVisible','true')
-  }
+import {useHandleOrder,useTips} from './login'
+  let { controllerValue,
+        userOrders,
+        hisControllerValue,
+        hisIndex,
+        homebodyScorllDom_ref,
+        userOrderDom_ref
+      } = useHandleOrder()
+  let {isTextOver,spansMapInnerHTML,isDialogVisible,handleisDialogVisible } = useTips()
   const Router = useRouter()
   let isSclaeController = ref(false)
-  let userOrderDom_ref = ref() 
-  let homebodyScorllDom_ref = ref()
   let isControllerShow = ref(true)
   function handleClose(){
     ElNotification({
@@ -153,77 +113,6 @@ import { ElNotification } from 'element-plus'
     onMounted(() => {
       getEquipment()
     })
-    
-    const controllerValue:iControllerValue = reactive({
-        value:'',
-        children:[]
-      })
-      const userOrders:iControllerValue[] = reactive([])
-      let hisControllerValue:string[] = reactive([])
-      let hisIndex = ref(0)
-      function handleSendOrder(e:KeyboardEvent,type = ''):void{
-        console.log(type)
-
-        if(e.keyCode === 13 || type === 'mobileClick'){
-          if(controllerValue.value === ''){
-            return  
-          }
-          userOrders.push({...controllerValue})
-          hisControllerValue.unshift(controllerValue.value)
-          hisIndex.value = 0    
-          switch(controllerValue.value){
-            case '--help':
-              console.log('right')
-              controllerValue.children.push('-- start:开始','-- end:undefined','-- clear:清理掉操作信息','-- deepclear:清理掉操作历史栈及信息','-- gobang:gobang is inventing','-- author:作者信息')   
-              break
-            case '--start':
-              Router.push({
-                name:'Main'
-              })
-              break
-            case '--end':
-              controllerValue.children.push('I haven not figured out what to do')
-              break
-            case '--clear':
-              userOrders.length = 0
-              break
-            case '--deepclear':
-               hisIndex.value = 0
-               hisControllerValue = []
-              break
-            case '--gobang':
-                Router.push({
-                name:'Gobang'
-              })
-              break
-            case '--author':
-              controllerValue.children.push('Name:lzx,Born:1997-12-05,University:undefiend')
-              break
-            default:
-              console.log('not found')
-          }
-          console.log()
-          
-          nextTick(() => {
-            var scorllHeight = userOrderDom_ref.value.clientHeight
-            homebodyScorllDom_ref.value.scrollTop = scorllHeight
-            console.log(scorllHeight)
-          })
-
-          controllerValue.value = ''
-          controllerValue.children = []
-        }else if(e.keyCode === 38){
-          console.log(hisControllerValue[hisIndex.value])
-          console.log(hisControllerValue)
-          console.log(hisIndex.value)
-          if(hisControllerValue[hisIndex.value] === undefined){
-            //controllerValue.value = hisControllerValue[0]         
-          }else{            
-            controllerValue.value = hisControllerValue[hisIndex.value]  
-            hisIndex.value++          
-          }     
-        }
-      }
 </script>
 <style scoped>
 .text-ident-4{

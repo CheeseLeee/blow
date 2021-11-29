@@ -1,12 +1,14 @@
-import {onMounted,onBeforeUnmount,ref,reactive} from 'vue'
+import {onMounted,onBeforeUnmount,ref,reactive, Ref} from 'vue'
 import {scorllToward,getRandomInt} from '../../utils/utils_fns/index'
 import {Animate} from '../../utils/utils_fns/animate'
+
 export function useComDreamCycle(){
-    const childWidtgref = ref()
-    const childsWidth = ref()
+    const childWidtgref = ref<HTMLElement | null>(null)
+    const childsWidth = ref(0)
     onMounted(() => {
-        const w = childWidtgref.value.clientWidth
-        childsWidth.value = w 
+        if(childWidtgref.value){
+            childsWidth.value = childWidtgref.value.clientWidth
+        }     
         window.addEventListener('beforeunload',() => {
             window.scrollTo(0,0)
         })
@@ -17,40 +19,36 @@ export function useComDreamCycle(){
 }
 
 export function useRandomBubble(){
-    const bubbleIsShow = ref(true)
-    const bubbleMoved = ref(false)
+    const isBubbleIsShow = ref(true)
+    const isBubbleMoved = ref(false)
     const bubbles:string[] = reactive([])
     const randonBubbles = setInterval(() => {
-        bubbleIsShow.value = true
-        bubbleMoved.value = false
+        isBubbleIsShow.value = true
+        isBubbleMoved.value = false
         bubbles.length = 0
         const int = getRandomInt(1,6)
-            for(let i = 1 ; i < int ; i++){
-                const left = getRandomInt(1,3300)
-                
-                bubbles.push(left + '')
-
-            }
-               setTimeout(() => {
-
-                bubbleMoved.value = true
-                    setTimeout(() => {
-                        bubbleIsShow.value = false
-                    },3000)
-                },1000)
+        for(let i = 1 ; i < int ; i++){
+            const left = getRandomInt(1,3300)               
+            bubbles.push(left + '')
+        }
+        setTimeout(() => {
+            isBubbleMoved.value = true
+            setTimeout(() => {
+                isBubbleIsShow.value = false
+            },3000)
+        },1000)
     },6000)
     onBeforeUnmount(() => {
         clearInterval(randonBubbles)
     })
     return {
-        bubbleIsShow,bubbleMoved,bubbles
+        isBubbleIsShow,isBubbleMoved,bubbles
     }
 }
 
 export function eyesOpenOrClose(){
     const isOpen = ref(false)
-    let eyesTimer:NodeJS.Timer | null
-    
+    let eyesTimer:NodeJS.Timer | null  
     onMounted(() => {
         eyesTimer = setInterval(() => {
             isOpen.value = true
@@ -92,7 +90,6 @@ export function useAnimateAndScroll(){
     let winWidthHelf:number
     let takeBalloonHeight: number
     let canScroll = true
-    const seaTop = ref()
 
     onMounted(() => {
         winWidthHelf = window.innerWidth / 2
@@ -119,26 +116,19 @@ export function useAnimateAndScroll(){
         //跳跃点 入海
         goSeaScrollHeight = 14786 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
         //跳跃点 第三关赛博朋克
-        goMechanicalHeight = 22792 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
-
-        
-       
-            scrollViweTranslateX.value =  -scrollHeight / 2
-        
-        
+        goMechanicalHeight = 22792 - animateEl.offsetLeft  - 220 - winWidthHelf + 100  
+        scrollViweTranslateX.value =  -scrollHeight / 2
         const {t} = scorllToward(scrollHeight)
         //case:scroll down
         preScrollTop = scrollHeight
         //第一阶段完成，第二阶段入海开始
         if(scrollHeight > goSeaScrollHeight){
             window.removeEventListener('scroll', handleScroll)
-            window.addEventListener('scroll', handleSeaViewScroll)
-            
+            window.addEventListener('scroll', handleSeaViewScroll)    
             return
         }
         //滚动方向判断
         if(t){
-
             const down1 = scrollHeight > downScrollHeight 
             const jump1 = scrollHeight > jumpScrollHeight 
             const down2 = scrollHeight > downScrollHeight2 
@@ -232,7 +222,6 @@ export function useAnimateAndScroll(){
     }
 
     function handleMechanicalViewScroll(){
-        
         const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop
         const jumpBoxPoint =  27006 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
         const jumpDownBoxPOint = 27862 - animateEl.offsetLeft  - 220 - winWidthHelf + 100
@@ -341,6 +330,6 @@ export function useAnimateAndScroll(){
         }
     }
     return {
-        cloneBalloonMove,skyLeft,eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight,seaTop,takeingBallon,screenBottom,scrollViweTranslateY
+        cloneBalloonMove,skyLeft,eyesLeft,startScroll,scrollViweTranslateX,scrollViewHeight,takeingBallon,screenBottom,scrollViweTranslateY
     }
 }

@@ -8,7 +8,6 @@ export const eleComponents = [
   ElFormItem,
   ElPopover,
   ElInput,
-  ElMenuItem,
   ElButton,
   ElDialog,
   ElCarousel,
