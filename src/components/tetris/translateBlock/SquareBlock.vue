@@ -1,6 +1,8 @@
 <template>
-  <div id="squareblock" :style="{bottom:bottom + 'px',left:left + 'px'}">
-      <square v-for="(item,index) in 4" :key="index" ></square>
+  <div id="squareblock" :style="{bottom:bottom + 'px',left:left + 'px',height:height + 'px'}">
+      <template v-for="(item,index) in 4" :key="index">
+        <square  v-if="index < 2"></square>
+      </template>
   </div>
 </template>
 
@@ -16,6 +18,9 @@ export default {
       type:String
     },
     left:{
+      type:String
+    },
+    height:{
       type:String
     }
   },

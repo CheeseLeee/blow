@@ -1,17 +1,18 @@
 <template>
   <div class="game">
-      <div class="game-board">        
+      <div class="game-board">  <!--12 * 12 50px -->      
         <square-block bottom="0" left="0"></square-block>
         <square-block bottom="0" left="100"></square-block>
         <square-block bottom="0" left="200"></square-block>
         <square-block bottom="0" left="300"></square-block>
         <square-block bottom="0" left="400"></square-block>
         <square-block bottom="0" left="500"></square-block>
-<!--         <rectangle-block rotate="90"></rectangle-block>
-   
-        <triangle></triangle> 
-        <z-shape-block type="1" ></z-shape-block>
-        <p-shape-block type="2"></p-shape-block> -->
+        <square-block bottom="100" left="500"></square-block>
+        <square-block bottom="200" left="500"></square-block>
+        <square-block bottom="300" left="500"></square-block>
+        <square-block bottom="400" left="500"></square-block>
+        <square-block bottom="500" left="500"></square-block>
+
       </div>
       
   </div>
@@ -56,7 +57,7 @@ export default defineComponent({
 }
 .game-board{
   width:600px;
-  height: 100vh;
+  height: 600px;
   position: relative;
   left: 50%;
   transform: translateX(-50%);
